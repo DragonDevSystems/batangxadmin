@@ -97,7 +97,7 @@
 					$('<div />', {'class': 'box-header with-border' }).append(
 						$('<h3 />' , {'class': 'box-title' , 'text': 'View User [Admin]' }),
 						$('<div/>', {'class': 'box-tools pull-right' }).append(
-							$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'button', 'html' : '<i class="fa fa-times-circle"></i>New' }),
+							$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'button' , 'onClick' : 'setNewEntry();' , 'html' : '<i class="fa fa-times-circle"></i>New' }),
 							$('<button/>', {'id' : 'clicker' , 'class': 'btn btn-primary btn-sm' ,'type' : 'button', 'html' : '<i class="fa fa-pencil-square"></i>Edit' }),
 							$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
 						$('<div />', { 'class' : 'row'}).append(
