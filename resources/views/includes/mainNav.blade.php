@@ -53,8 +53,8 @@
         </li>
 
         <!--end filemaintenance part -->
-        <li class="treeview">
-          <a href="{{ URL::Route('home') }}">
+        <li class="treeview {{ ($mt == "pt") ? "active" : ""}}">
+          <a href="{{ URL::Route('getProductView') }}">
             <i class="fa fa-users"></i> <span>Products</span> <i class="fa pull-right"></i>
           </a>
         </li>

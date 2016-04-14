@@ -65,3 +65,11 @@ Route::group(array('prefix' => '/filemaintenance'),function()
 		Route::get('/getCategory', array('uses' => 'FileMaintenanceController@getCategory', 'as' => 'getCategory','middleware' => 'auth'));
 	});
 });
+
+Route::group(array('prefix' => '/product'),function()
+{
+	Route::group(array('before' => 'auth'), function()
+	{
+		Route::get('/', array('uses' => 'ProductController@getProductView', 'as' => 'getProductView','middleware' => 'auth'));
+	});
+});
