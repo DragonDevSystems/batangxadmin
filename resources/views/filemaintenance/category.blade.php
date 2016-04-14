@@ -35,7 +35,7 @@
               <table id="dtUAList" class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
-                  <th>User ID</th>
+                  <th>Category ID</th>
                   <th>Category</th>
                 </tr>
                 </thead>
@@ -64,14 +64,14 @@
 				for (var i = 0; i < data.length; i++) 
 				{
 					$('#tbUAList').append('<tr style="cursor:pointer">\
-							                  <td>'+data[i].user_id+'</td>\
-							                  <td>'+data[i].fname+'</td>\
+							                  <td>'+data[i].id+'</td>\
+							                  <td>'+data[i].name+'</td>\
 							                </tr>');
 				}
 				var table = $("#dtUAList").DataTable();
 				$('#dtUAList tbody').on('click', 'tr', function () {
 			        var data = table.row( this ).data();
-			        adminInformation(data[0]);
+			        categoryInfo(data[0]);
 			    } );
 			}
 			else
@@ -83,54 +83,45 @@
 		});
 	}
 
-	function adminInformation(uid)
+	function categoryInfo(cid)
 	{
-		$('#div_user-entry').append('<div class="overlay">\
+		$('#div-entry').append('<div class="overlay">\
 	            	<i class="fa fa-spinner fa-spin"></i>\
 	            </div>');
-		$.get('{{URL::Route('uaal')}}',{ uid: uid}, function(data)
+		$.get('{{URL::Route('categoryInfo',0)}}',{ cid: cid}, function(data)
 		{
 			if(data.length != 0)
 			{
-				$('#div_user-entry').empty();
-				$('#div_user-entry').append(
+				$('#div-entry').empty();
+				$('#div-entry').append(
 					$('<div />', {'class': 'box-header with-border' }).append(
 						$('<h3 />' , {'class': 'box-title' , 'text': 'View User [Admin]' }),
 						$('<div/>', {'class': 'box-tools pull-right' }).append(
 							$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'button', 'html' : '<i class="fa fa-times-circle"></i>New' }),
 							$('<button/>', {'id' : 'clicker' , 'class': 'btn btn-primary btn-sm' ,'type' : 'button', 'html' : '<i class="fa fa-pencil-square"></i>Edit' }),
-							$('<button/>', {'class': 'btn btn-danger btn-sm' ,'type' : 'button', 'html' : '<i class="fa fa-times-circle"></i>Delete' }),
 							$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
 						$('<div />', { 'class' : 'row'}).append(
 							$('<div />', { 'class' : 'col-md-3 col-sm-3'}).append(
-								$('<div />' , {'class' : 'col-md-12 col-sm-12'}).append(
-									$('<div />' , {'class' : 'image pull-left'}).append(
-										$('<img/>', {'src':'{{env('FILE_MAIN_PATH')}}'+data.uinfo.userDp , 'style':'margin:0px auto;width:40px;height:40px;' , 'class':'img-circle' , 'alt':'User Image'}))),
 								$('<div />' , { 'class' : 'col-md-12 col-sm-12'}).append(
 									$('<div />' , { 'class' : 'form-group'}).append(
-										$('<label />' , { 'class' : 'control-label' , 'for' : 'username' , 'text' : 'Username'}),
-										$('<input />' , { 'id':'username' ,'class':'form-control' ,'type':'text','value' : data.uinfo.un,'name':'username', 'placeholder':'Enter Username' , 'disabled': true}))),
+										$('<label />' , { 'class' : 'control-label' , 'for' : 'name' , 'text' : 'Name'}),
+										$('<input />' , { 'id':'name' ,'class':'form-control' ,'type':'text','value' : data.name,'name':'name', 'placeholder':'Enter Name' , 'disabled': true}))),
 								$('<div />' , { 'class' : 'col-md-12 col-sm-12'}).append(
 									$('<div />' , { 'class' : 'form-group'}).append(
-										$('<label />' , { 'class' : 'control-label' , 'for' : 'fname' , 'text' : 'Firstname'}),
-										$('<input />' , { 'id':'fname' ,'class':'form-control' ,'type':'text','value' : data.uinfo.fname,'name':'fname', 'placeholder':'Firstname' , 'disabled': true}))),
-								$('<div />' , { 'class' : 'col-md-12 col-sm-12'}).append(
-									$('<div />' , { 'class' : 'form-group'}).append(
-										$('<label />' , { 'class' : 'control-label' , 'for' : 'lname' , 'text' : 'Lastname' }),
-										$('<input />' , { 'id':'lname' ,'class':'form-control' ,'type':'text','value' : data.uinfo.lname,'name':'lname', 'placeholder':'Enter Lastname' , 'disabled': true})))),
+										$('<label />' , { 'class' : 'control-label' , 'for' : 'description' , 'text' : 'Description'}),
+										$('<input />' , { 'id':'description' ,'class':'form-control' ,'type':'text','value' : data.description,'name':'description', 'placeholder':'Enter Description' , 'disabled': true})))),
 							$('<div />', {'class' : 'col-md-3 col-sm-3'}).append(
 								$('<table />' , {'class' : 'table'}).append(
 									$('<thead />').append(
 										$('<tr>').append(
-											$('<th />' , {'text' : 'Role'}))),
-									$('<tbody />' , { 'id' : 'tbody'+data.uinfo.user_id }))))),
+											$('<th />' , {'text' : 'Status'}))),
+									$('<tbody />' , { 'id' : 'tbody'+data.id }))))),
 				'<div class="box-footer"></div>');
 
-		        $appendItems = $('#tbody'+data.uinfo.user_id);
+		        $appendItems = $('#tbody'+data.id);
 		        $appendItems.append($('<select />' , { 'id':'module' ,'class':'form-control select2' ,'name':'module', 'disabled': true}).append(
-										'<option value="1">Staff</option>',
-										'<option value="2">Admin</option>',
-										'<option value="3">Super Admin</option>'));
+										'<option value="0">Active</option>',
+										'<option value="1">In-Active</option>'));
 		        $(".select2").select2();
 				$('#clicker').click(function() {
 			        $('select').each(function() {

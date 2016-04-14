@@ -3,9 +3,10 @@ namespace App\Http\Controllers;
 
 use View;
 use Auth;
-use Shinobi;
 use App;
 use App\Models\ProCategory;
+use Input;
+use Response;
 
 class FileMaintenanceController extends Controller {
 
@@ -24,7 +25,7 @@ class FileMaintenanceController extends Controller {
 	{
 		return ProCategory::all();
 	}
-
+	
 	public function addCategory()
 	{
     	$name = Input::get('name');

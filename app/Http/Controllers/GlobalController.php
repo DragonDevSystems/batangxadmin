@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Info;
 use App\Models\User;
 use App\Models\Online;
+use App\Models\ProCategory;
 use Auth;
 use DB;
 use Input;
@@ -82,6 +83,11 @@ class GlobalController extends Controller {
 
 	}
 
+	public function categoryInfo($cid)
+	{
+		$id = (!empty($cid)) ? $cid : Input::get("cid");
+		return ProCategory::find($id);
+	}
 	public function onlineUser()
 	{
 		try 
@@ -122,59 +128,6 @@ class GlobalController extends Controller {
 		}catch (\Exception $e){
         	return 'Sorry something went worng. Please try again.';
    		}
-	}
-
-	public function allCountry()
-	{
-		return Country::all();
-	}
-
-	public function countryInfo($id)
-	{
-		return Country::find($id);
-	}
-
-	public function cityInfo($id)
-	{
-		return DB::table("fm_city")->whereid($id)->first();
-	}
-
-	/*
-	|--------------------------------------------------------------------------
-	| checkinFeeds
-	|--------------------------------------------------------------------------
-	|
-	| Get the lat and lng of maps coordinate with information for news feeds with map display.\
-	| Parammeter:
-	| 	$id = Individual feeds id.
-	|
-	*/
-	public function checkinFeeds($id)
-	{
-		return 	Places::find($id);
-	}
-
-	public function userPermissionCheck($slug)
-	{
-		$roleUser = RoleUser::where('user_id','=',Auth::User()['id'])->first()['user_id'];
-		if(!empty($roleUser))
-		{
-			$role = Role::find($roleUser);
-			if ($role->can($slug))
-			{
-				return  array(
-	                    'status'  => 'success',
-	                    'message'  => 'You input invalid credentials. Please Try again.',
-	                );
-			}
-			else
-			{
-				return  array(
-	                    'status'  => 'fail',
-	                    'message'  => 'You have no permission for this modules',
-	                );
-			}
-		}
 	}
 
 	//resize image to default max width or high
