@@ -43,6 +43,20 @@ class GlobalController extends Controller {
 	{
 		$event = (!empty($event)) ? $event : Input::get('event');
 		$uaccess = Auth::User()['isAdmin'];
+		if(($uaccess == 2 || $uaccess == 3) && ($event == "add" || $event == "update" || $event == "update"))
+		{
+			return Response::json(array(
+                'status'  => 'success',
+                'message'  => 'Permission granted.',
+            ));
+		}
+		else
+		{
+			return Response::json(array(
+                'status'  => 'fail',
+                'message'  => 'You have no permission to add, update, and delete data or records.',
+            ));
+		}
 		return $uaccess;
 	}
 
