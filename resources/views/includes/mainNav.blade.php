@@ -41,6 +41,17 @@
             <li class="{{ $mt == "uam" ? (($cc == "ual") ? "active" : "") : ""}}"><a href="{{ URL::Route('getUAL') }}"><i class="fa fa-users"></i> User Access Level</a></li>
           </ul>
         </li>
+
+        <li class="{{ ($mt == "fm") ? "active" : ""}} treeview">
+          <a href="#">
+            <i class="fa fa-files-o"></i> <span>File Maintenance</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+                <li class="{{ $mt == "fm" ? (($cc == "pc") ? "active" : "") : ""}}"><a href="{{ URL::Route('getCategory') }}"><i class="fa fa-globe"></i> Product Category</a></li>
+          </ul>
+        </li>
+
         <!--end filemaintenance part -->
         <li class="treeview">
           <a href="{{ URL::Route('home') }}">

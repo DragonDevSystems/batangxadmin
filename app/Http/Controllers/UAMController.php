@@ -19,18 +19,6 @@ class UAMController extends Controller {
 		return View::Make("uam.ual")->with("userInfo",$userInfo)->with('mt','uam')->with('cc','ual');
 	}
 
-	public function getRoles()
-	{
-		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
-		return View::Make("uam.roles")->with("userInfo",$userInfo)->with('mt','uam')->with('cc','roles');
-	}
-
-	public function getPermissions()
-	{
-		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
-		return View::Make("uam.permissions")->with("userInfo",$userInfo)->with('mt','uam')->with('cc','perms');
-	}
-
 	//userAdminAccessLvl
 	public function uaal() 
 	{
@@ -44,6 +32,7 @@ class UAMController extends Controller {
 		}
 		return $response;
 	}
+	
 	public function adminUserList()
 	{
 		$response = array();

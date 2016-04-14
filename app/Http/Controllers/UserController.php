@@ -36,7 +36,7 @@ class UserController extends Controller {
 			$auth = Auth::attempt(array(
 				$field => Input::get('txtUsername'),
 				'password' => Input::get('txtPassword'),
-				'isAdmin' => true,
+				'isAdmin' => 3,
 			), $remember);
 
 			if($auth)

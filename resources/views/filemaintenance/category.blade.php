@@ -12,65 +12,23 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        User Access Management
+        File Maintenance
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="{{ URL::Route('getUAL') }}"><i class="fa fa-dashboard"></i> User Access Management</a></li>
-        <li class="active">User Access Level</li>
+        <li><a href="{{ URL::Route('getUAL') }}"><i class="fa fa-dashboard"></i> File Maintenance</a></li>
+        <li class="active">Product Category</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-		<div id="div_user-entry" class="box box-success">
-			<div class="box-header with-border">
-				<h3 class="box-title"> Users</h3>
-				<div class="box-tools pull-right">
-					<button id="btn-new-user" class="btn btn-primary btn-sm" type="button">
-						<i class="fa fa-plus-circle"></i>
-						New
-					</button>
-					<button class="btn btn-box-tool" data-widget="collapse">
-						<i class="fa fa-minus"></i>
-					</button>
-				</div>
-			</div>
-			<div class="box-body" style="min-height:100px">
-				<div class="row">
-					<div class="col-md-12 col-lg-12">
-						<h1 class="text-center">
-							<small>
-								<button id="btn-new-user-icn" class="btn btn-app" title="" data-placement="top" data-toggle="tooltip" type="button">
-									<span class="badge bg-purple">0</span>
-									<i class="fa fa-plus-circle fa-3x"></i>
-									Add User
-								</button>
-								<br>
-								Click on the below list for preview
-							</small>
-						</h1>
-					</div>
-				</div>
-			</div>
-			<div class="box-footer">   </div>
-		</div>
+		<div id="div-entry" class="box box-success"></div>
 
 		<!-- user admin list -->
 		<div class="box box-primary">
             <div class="box-header">
-            	<h3 class="box-title">Admin Users</h3>
-				<div class="box-tools pull-right">
-					<h4>
-						<a class="label label-primary filter-role" data-role="" href="#">All</a>
-						<a class="label label-warning filter-role" data-role="admin" href="#">Admin</a>
-						<a class="label label-warning filter-role" data-role="superuser" href="#">Superuser</a>
-						<a class="label label-warning filter-role" data-role="user" href="#">User</a>
-						<button class="btn btn-box-tool" data-widget="collapse">
-							<i class="fa fa-minus"></i>
-						</button>
-					</h4>
-				</div>
+            	<h3 class="box-title">Product Category</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -78,9 +36,7 @@
                 <thead>
                 <tr>
                   <th>User ID</th>
-                  <th>Username</th>
-                  <th>Firstname</th>
-                  <th>Lastname</th>
+                  <th>Category</th>
                 </tr>
                 </thead>
                 <tbody id="tbUAList">
@@ -97,11 +53,11 @@
   @include('includes.settingSidebar')
 </div>
 <script type="text/javascript">
-
-	
-	function adminUserList()
+	defaultDisplay();
+	categoryList();
+	function categoryList()
 	{
-		$.get('{{URL::Route('adminUserList')}}', function(data)
+		$.get('{{URL::Route('categoryList')}}', function(data)
 		{
 			if(data.length != 0)
 			{
@@ -109,9 +65,7 @@
 				{
 					$('#tbUAList').append('<tr style="cursor:pointer">\
 							                  <td>'+data[i].user_id+'</td>\
-							                  <td><img src="{{env('FILE_PATH_CUSTOM')}}'+data[i].userDp+'" style="margin:0px auto;width:30px;height:30px;" class="img-circle" alt="User Image">  '+data[i].un+'</td>\
 							                  <td>'+data[i].fname+'</td>\
-							                  <td>'+data[i].lname+'</td>\
 							                </tr>');
 				}
 				var table = $("#dtUAList").DataTable();
@@ -122,12 +76,12 @@
 			}
 			else
 			{
+				$("#dtUAList").DataTable();
 				promptMsg('fail',"No records yet.")
 			}
 
 		});
 	}
-	adminUserList();
 
 	function adminInformation(uid)
 	{
@@ -197,6 +151,89 @@
 			}
 		});
 	}
+
+	function defaultDisplay()
+	{
+	   	$('#div-entry').append('<div class="overlay">\
+			        	<i class="fa fa-spinner fa-spin"></i>\
+			        </div>');
+	   	$('#div-entry').empty();
+		$('#div-entry').append(
+				$('<div />' , { 'class' : 'box-header with-border'}).append(
+					$('<h3 />' , { 'class' : 'box-title' , 'text' : 'Users'}),
+					$('<div />' , { 'class' : 'box-tools pull-right'}).append(
+						'<button id="btn-new-user" class="btn btn-primary btn-sm" type="button" onClick="setNewEntry();">\
+							<i class="fa fa-plus-circle"></i>\
+							New\
+						</button>\
+						<button class="btn btn-box-tool" data-widget="collapse">\
+							<i class="fa fa-minus"></i>\
+						</button>')),
+				$('<div />' , { 'class' : 'box-body' , 'style' : 'min-height:100px'}).append(
+					$('<div />' , { 'class' : 'row' }).append(
+						$('<div />' , {'class' : 'col-md-12 col-lg-12'}).append(
+							$('<h1 />' , { 'class': 'text-center'}).append(
+								$('<small />').append(
+									$('<button />' , { 'id':'btn-new-user-icn' , 'class':'btn btn-app' , 'data-placement':'top' , 'data-toggle':'tooltip' , 'type':'button' , 'onClick':'setNewEntry();' , 'html' : '<span class="badge bg-purple">0</span><i class="fa fa-plus-circle fa-3x"></i>Add Admin'}).append(
+										''),
+									$('<br />'),
+									'Click on the below list for preview'))))),
+				$('<div />' , { 'class' : 'box-footer'}));
+	}
+
+	function setNewEntry()
+	{
+		$('#div-entry').append('<div class="overlay">\
+		        	<i class="fa fa-spinner fa-spin"></i>\
+		        </div>');
+		$('#div-entry').empty();
+		$('#div-entry').append($('<form />' ,{'id' : 'frmEntry', 'onsubmit' : 'return saveNewEntry()'}).append(
+			$('<div />',{ 'class' : 'box-header with-border'}).append(
+				$('<h3 />',{'class':'box-title' , 'text' : 'Add New Product Category'}),
+				$('<div />', { 'class' : 'box-tools pull-right'}).append(
+					$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Save' }),
+					$('<button/>', {'class': 'btn btn-danger btn-sm' ,'type' : 'button', 'onClick' : 'defaultDisplay();' , 'html' : '<i class="fa fa-times-circle"></i>Cancel' }),
+					$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
+				$('<div />', { 'class' : 'row'}).append(
+					$('<div />', {'class' : 'col-md-4 col-sm-6'}).append(
+						$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
+							$('<div />' , {'class' : 'form-group'}).append(
+								$('<label />' , { 'class' : 'control-label' , 'for' : 'name' , 'text' : 'Name:'}),
+								$('<input />' , { 'id':'name' ,'class':'form-control' ,'type':'text','name':'name', 'placeholder':'Enter Name', 'required' : true})))),
+					$('<div />', {'class' : 'col-md-4 col-sm-6'}).append(
+						$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
+							$('<div />' , {'class' : 'form-group'}).append(
+								$('<label />' , { 'class' : 'control-label' , 'for' : 'slug' , 'text' : 'Slug:'}),
+								$('<input />' , { 'id':'description' ,'class':'form-control' ,'type':'text','name':'description', 'placeholder':'Enter Description', 'required' : true})))))),
+		'<div class="box-footer"></div>'));
+    }
+
+    function saveNewEntry()
+    {
+    	$_token = "{{ csrf_token() }}";
+    	$name = $('#name').val();
+    	$description = $('#description').val();
+    	$('#div-entry').append('<div class="overlay">\
+			        	<i class="fa fa-spinner fa-spin"></i>\
+			        </div>');
+    	$.post('{{URL::Route('addCategory')}}',{ _token: $_token, name: $name, description: $description}, function(data)
+		{
+			if(data.length != 0)
+			{
+				if(data.status == "success")
+				{
+					categoryList();
+					defaultDisplay();
+				}
+				else
+				{
+					$('.overlay').remove();
+				}
+				promptMsg(data.status,data.message);
+			}
+		});
+    	return false;
+    }
 </script>
 @endsection
 
