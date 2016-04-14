@@ -53,7 +53,7 @@ class GlobalController extends Controller {
 
 	public function statsbox()
 	{
-		return array (
+		return array(
 						"nu" 	=> count($this->newUser()),//new user this month
 						"ou"	=> count($this->onlineUser()),// online user near realtime
 						"ru"	=> count($this->registeredUser()),// total of registered user
