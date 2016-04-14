@@ -39,36 +39,15 @@ class GlobalController extends Controller {
 		return User::find($id)['userImages'];
 	}
 
+	public function accountAccessChecker($event)
+	{
+		$event = (!empty($event)) ? $event : Input::get('event');
+		$uaccess = Auth::User()['isAdmin'];
+		return $uaccess;
+	}
+
 	public function userDpv2($id)
 	{
-		/*$userInfo = $this->userInfo($id);
-		$userDPs = $this->userDP($id);
-		$avatar = false;
-
-		if(count($userDPs) != 0)
-		{
-			foreach($userDPs as $userDP)
-			{
-				if($userDP['fw_dp'] == 1)
-				{
-					$userDPics = $userDP['fw_img_thumbnail'];
-					$avatar = true;
-				}
-			}
-		}
-
-		if(!$avatar)
-		{
-			if($userInfo['fw_gender'] == 1)
-			{
-				$userDPics = "maleimgplaceholder.jpg";
-			}
-			else
-			{
-				$userDPics = "femaleimgplaceholder.jpg";
-			}
-		}*/
-
 		return "img/person1.png";//.$userDPics;
 	}
 
@@ -88,6 +67,7 @@ class GlobalController extends Controller {
 		$id = (!empty($cid)) ? $cid : Input::get("cid");
 		return ProCategory::find($id);
 	}
+
 	public function onlineUser()
 	{
 		try 

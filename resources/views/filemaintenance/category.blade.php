@@ -177,26 +177,40 @@
 		$('#div-entry').append('<div class="overlay">\
 		        	<i class="fa fa-spinner fa-spin"></i>\
 		        </div>');
-		$('#div-entry').empty();
-		$('#div-entry').append($('<form />' ,{'id' : 'frmEntry', 'onsubmit' : 'return saveNewEntry()'}).append(
-			$('<div />',{ 'class' : 'box-header with-border'}).append(
-				$('<h3 />',{'class':'box-title' , 'text' : 'Add New Product Category'}),
-				$('<div />', { 'class' : 'box-tools pull-right'}).append(
-					$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Save' }),
-					$('<button/>', {'class': 'btn btn-danger btn-sm' ,'type' : 'button', 'onClick' : 'defaultDisplay();' , 'html' : '<i class="fa fa-times-circle"></i>Cancel' }),
-					$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
-				$('<div />', { 'class' : 'row'}).append(
-					$('<div />', {'class' : 'col-md-4 col-sm-6'}).append(
-						$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
-							$('<div />' , {'class' : 'form-group'}).append(
-								$('<label />' , { 'class' : 'control-label' , 'for' : 'name' , 'text' : 'Name:'}),
-								$('<input />' , { 'id':'name' ,'class':'form-control' ,'type':'text','name':'name', 'placeholder':'Enter Name', 'required' : true})))),
-					$('<div />', {'class' : 'col-md-4 col-sm-6'}).append(
-						$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
-							$('<div />' , {'class' : 'form-group'}).append(
-								$('<label />' , { 'class' : 'control-label' , 'for' : 'slug' , 'text' : 'Slug:'}),
-								$('<input />' , { 'id':'description' ,'class':'form-control' ,'type':'text','name':'description', 'placeholder':'Enter Description', 'required' : true})))))),
-		'<div class="box-footer"></div>'));
+		$.get('{{URL::Route('accountAccessChecker',0)}}',{ event: "add"}, function(data)
+		{
+			if(data.length != 0)
+			{
+				if(data.status == "success")
+				{
+					$('#div-entry').empty();
+					$('#div-entry').append($('<form />' ,{'id' : 'frmEntry', 'onsubmit' : 'return saveNewEntry()'}).append(
+						$('<div />',{ 'class' : 'box-header with-border'}).append(
+							$('<h3 />',{'class':'box-title' , 'text' : 'Add New Product Category'}),
+							$('<div />', { 'class' : 'box-tools pull-right'}).append(
+								$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Save' }),
+								$('<button/>', {'class': 'btn btn-danger btn-sm' ,'type' : 'button', 'onClick' : 'defaultDisplay();' , 'html' : '<i class="fa fa-times-circle"></i>Cancel' }),
+								$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
+							$('<div />', { 'class' : 'row'}).append(
+								$('<div />', {'class' : 'col-md-4 col-sm-6'}).append(
+									$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
+										$('<div />' , {'class' : 'form-group'}).append(
+											$('<label />' , { 'class' : 'control-label' , 'for' : 'name' , 'text' : 'Name:'}),
+											$('<input />' , { 'id':'name' ,'class':'form-control' ,'type':'text','name':'name', 'placeholder':'Enter Name', 'required' : true})))),
+								$('<div />', {'class' : 'col-md-4 col-sm-6'}).append(
+									$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
+										$('<div />' , {'class' : 'form-group'}).append(
+											$('<label />' , { 'class' : 'control-label' , 'for' : 'slug' , 'text' : 'Slug:'}),
+											$('<input />' , { 'id':'description' ,'class':'form-control' ,'type':'text','name':'description', 'placeholder':'Enter Description', 'required' : true})))))),
+					'<div class="box-footer"></div>'));
+				}
+				else
+				{
+					promptMsg(data.status,data.message);
+					$('.overlay').remove();
+				}
+			}
+		});
     }
 
     function saveNewEntry()
