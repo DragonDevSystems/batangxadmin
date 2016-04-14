@@ -43,13 +43,13 @@ class FileMaintenanceController extends Controller {
 	    	{
 	    		return Response::json(array(
 	                'status'  => 'success',
-	                'message'  => 'You succesfully added new permission.',
+	                'message'  => 'You succesfully added new category.',
 	            ));
 	    	}
     	}
     	return Response::json(array(
             'status'  => 'fail',
-            'message'  => 'An error occured while creating the new permission. Please try again. .',
+            'message'  => 'An error occured while creating the new category. Please try again. .',
         ));
 	}
 }
