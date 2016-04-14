@@ -159,7 +159,7 @@ return [
         /*
          * Php Libraries...
          */
-        //Intervention\Image\ImageServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -206,7 +206,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Input' => Illuminate\Support\Facades\Input::class,
-        //'Image' => Intervention\Image\Facades\Image::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

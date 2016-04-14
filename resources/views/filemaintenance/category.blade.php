@@ -181,7 +181,7 @@
 						$('<div />' , {'class' : 'col-md-12 col-lg-12'}).append(
 							$('<h1 />' , { 'class': 'text-center'}).append(
 								$('<small />').append(
-									$('<button />' , { 'id':'btn-new-user-icn' , 'class':'btn btn-app' , 'data-placement':'top' , 'data-toggle':'tooltip' , 'type':'button' , 'onClick':'setNewEntry();' , 'html' : '<span class="badge bg-purple">0</span><i class="fa fa-plus-circle fa-3x"></i>Add Admin'}).append(
+									$('<button />' , { 'id':'btn-new-user-icn' , 'class':'btn btn-app' , 'data-placement':'top' , 'data-toggle':'tooltip' , 'type':'button' , 'onClick':'setNewEntry();' , 'html' : '<span class="badge bg-purple">0</span><i class="fa fa-plus-circle fa-3x"></i>Add Category'}).append(
 										''),
 									$('<br />'),
 									'Click on the below list for preview'))))),
@@ -239,7 +239,7 @@
 
     function saveNewEntry()
     {
-    	promptConfirmation("Are you sure want to process this changes?");
+    	promptConfirmation("Are you sure you want to add this new category?");
     	$('#btnYes').click(function() {
 	    	$_token = "{{ csrf_token() }}";
 	    	$name = $('#name').val();
