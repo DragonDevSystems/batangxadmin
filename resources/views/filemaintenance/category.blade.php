@@ -97,9 +97,17 @@
 					$('<div />', {'class': 'box-header with-border' }).append(
 						$('<h3 />' , {'class': 'box-title' , 'text': 'View User [Admin]' }),
 						$('<div/>', {'class': 'box-tools pull-right' }).append(
-							$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'button' , 'onClick' : 'setNewEntry();' , 'html' : '<i class="fa fa-times-circle"></i>New' }),
-							$('<button/>', {'id' : 'clicker' , 'class': 'btn btn-primary btn-sm' ,'type' : 'button', 'html' : '<i class="fa fa-pencil-square"></i>Edit' }),
-							$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
+							'<button class="btn btn-success btn-sm" type="button" onClick="setNewEntry();">\
+								<i class="fa fa-plus-circle"></i>\
+								New\
+							</button>\
+							<button id="clicker" class="btn btn-primary btn-sm" type="button">\
+								<i class="fa fa-pencil-square"></i>\
+								Edit\
+							</button>\
+							<button class="btn btn-box-tool" data-widget="collapse">\
+								<i class="fa fa-minus"></i>\
+							</button>'),
 						$('<div />', { 'class' : 'row'}).append(
 							$('<div />', { 'class' : 'col-md-3 col-sm-3'}).append(
 								$('<div />' , { 'class' : 'col-md-12 col-sm-12'}).append(
@@ -188,9 +196,17 @@
 						$('<div />',{ 'class' : 'box-header with-border'}).append(
 							$('<h3 />',{'class':'box-title' , 'text' : 'Add New Product Category'}),
 							$('<div />', { 'class' : 'box-tools pull-right'}).append(
-								$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Save' }),
-								$('<button/>', {'class': 'btn btn-danger btn-sm' ,'type' : 'button', 'onClick' : 'defaultDisplay();' , 'html' : '<i class="fa fa-times-circle"></i>Cancel' }),
-								$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
+								'<button id="btn-new-user" class="btn btn-success btn-sm" type="button">\
+									<i class="fa fa-times-circle"></i>\
+									Save\
+								</button>\
+								<button id="btn-new-user" class="btn btn-danger btn-sm" type="button" onClick="defaultDisplay();">\
+									<i class="fa fa-times-circle"></i>\
+									Cancel\
+								</button>\
+								<button class="btn btn-box-tool" data-widget="collapse">\
+									<i class="fa fa-minus"></i>\
+								</button>')),
 							$('<div />', { 'class' : 'row'}).append(
 								$('<div />', {'class' : 'col-md-4 col-sm-6'}).append(
 									$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
@@ -202,7 +218,7 @@
 										$('<div />' , {'class' : 'form-group'}).append(
 											$('<label />' , { 'class' : 'control-label' , 'for' : 'slug' , 'text' : 'Slug:'}),
 											$('<input />' , { 'id':'description' ,'class':'form-control' ,'type':'text','name':'description', 'placeholder':'Enter Description', 'required' : true})))))),
-					'<div class="box-footer"></div>'));
+					'<div class="box-footer"></div>');
 				}
 				else
 				{
