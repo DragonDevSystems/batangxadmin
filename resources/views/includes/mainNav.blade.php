@@ -55,7 +55,7 @@
         <!--end filemaintenance part -->
         <li class="treeview">
           <a href="{{ URL::Route('home') }}">
-            <i class="fa fa-users"></i> <span>Customer Support</span> <i class="fa pull-right"></i>
+            <i class="fa fa-users"></i> <span>Products</span> <i class="fa pull-right"></i>
           </a>
         </li>
         <li class="treeview">

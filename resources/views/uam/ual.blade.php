@@ -58,20 +58,6 @@
 
 		<!-- user admin list -->
 		<div class="box box-primary">
-            <div class="box-header">
-            	<h3 class="box-title">Admin Users</h3>
-				<div class="box-tools pull-right">
-					<h4>
-						<a class="label label-primary filter-role" data-role="" href="#">All</a>
-						<a class="label label-warning filter-role" data-role="admin" href="#">Admin</a>
-						<a class="label label-warning filter-role" data-role="superuser" href="#">Superuser</a>
-						<a class="label label-warning filter-role" data-role="user" href="#">User</a>
-						<button class="btn btn-box-tool" data-widget="collapse">
-							<i class="fa fa-minus"></i>
-						</button>
-					</h4>
-				</div>
-            </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="dtUAList" class="table table-bordered table-striped table-hover">
