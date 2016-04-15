@@ -30,6 +30,7 @@ class GlobalController extends Controller {
 						"userDp"		=> $this->userDpv2($userInfo['user_id']),
 						"fname"			=> $userInfo['first_name'],
 						"lname"			=> $userInfo['last_name'],
+						"dm"			=> $userInfo['created_at'],
 					);
 		}
 	}

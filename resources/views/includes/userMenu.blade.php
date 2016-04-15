@@ -9,8 +9,8 @@
     <li class="user-header">
       <img src="{{env('FILE_PATH_CUSTOM').''.$userInfo['userDp']}}" class="img-circle" alt="User Image">
       <p>
-        {{$userInfo['fname']}} {{$userInfo['lname']}}- Web Developer
-        <small>Member since Nov. 2012</small>
+        {{$userInfo['fname']}} {{$userInfo['lname']}}
+        <small>Member since {{date("M Y", strtotime($userInfo['dm']))}}</small>
       </p>
     </li>
     <!-- Menu Body -->
