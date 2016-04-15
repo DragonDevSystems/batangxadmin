@@ -2,6 +2,7 @@
 @section('addHead')
   <title>Welcome | GameXtreme</title>
 @endsection
+
 @section('content')
 <button class="btn btn-success" id="btn_login">Login</button>
 <button class="btn btn-success" id="btn_registration">Registration</button>

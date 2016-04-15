@@ -35,6 +35,15 @@
 		<script src="{{env('FILE_PATH_CUSTOM')}}bootstrap/js/bootstrap.min.js"></script>
 
 	@yield('addHead')
+
+	
+	<style>
+		.modal-vertical-centered {
+			transform: translate(0, 50%) !important;
+			-ms-transform: translate(0, 50%) !important; /* IE 9 */
+			-webkit-transform: translate(0, 50%) !important; /* Safari and Chrome */
+		}
+	</style>
 </head>
 
 <body background="{{env('FILE_PATH_CUSTOM')}}img/diablo3.jpg">

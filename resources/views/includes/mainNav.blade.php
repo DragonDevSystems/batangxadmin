@@ -10,7 +10,6 @@
         </div>
         <div class="pull-left info">
           <p>{{$userInfo['fname']}} {{$userInfo['lname']}}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
       <!-- search form -->

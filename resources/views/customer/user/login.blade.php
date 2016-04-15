@@ -1,5 +1,5 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="mdl_login" style="opacity:0.5 !important;">
-	<div class="modal-dialog">
+<div class="modal fade" tabindex="-1" role="dialog" id="mdl_login" style="opacity:0.6 !important;">
+	<div class="modal-dialog modal-vertical-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -8,6 +8,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="login-box-body">
+					<div class="form-group has-feedback has-error"></div>
 					<div class="form-group has-feedback">
 						<input type="email" class="form-control" id="email" name="email" placeholder="Username or Email">
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -35,12 +36,31 @@
 					<!--<a href="register.html" class="text-center">Register a new membership</a>-->
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-				<button class="btn btn-outline" type="button" data-dismiss="modal" id="btnYes">Register Now</button>
-			</div>
 		</div>
 	<!-- /.modal-content -->
 	</div>
 <!-- /.modal-dialog -->
 </div>
+<label class="control-label"></label>
+<script type="text/javascript">
+	function validateCreds()
+    {
+        $_token = "{{ csrf_token() }}";
+        $email = $("#email").val();
+        $pass = $("#password").val();
+        $remember = $("#chk_remember").is(":checked");
+        $.post('{{URL::Route('postLogin')}}', { _token: $_token, txtUsername: $email , txtPassword: $pass ,remember: $remember}, function(data)
+        {
+            if(data == 1)
+            {
+                window.location.replace('{{URL::Route('home')}}');
+            }
+            else
+            {
+            	$('.has-error').empty();
+            	$('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i> '+data.message+''}));
+            }
+            //console.log(data);
+        });
+    }
+</script>

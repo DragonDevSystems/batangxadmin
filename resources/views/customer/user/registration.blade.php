@@ -1,6 +1,6 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="mdl_registration" style="opacity:0.5 !important;">
+<div class="modal fade" tabindex="-1" role="dialog" id="mdl_registration" style="opacity:0.6 !important;">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content modal-vertical-centered">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
