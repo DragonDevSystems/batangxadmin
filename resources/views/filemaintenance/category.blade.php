@@ -59,6 +59,7 @@
 	{
 		$.get('{{URL::Route('categoryList')}}', function(data)
 		{
+			$('#tbUAList').empty();
 			if(data.length != 0)
 			{
 				for (var i = 0; i < data.length; i++) 
@@ -96,7 +97,7 @@
 				$('#div-entry').append(
 					$('<div />', {'class': 'box-header with-border' }).append(
 						$('<h3 />' , {'class': 'box-title' , 'text': 'View User [Admin]' }),
-						$('<div/>', {'class': 'box-tools pull-right' }).append(
+						$('<div/>', {'class': 'box-tools pull-right event-btn' }).append(
 							'<button class="btn btn-success btn-sm" type="button" onClick="setNewEntry();">\
 								<i class="fa fa-plus-circle"></i>\
 								New\
@@ -127,12 +128,13 @@
 				'<div class="box-footer"></div>');
 
 		        $appendItems = $('#tbody'+data.id);
-		        $appendItems.append($('<select />' , { 'id':'module' ,'class':'form-control select2' ,'name':'module', 'disabled': true}).append(
-										'<option value="0">Active</option>',
-										'<option value="1">In-Active</option>'));
+		        $appendItems.append($('<select />' , { 'id':'drpStatus' ,'class':'form-control select2' ,'name':'module', 'disabled': true}).append(
+										'<option value="1">Active</option>',
+										'<option value="0">In-Active</option>'));
+		        $("#drpStatus").val(data.status);
 		        $(".select2").select2();
 				$('#clicker').click(function() {
-			        $('select').each(function() {
+			        $('select,input[type=text]').each(function() {
 			            if ($(this).attr('disabled')) {
 			                $(this).removeAttr('disabled');
 			            }
@@ -142,6 +144,12 @@
 			                });
 			            }
 			        });
+			        $('.event-btn').find('.btn-sm').each(function() {
+			            $(this).remove();
+			        });
+			        $('.event-btn').prepend(
+			            $('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'button', 'onClick':'updateRecord('+data.id+');', 'html' : '<i class="fa fa-times-circle"></i>Save' }),
+						$('<button/>', {'id' : 'clicker' , 'class': 'btn btn-danger btn-sm', 'onClick':'defaultDisplay();', 'type' : 'button', 'html' : '<i class="fa fa-pencil-sq;are"></i>Cancel' }));
 			    });
 			}
 			else
@@ -196,7 +204,7 @@
 						$('<div />',{ 'class' : 'box-header with-border'}).append(
 							$('<h3 />',{'class':'box-title' , 'text' : 'Add New Product Category'}),
 							$('<div />', { 'class' : 'box-tools pull-right'}).append(
-								'<button id="btn-new-user" class="btn btn-success btn-sm" type="button">\
+								'<button id="btn-new-user" class="btn btn-success btn-sm" type="submit">\
 									<i class="fa fa-times-circle"></i>\
 									Save\
 								</button>\
@@ -216,7 +224,7 @@
 								$('<div />', {'class' : 'col-md-4 col-sm-6'}).append(
 									$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
 										$('<div />' , {'class' : 'form-group'}).append(
-											$('<label />' , { 'class' : 'control-label' , 'for' : 'slug' , 'text' : 'Slug:'}),
+											$('<label />' , { 'class' : 'control-label' , 'for' : 'slug' , 'text' : 'Description:'}),
 											$('<input />' , { 'id':'description' ,'class':'form-control' ,'type':'text','name':'description', 'placeholder':'Enter Description', 'required' : true})))))),
 					'<div class="box-footer"></div>');
 				}
@@ -231,27 +239,61 @@
 
     function saveNewEntry()
     {
-    	$_token = "{{ csrf_token() }}";
-    	$name = $('#name').val();
-    	$description = $('#description').val();
-    	$('#div-entry').append('<div class="overlay">\
-			        	<i class="fa fa-spinner fa-spin"></i>\
-			        </div>');
-    	$.post('{{URL::Route('addCategory')}}',{ _token: $_token, name: $name, description: $description}, function(data)
-		{
-			if(data.length != 0)
+    	promptConfirmation("Are you sure want to process this changes?");
+    	$('#btnYes').click(function() {
+	    	$_token = "{{ csrf_token() }}";
+	    	$name = $('#name').val();
+	    	$description = $('#description').val();
+	    	$('#div-entry').append('<div class="overlay">\
+				        	<i class="fa fa-spinner fa-spin"></i>\
+				        </div>');
+	    	$.post('{{URL::Route('addCategory')}}',{ _token: $_token, name: $name, description: $description}, function(data)
 			{
-				if(data.status == "success")
+				if(data.length != 0)
 				{
-					categoryList();
-					defaultDisplay();
+					if(data.status == "success")
+					{
+						categoryList();
+						defaultDisplay();
+					}
+					else
+					{
+						$('.overlay').remove();
+					}
+					promptMsg(data.status,data.message);
 				}
-				else
+			});
+    	});
+    	return false;
+    }
+
+    function updateRecord(cid)
+    {
+    	promptConfirmation("Are you sure want to process this changes?");
+    	$('#btnYes').click(function() {
+	    	$_token = "{{ csrf_token() }}";
+	    	$name = $('#name').val();
+	    	$description = $('#description').val();
+	    	$drpStatus = $('#drpStatus').val();
+	    	$('#div-entry').append('<div class="overlay">\
+				        	<i class="fa fa-spinner fa-spin"></i>\
+				        </div>');
+	    	$.post('{{URL::Route('addCategory')}}',{ _token: $_token, name: $name, description: $description , status: $drpStatus, cid: cid}, function(data)
+			{
+				if(data.length != 0)
 				{
-					$('.overlay').remove();
+					if(data.status == "success")
+					{
+						categoryList();
+						defaultDisplay();
+					}
+					else
+					{
+						$('.overlay').remove();
+					}
+					promptMsg(data.status,data.message);
 				}
-				promptMsg(data.status,data.message);
-			}
+			});
 		});
     	return false;
     }

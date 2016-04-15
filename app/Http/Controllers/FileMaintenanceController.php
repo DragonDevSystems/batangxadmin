@@ -28,25 +28,28 @@ class FileMaintenanceController extends Controller {
 	
 	public function addCategory()
 	{
+		$cid = Input::get('cid');
+		$status = Input::get('status');
     	$name = Input::get('name');
     	$description = Input::get('description');
 
-    	$procategory = new ProCategory();
-    	$procategory['name'] = $name;
-    	$procategory['description'] = $description;
-    	if($procategory->save())
+    	$procategory = (!empty($cid)) ? ProCategory::find($cid) :new ProCategory();
+    	if(!empty($procategory))
     	{
-    		return Response::json(array(
-                'status'  => 'success',
-                'message'  => 'You succesfully added new permission.',
-            ));
+	    	$procategory['name'] = $name;
+	    	$procategory['description'] = $description;
+	    	$procategory['status'] = (!empty($status)) ? $status : 0;
+	    	if($procategory->save())
+	    	{
+	    		return Response::json(array(
+	                'status'  => 'success',
+	                'message'  => 'You succesfully added new permission.',
+	            ));
+	    	}
     	}
-    	else
-    	{
-	    	return Response::json(array(
-                'status'  => 'fail',
-                'message'  => 'An error occured while creating the new permission. Please try again. .',
-            ));
-    	}
+    	return Response::json(array(
+            'status'  => 'fail',
+            'message'  => 'An error occured while creating the new permission. Please try again. .',
+        ));
 	}
 }
