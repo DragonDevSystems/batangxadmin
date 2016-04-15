@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/', array('uses' =>'HomeController@cusIndex', 'as' => 'cusIndex'));
+
 Route::group(array('prefix' => '/admin'),function()
 {
 	Route::get('/', array('uses' =>'HomeController@index', 'as' => 'home'));

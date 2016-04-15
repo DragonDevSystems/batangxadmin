@@ -22,4 +22,9 @@ class HomeController extends Controller {
 
 	}
 
+	public function cusIndex()
+	{
+		return View::Make("customer.home.index");
+	}
+
 }
