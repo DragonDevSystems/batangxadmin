@@ -146,9 +146,8 @@ class GlobalController extends Controller {
 	public function userlist()
 	{
 		$response = array();
-		$userList = User::where('id','!=',Auth::User()['id'])->where('isAdmin','=',0)->get();
-		return $userList;
-		if(!empty($userList))
+		$userList = User::where('id','!=',Auth::User()['id'])->where('isAdmin','=',"0")->get();
+		if(count($userList) != 0)
 		{
 			foreach ($userList as $userListi) {
 				$response[] = $this->userInfoList($userListi['id']);
