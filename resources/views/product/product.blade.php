@@ -203,7 +203,7 @@
 					$('#div-entry').append('<form id="formProduct" role="form" enctype ="multipart/form-data" method="post">\
 												<div class="box-body">\
 													<div class="row">\
-														<div class="col-lg-4 col-md-4 col-xs-6">\
+														<div class="col-md-4">\
 															<div class="form-group">\
 															  <label for="name">Product Name :</label>\
 															  <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" required>\
@@ -219,21 +219,13 @@
 															  <label for="description">Description :</label>\
 															  <textarea style="resize: none;" class="form-control" rows="3"  placeholder="Enter product description..." name="description" id="description" required></textarea>\
 															</div>\
-														</div>\
-														<div class="col-lg-4 col-md-4 col-xs-6">\
 															<div class="form-group">\
 															  <label for="specs">Specs :</label>\
 															  <textarea style="resize: none;" class="form-control" rows="5"  placeholder="Enter product specs..." name="specs" id="specs" required></textarea>\
 															</div>\
+															<input type="file" id="file" style="display:none" multiple>\
 														</div>\
-														<div class="col-lg-4 col-md-4 col-xs-6">\
-															<div  style="width:100%;height:50%;padding:10px;padding-bottom:10px;padding-top:10px;border:1px solid #e7e7e7;margin-bottom:10px;">\
-													    		<img src="{{env('FILE_PATH_CUSTOM')}}img/noimage.png" style="width:100%;height:100%;margin-bottom:5px;">\
-													    		<div class="form-group">\
-												                  <input type="file" id="file" name="file" required>\
-												                  <p class="help-block">Product Image</p>\
-												                </div>\
-													    	</div>\
+														<div class="col-md-8 browse">\
 														</div>\
 													</div>\
 													<div class="box-footer">\
@@ -244,6 +236,16 @@
 						           				<input type="hidden" value="{{ csrf_token() }}" name="_token">\
 								            </form>\
 											');
+					$('.browse').append(
+						$('<div />' , { 'class' : 'box-body' , 'style' : 'min-height:100px'}).append(
+							$('<div />' , { 'class' : 'row' }).append(
+								$('<div />' , {'class' : 'col-md-12 col-lg-12'}).append(
+									$('<h1 />' , { 'class': 'text-center'}).append(
+										$('<small />').append(
+											$('<button />' , { 'id':'btn-new-user-icn' , 'class':'btn btn-app addImage' , 'data-placement':'top' , 'data-toggle':'tooltip' , 'type':'button' , 'html' : '<i class="fa fa-plus-circle fa-3x"></i>Add Image'}).append(
+												''),
+											$('<br />'),
+											'Click on here'))))));
 					var form = document.getElementById('formProduct');
 					var request = new XMLHttpRequest();
 					form.addEventListener('submit',function(e){
@@ -271,6 +273,9 @@
 				$('.addProduct').click( function () {
 					$('.submitProduct').click();
 				});
+				$('.addImage').click( function () {
+					$('#file').click();
+				});
 				$(".select2").select2();
 				}
 				else
@@ -282,20 +287,9 @@
 		});
     }
     $(document).on("change","#file",function(e){
-    	/*var fileCollection = new Array();
-    	var  files = e.target.files;
-
-    	fileCollection.push(file);
-		var reader = new FileReader();
-		reader.readAsDataURL(file);
-		reader.onload = function(e)
-		{	
-		
-			$('#formProduct').find('img').attr("src",e.target.result);
-		};*/
-	    //image display
-	    var fileCollection = new Array();
+    	var fileCollection = new Array();
 	    var  files = e.target.files;
+	    $x = 0;
 	    $.each(files, function(i, file)
 	    {
 	      fileCollection.push(file);
@@ -303,10 +297,22 @@
 	      reader.readAsDataURL(file);
 	      reader.onload = function(e)
 	      {
-	        $('#formProduct').find('img').attr("src",e.target.result);
+	        var template = 
+	        '<div class="col-lg-3 col-md-3 col-xs-6 image_wrapper">'+
+		        '<div  style="width:100%;padding:10px;padding-bottom:0px;padding-top:0px;border:1px solid #e7e7e7;margin-bottom:10px;">'+
+		          '<div class="pull-right">'+
+		          '<button type="button" data-toggle="tooltip" title="Save" class="btn btn-box-tool saveImage" data-id="'+$x+'"><i class="fa fa-arrow-up"></i></button>'+
+		            '<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-box-tool removeImage" data-id="'+$x+'"><i class="fa fa-trash-o"></i></button>'+
+		          '</div>'+
+		          '<img src="'+e.target.result+'" style="width:100%;height:auto;margin-bottom:5px;">'+
+		        '</div>'+
+	        '</div>';
+	        
+	        $('.browse').append(template);
+	        $x++;
 	      };
-	      
-	    });
+      
+    	});
     });
 
     function saveNewEntry()
