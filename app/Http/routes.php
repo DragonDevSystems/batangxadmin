@@ -75,6 +75,9 @@ Route::group(array('prefix' => '/product'),function()
 		Route::group(array('before' => 'csrf'), function()
 		{
 			Route::post('/addProduct', array('uses' => 'ProductController@addProduct', 'as' => 'addProduct','middleware' => 'auth'));
+			Route::post('/uploadProductImage', array('uses' => 'ProductController@uploadProductImage', 'as' => 'uploadProductImage','middleware' => 'auth'));
+			Route::post('/deleteImage', array('uses' => 'ProductController@deleteImage', 'as' => 'deleteImage','middleware' => 'auth'));
+			
 		});
 	});
 });

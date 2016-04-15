@@ -200,8 +200,7 @@
 				if(data.status == "success")
 				{
 					$('#div-entry').empty();
-					$('#div-entry').append('<form id="formProduct" role="form" enctype ="multipart/form-data" method="post">\
-												<div class="box-body">\
+					$('#div-entry').append('<div class="box-body">\
 													<div class="row">\
 														<div class="col-md-4">\
 															<div class="form-group">\
@@ -223,18 +222,20 @@
 															  <label for="specs">Specs :</label>\
 															  <textarea style="resize: none;" class="form-control" rows="5"  placeholder="Enter product specs..." name="specs" id="specs" required></textarea>\
 															</div>\
-															<input type="file" id="file" style="display:none" multiple>\
+															<form id="uploadProductImage" role="form" enctype ="multipart/form-data" method="post">\
+																<input type="file" id="file" name="file[]" style="display:none" multiple>\
+																<input type="hidden" id="processType" value="old" name="processType">\
+																<input type="hidden" value="{{ csrf_token() }}" name="_token">\
+																<button type="submit" class="btn btn-primary submitImage" style="display:none"></button>\
+															</form>\
 														</div>\
 														<div class="col-md-8 browse">\
 														</div>\
 													</div>\
 													<div class="box-footer">\
-														<button type="submit" class="btn btn-primary submitProduct" style="display:none">Add Product</button>\
 														<button type="button" class="btn btn-primary addProduct">Add Product</button>\
 													</div>\
 						           				</div>\
-						           				<input type="hidden" value="{{ csrf_token() }}" name="_token">\
-								            </form>\
 											');
 					$('.browse').append(
 						$('<div />' , { 'class' : 'box-body' , 'style' : 'min-height:100px'}).append(
@@ -246,13 +247,13 @@
 												''),
 											$('<br />'),
 											'Click on here'))))));
-					var form = document.getElementById('formProduct');
+					var form = document.getElementById('uploadProductImage');
 					var request = new XMLHttpRequest();
 					form.addEventListener('submit',function(e){
 						e.preventDefault();
 						var formdata = new FormData(form);
-						request.open('post','{{ URL::Route('addProduct')}}');
-						/*
+						request.open('post','{{ URL::Route('uploadProductImage')}}');
+						
 						request.onreadystatechange = function() {
 						    if (request.readyState == 4 && request.status == 200) {
 						      arr = JSON.parse(request.responseText);
@@ -261,15 +262,30 @@
 						        for (var i = 0; i < arr.length; i++) 
 						        { 
 						          $('.removeImage[data-id="'+arr[i].count+'"]').attr("data-id",arr[i].image_id);
-						          $('.saveImage[data-id="'+arr[i].count+'"]').attr("data-id",arr[i].image_id);
 						        }
 						      }
 						    }
-						};*/
-						//request.upload.addEventListener("progress", uploadProgressFile, false);
-						//request.addEventListener('load',transferCompleteFile);
+						};
+						request.upload.addEventListener("progress", uploadProgressFile, false);
+						request.addEventListener('load',transferCompleteFile);
 						request.send(formdata);
 					});
+					function uploadProgressFile(evt) {
+				        if (evt.lengthComputable) {
+				            var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+				            $(".progress").find('.progress-bar').css("width",percentComplete+"%").html(percentComplete+"% Complete (upload)");
+				        }
+				        else {
+				          alert('cant upload.')
+				        }
+				      }
+					function transferCompleteFile(evt) {
+				        console.log("The transfer file  is complete.");
+				        $("#processType").val("new");
+				        $(".progress").fadeOut("slow",function(){ 
+				                                                  $(this).remove(); 
+				                                               });
+				    }
 				$('.addProduct').click( function () {
 					$('.submitProduct').click();
 				});
@@ -286,7 +302,30 @@
 			}
 		});
     }
+    $(document).on("click",".removeImage",function(){
+    	var id = $(this).data('id');
+    	var status = confirm('Do you want to remove this image?');
+    	var _token = "{{ csrf_token() }}";
+	    $this = $(this);
+	    if(status  == true){
+	    	$.post('{{URL::Route('deleteImage')}}',{ _token: _token ,image: id} , function(response)
+			{
+			if(response.status == "success"){
+				$this.closest(".image_wrapper").fadeOut("slow",function(){ 
+			                                          $(this).remove(); 
+			                                        });
+			}
+			});
+	    }
+  	});
     $(document).on("change","#file",function(e){
+    	$(this).closest(".box-body").append('<div class="progress">\
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"\
+                aria-valuemin="0" aria-valuemax="100" style="width:0%">\
+                  0% Complete (success)\
+                </div>\
+              </div>')
+    	$('.submitImage').click();
     	var fileCollection = new Array();
 	    var  files = e.target.files;
 	    $x = 0;
@@ -301,7 +340,6 @@
 	        '<div class="col-lg-3 col-md-3 col-xs-6 image_wrapper">'+
 		        '<div  style="width:100%;padding:10px;padding-bottom:0px;padding-top:0px;border:1px solid #e7e7e7;margin-bottom:10px;">'+
 		          '<div class="pull-right">'+
-		          '<button type="button" data-toggle="tooltip" title="Save" class="btn btn-box-tool saveImage" data-id="'+$x+'"><i class="fa fa-arrow-up"></i></button>'+
 		            '<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-box-tool removeImage" data-id="'+$x+'"><i class="fa fa-trash-o"></i></button>'+
 		          '</div>'+
 		          '<img src="'+e.target.result+'" style="width:100%;height:auto;margin-bottom:5px;">'+
