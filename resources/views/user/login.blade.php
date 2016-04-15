@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>FWAdmin | Log in</title>
+  <title>GameXtreme | Log in</title>
   <!-- Tell the browser to be responsive to screen width -->
   <!-- Bootstrap 3.3.6 -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -35,11 +35,11 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b><font color="#74c028">F</font><font color="#4279ac">S</font></b>Admin</a>
+    <a href="../../index2.html"><b><img width="226" height="77" src="{{env('FILE_PATH_CUSTOM')}}img/gamextreme.png"></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">Log in to start your session</p>
 
       <div class="form-group has-feedback">
         <input type="email" class="form-control" id="email" name="email" placeholder="Username or Email">
@@ -59,19 +59,10 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat" onClick="validateCreds(); return false;">Sign In</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat" onClick="validateCreds(); return false;">Log In</button>
         </div>
         <!-- /.col -->
       </div>
-
-    <div class="social-auth-links text-center">
-      <p>- OR -</p>
-      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-        Facebook</a>
-      <!--<a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-        Google+</a>-->
-    </div>
-    <!-- /.social-auth-links -->
 
     <a href="#">I forgot my password</a><br>
     <!--<a href="register.html" class="text-center">Register a new membership</a>-->
@@ -87,7 +78,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Failed to Sign in!</h4>
+        <h4 class="modal-title">Failed to Log in!</h4>
       </div>
       <div class="modal-body">
         <p id="mdl_msg"></p>
