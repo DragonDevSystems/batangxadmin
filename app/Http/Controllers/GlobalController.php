@@ -57,7 +57,6 @@ class GlobalController extends Controller {
                 'message'  => 'You have no permission to add, update, and delete data or records.',
             ));
 		}
-		return $uaccess;
 	}
 
 	public function userDpv2($id)

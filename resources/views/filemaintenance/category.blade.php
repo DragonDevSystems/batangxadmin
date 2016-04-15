@@ -271,29 +271,44 @@
     {
     	promptConfirmation("Are you sure want to process this changes?");
     	$('#btnYes').click(function() {
-	    	$_token = "{{ csrf_token() }}";
-	    	$name = $('#name').val();
-	    	$description = $('#description').val();
-	    	$drpStatus = $('#drpStatus').val();
-	    	$('#div-entry').append('<div class="overlay">\
-				        	<i class="fa fa-spinner fa-spin"></i>\
-				        </div>');
-	    	$.post('{{URL::Route('addCategory')}}',{ _token: $_token, name: $name, description: $description , status: $drpStatus, cid: cid}, function(data)
+    		$.get('{{URL::Route('accountAccessChecker',0)}}',{ event: "add"}, function(data)
 			{
+				$('#div-entry').append('<div class="overlay">\
+							        	<i class="fa fa-spinner fa-spin"></i>\
+							        </div>');
 				if(data.length != 0)
 				{
 					if(data.status == "success")
 					{
-						categoryList();
-						defaultDisplay();
-					}
+				    	$_token = "{{ csrf_token() }}";
+				    	$name = $('#name').val();
+				    	$description = $('#description').val();
+				    	$drpStatus = $('#drpStatus').val();
+				    	
+				    	$.post('{{URL::Route('addCategory')}}',{ _token: $_token, name: $name, description: $description , status: $drpStatus, cid: cid}, function(data)
+						{
+							if(data.length != 0)
+							{
+								if(data.status == "success")
+								{
+									categoryList();
+									defaultDisplay();
+								}
+								else
+								{
+									$('.overlay').remove();
+								}
+								promptMsg(data.status,data.message);
+							}
+						});
+			    	}
 					else
 					{
+						promptMsg(data.status,data.message);
 						$('.overlay').remove();
 					}
-					promptMsg(data.status,data.message);
-				}
-			});
+			    }
+		    });
 		});
     	return false;
     }
