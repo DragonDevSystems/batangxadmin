@@ -223,7 +223,7 @@
 						$('<div />' , {'class' : 'col-md-12 col-lg-12'}).append(
 							$('<h1 />' , { 'class': 'text-center'}).append(
 								$('<small />').append(
-									$('<button />' , { 'id':'btn-new-user-icn' , 'class':'btn btn-app' , 'data-placement':'top' , 'data-toggle':'tooltip' , 'type':'button' , 'onClick':'setNewEntry();' , 'html' : '<i class="fa fa-plus-circle fa-3x"></i>Add Category'}).append(
+									$('<button />' , { 'id':'btn-new-user-icn' , 'class':'btn btn-app' , 'data-placement':'top' , 'data-toggle':'tooltip' , 'type':'button' , 'onClick':'setNewEntry();' , 'html' : '<i class="fa fa-plus-circle fa-3x"></i>Add User Admin'}).append(
 										''),
 									$('<br />'),
 									'Click on the below list for preview'))))),
