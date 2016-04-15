@@ -71,5 +71,9 @@ Route::group(array('prefix' => '/product'),function()
 	Route::group(array('before' => 'auth'), function()
 	{
 		Route::get('/', array('uses' => 'ProductController@getProductView', 'as' => 'getProductView','middleware' => 'auth'));
+		Route::group(array('before' => 'csrf'), function()
+		{
+			Route::post('/addProduct', array('uses' => 'ProductController@addProduct', 'as' => 'addProduct','middleware' => 'auth'));
+		});
 	});
 });

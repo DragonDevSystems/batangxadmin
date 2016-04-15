@@ -167,7 +167,7 @@
 	   	$('#div-entry').empty();
 		$('#div-entry').append(
 				$('<div />' , { 'class' : 'box-header with-border'}).append(
-					$('<h3 />' , { 'class' : 'box-title' , 'text' : 'Users'}),
+					$('<h3 />' , { 'class' : 'box-title' , 'text' : 'Add Product'}),
 					$('<div />' , { 'class' : 'box-tools pull-right'}).append(
 						'<button id="btn-new-user" class="btn btn-primary btn-sm" type="button" onClick="setNewEntry();">\
 							<i class="fa fa-plus-circle"></i>\
@@ -200,47 +200,77 @@
 				if(data.status == "success")
 				{
 					$('#div-entry').empty();
-					$('#div-entry').append($('<form />' ,{'id' : 'frmEntry', 'onsubmit' : 'return saveNewEntry()'}).append(
-						$('<div />',{ 'class' : 'box-header with-border'}).append(
-							$('<h3 />',{'class':'box-title' , 'text' : 'Add New Product Category'}),
-							$('<div />', { 'class' : 'box-tools pull-right'}).append(
-								'<button id="btn-new-user" class="btn btn-success btn-sm" type="submit">\
-									<i class="fa fa-times-circle"></i>\
-									Save\
-								</button>\
-								<button id="btn-new-user" class="btn btn-danger btn-sm" type="button" onClick="defaultDisplay();">\
-									<i class="fa fa-times-circle"></i>\
-									Cancel\
-								</button>\
-								<button class="btn btn-box-tool" data-widget="collapse">\
-									<i class="fa fa-minus"></i>\
-								</button>')),
-							$('<div />', { 'class' : 'row'}).append(
-								'<div class="col-md-6 col-sm-6">\
-								    <div class="form-group">\
-								    	<label for="name">Name of product :</label>\
-								        <input type="text" class="form-control" id="name" name="name" placeholder="Name of product">\
-								    	<label for="description">Description</label>\
-								        <textarea style="resize: none;" class="form-control" rows="2"  placeholder="Enter product description..." name="description" id="description"></textarea>\
-								    	<label for="prod_cat">Product Category</label>\
-					                    <select id="prod_cat" class="form-control select2" style="width: 100%;" placeholer="select here..">\
-					                      <option value="1">test1</option>\
-					                      <option value="1">test2</option>\
-					                    </select>\
-					                    <label for="specs">Specification :</label>\
-								        <select id="specs" class="form-control select2" style="width: 100%;">\
-					                      <option value="1">specs</option>\
-					                      <option value="1">specs</option>\
-					                    </select>\
-								    </div>\
-							</div>\
-							<div class="col-md-6 col-sm-6">\
-						    	<div  style="width:100%;padding:10px;padding-bottom:10px;padding-top:10px;border:1px solid #e7e7e7;margin-bottom:10px;">\
-						    		<img src="{{env('FILE_PATH_CUSTOM')}}img/noimage.png" style="width:100%;height:50%;margin-bottom:5px;">\
-						    		<input type="file"  id="file" name="file" placeholder="Browse">\
-						    	</div>\
-						    </div>')),
-					'<div class="box-footer"></div>');
+					$('#div-entry').append('<form id="formProduct" role="form" enctype ="multipart/form-data" method="post">\
+												<div class="box-body">\
+													<div class="row">\
+														<div class="col-lg-4 col-md-4 col-xs-6">\
+															<div class="form-group">\
+															  <label for="name">Product Name :</label>\
+															  <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" required>\
+															</div>\
+															<div class="form-group">\
+												                <label for="category">Category :</label>\
+												                <select id="category" name="category" class="form-control select2" style="width: 100%;" required>\
+												                  <option selected="selected" value="1">Computer</option>\
+												                  <option value="2">PSP</option>\
+												                </select>\
+												            </div>\
+															<div class="form-group">\
+															  <label for="description">Description :</label>\
+															  <textarea style="resize: none;" class="form-control" rows="3"  placeholder="Enter product description..." name="description" id="description" required></textarea>\
+															</div>\
+														</div>\
+														<div class="col-lg-4 col-md-4 col-xs-6">\
+															<div class="form-group">\
+															  <label for="specs">Specs :</label>\
+															  <textarea style="resize: none;" class="form-control" rows="5"  placeholder="Enter product specs..." name="specs" id="specs" required></textarea>\
+															</div>\
+														</div>\
+														<div class="col-lg-4 col-md-4 col-xs-6">\
+															<div  style="width:100%;height:50%;padding:10px;padding-bottom:10px;padding-top:10px;border:1px solid #e7e7e7;margin-bottom:10px;">\
+													    		<img src="{{env('FILE_PATH_CUSTOM')}}img/noimage.png" style="width:100%;height:100%;margin-bottom:5px;">\
+													    		<div class="form-group">\
+												                  <input type="file" id="file" name="file" required>\
+												                  <p class="help-block">Product Image</p>\
+												                </div>\
+													    	</div>\
+														</div>\
+													</div>\
+													<div class="box-footer">\
+														<button type="submit" class="btn btn-primary submitProduct" style="display:none">Add Product</button>\
+														<button type="button" class="btn btn-primary addProduct">Add Product</button>\
+													</div>\
+						           				</div>\
+						           				<input type="hidden" value="{{ csrf_token() }}" name="_token">\
+								            </form>\
+											');
+					var form = document.getElementById('formProduct');
+					var request = new XMLHttpRequest();
+					form.addEventListener('submit',function(e){
+						e.preventDefault();
+						var formdata = new FormData(form);
+						request.open('post','{{ URL::Route('addProduct')}}');
+						/*
+						request.onreadystatechange = function() {
+						    if (request.readyState == 4 && request.status == 200) {
+						      arr = JSON.parse(request.responseText);
+						      if(arr.length != 0)
+						      {   
+						        for (var i = 0; i < arr.length; i++) 
+						        { 
+						          $('.removeImage[data-id="'+arr[i].count+'"]').attr("data-id",arr[i].image_id);
+						          $('.saveImage[data-id="'+arr[i].count+'"]').attr("data-id",arr[i].image_id);
+						        }
+						      }
+						    }
+						};*/
+						//request.upload.addEventListener("progress", uploadProgressFile, false);
+						//request.addEventListener('load',transferCompleteFile);
+						request.send(formdata);
+					});
+				$('.addProduct').click( function () {
+					$('.submitProduct').click();
+				});
 				$(".select2").select2();
 				}
 				else
@@ -251,6 +281,33 @@
 			}
 		});
     }
+    $(document).on("change","#file",function(e){
+    	/*var fileCollection = new Array();
+    	var  files = e.target.files;
+
+    	fileCollection.push(file);
+		var reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = function(e)
+		{	
+		
+			$('#formProduct').find('img').attr("src",e.target.result);
+		};*/
+	    //image display
+	    var fileCollection = new Array();
+	    var  files = e.target.files;
+	    $.each(files, function(i, file)
+	    {
+	      fileCollection.push(file);
+	      var reader = new FileReader();
+	      reader.readAsDataURL(file);
+	      reader.onload = function(e)
+	      {
+	        $('#formProduct').find('img').attr("src",e.target.result);
+	      };
+	      
+	    });
+    });
 
     function saveNewEntry()
     {
