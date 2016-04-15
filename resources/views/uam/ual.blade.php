@@ -42,7 +42,6 @@
 						<h1 class="text-center">
 							<small>
 								<button id="btn-new-user-icn" class="btn btn-app" title="" data-placement="top" data-toggle="tooltip" type="button">
-									<span class="badge bg-purple">0</span>
 									<i class="fa fa-plus-circle fa-3x"></i>
 									Add User
 								</button>
