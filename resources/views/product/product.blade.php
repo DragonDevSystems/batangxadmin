@@ -32,7 +32,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="product_list" class="table table-bordered table-striped table-hover">
+              <table id="product_list" class="table table-bordered table-hover">
                 <thead>
                 <?php 
                     $headers = Schema::getColumnListing('prod_information');
