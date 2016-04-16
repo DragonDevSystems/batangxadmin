@@ -39,8 +39,8 @@ class ProductController extends Controller {
 			if(!empty($oldImage)){
 				foreach ($oldImage as $oldImagei) 
 				{
-					File::delete(env("FILE_PATH_INTERVENTION").'productImage/' . $oldImagei['img_file']);
-					File::delete(env("FILE_PATH_INTERVENTION").'productThumbnail/' . $oldImagei['thumbnail_img']);
+					File::delete(env("FILE_PATH_INTERVENTION").'productImage/'.$oldImagei['img_file']);
+					File::delete(env("FILE_PATH_INTERVENTION").'productThumbnail/'.$oldImagei['thumbnail_img']);
 					$oldImagei->delete();
 				}
 			}
@@ -83,7 +83,10 @@ class ProductController extends Controller {
 		$id = Input::get('image');
 		$deleteImage = ProductImage::find($id);
 		if(!empty($deleteImage)){
+			File::delete(env("FILE_PATH_INTERVENTION").'productImage/'.$deleteImage['img_file']);
+			File::delete(env("FILE_PATH_INTERVENTION").'productThumbnail/'.$deleteImage['thumbnail_img']);
 			if($deleteImage->delete()){
+				
 				return Response::json(array(
 						"status" => "success",
 						"message" => "Delete success."
