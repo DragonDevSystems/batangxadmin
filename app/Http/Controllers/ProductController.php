@@ -138,7 +138,16 @@ class ProductController extends Controller {
 
 	public function getProductList()
 	{
-		return $list = ProductInformation::all();
+		$lists = ProductInformation::all();
+		$response = array();
+		foreach ($lists as $item) {
+			$response[] = array(
+				"id" 			=> $item['id'],
+				"name" 			=> $item['name'],
+				"description" 	=> $item['description'],
+				);
+		}
+		return Response::json($response);	
 	}
 	
 }

@@ -32,7 +32,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="dtUAList" class="table table-bordered table-striped table-hover">
+              <table id="product_list" class="table table-bordered table-striped table-hover">
                 <thead>
                 <?php 
                     $headers = Schema::getColumnListing('prod_information');
@@ -46,32 +46,13 @@
                   @endforeach
                 </tr>
                 </thead>
-                <tbody id="product_list">
+                <tbody>
                 </tbody>
               </table>
             </div>
             <!-- /.box-body -->
         </div>
-		<!-- product category -->
-		<div class="box box-primary">
-            <div class="box-header">
-            	<h3 class="box-title">Product Category</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="dtUAList" class="table table-bordered table-striped table-hover">
-                <thead>
-                <tr>
-                  <th>Category ID</th>
-                  <th>Category</th>
-                </tr>
-                </thead>
-                <tbody id="tbUAList">
-                </tbody>
-              </table>
-            </div>
-            <!-- /.box-body -->
-        </div>
+		
     </section>
     <!-- /.content -->
   </div>
@@ -80,40 +61,27 @@
   @include('includes.settingSidebar')
 </div>
 <script type="text/javascript">
+	$(document).ready(function() {
+		productList();
+	    //Initialize datatable Elements
+	    $('#product_list').DataTable();
+	    
+	});
 	defaultDisplay();
-	productList();
+	
 	function productList()
 	{
-		$.get('{{URL::Route('getProductList')}}', function(response)
-		{
-			console.log(response);
+		 $.get('{{URL::Route('getProductList')}}', function(response)
+   		 {
+			$('#product_list').DataTable().clear();
+			for (var i = 0; i < response.length; i++) 
+        	{
+				$('#product_list').DataTable().row.add([''+response[i].id+'', 
+                                                    ''+response[i].name+'', 
+                                                    ''+response[i].description+'',
+                                                    ]).draw();
+			}
 			
-			$('#product_list').empty();
-			if(response.length != 0)
-			{
-				for (var i = 0; i < response.length; i++) 
-				{
-					/*$('#tbUAList').append('<tr style="cursor:pointer">\
-							                  <td>'+data[i].id+'</td>\
-							                  <td>'+data[i].name+'</td>\
-							                </tr>');*/
-	                $('#city_data_images').DataTable().row.add([''+response[i].id+'', 
-	                        ''+response[i].name+'', 
-	                        ''+response[i].description+'',
-	                        ]).draw();
-				}
-				/*var table = $("#dtUAList").DataTable();
-				$('#dtUAList tbody').on('click', 'tr', function () {
-			        var data = table.row( this ).data();
-			        productInfo(data[0]);
-			    } );*/
-			}
-			else
-			{
-				$("#product_list").DataTable();
-				promptMsg('fail',"No records yet.")
-			}
-
 		});
 	}
 
@@ -348,6 +316,7 @@
 	                                                  $(this).remove(); 
 	                                                });
 		    						defaultDisplay();
+		    						productList();
 		    					}
 		    				});
 						}
