@@ -25,7 +25,34 @@
     <section class="content">
 		<div id="div-entry" class="box box-success"></div>
 
-		<!-- user admin list -->
+		<!-- product list -->
+		<div class="box box-primary">
+            <div class="box-header">
+            	<h3 class="box-title">Product List</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="dtUAList" class="table table-bordered table-striped table-hover">
+                <thead>
+                <?php 
+                    $headers = Schema::getColumnListing('prod_information');
+                    $include = ["id","name","description"]; 
+                ?>
+                <tr>
+                  @foreach($headers as $header)
+                    @if(in_array($header, $include))
+                       <th>{{$header}}</th>
+                    @endif
+                  @endforeach
+                </tr>
+                </thead>
+                <tbody id="product_list">
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+		<!-- product category -->
 		<div class="box box-primary">
             <div class="box-header">
             	<h3 class="box-title">Product Category</h3>
@@ -44,7 +71,7 @@
               </table>
             </div>
             <!-- /.box-body -->
-          </div>
+        </div>
     </section>
     <!-- /.content -->
   </div>
@@ -57,27 +84,33 @@
 	productList();
 	function productList()
 	{
-		$.get('{{URL::Route('categoryList')}}', function(data)
+		$.get('{{URL::Route('getProductList')}}', function(response)
 		{
-			$('#tbUAList').empty();
-			if(data.length != 0)
+			console.log(response);
+			
+			$('#product_list').empty();
+			if(response.length != 0)
 			{
-				for (var i = 0; i < data.length; i++) 
+				for (var i = 0; i < response.length; i++) 
 				{
-					$('#tbUAList').append('<tr style="cursor:pointer">\
+					/*$('#tbUAList').append('<tr style="cursor:pointer">\
 							                  <td>'+data[i].id+'</td>\
 							                  <td>'+data[i].name+'</td>\
-							                </tr>');
+							                </tr>');*/
+	                $('#city_data_images').DataTable().row.add([''+response[i].id+'', 
+	                        ''+response[i].name+'', 
+	                        ''+response[i].description+'',
+	                        ]).draw();
 				}
-				var table = $("#dtUAList").DataTable();
+				/*var table = $("#dtUAList").DataTable();
 				$('#dtUAList tbody').on('click', 'tr', function () {
 			        var data = table.row( this ).data();
 			        productInfo(data[0]);
-			    } );
+			    } );*/
 			}
 			else
 			{
-				$("#dtUAList").DataTable();
+				$("#product_list").DataTable();
 				promptMsg('fail',"No records yet.")
 			}
 
@@ -200,28 +233,32 @@
 				if(data.status == "success")
 				{
 					$('#div-entry').empty();
-					$('#div-entry').append('<div class="box-body">\
+					$('#div-entry').append('<div class="box-body formAddProduct">\
 													<div class="row">\
 														<div class="col-md-4">\
-															<div class="form-group">\
-															  <label for="name">Product Name :</label>\
-															  <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" required>\
-															</div>\
-															<div class="form-group">\
-												                <label for="category">Category :</label>\
-												                <select id="category" name="category" class="form-control select2" style="width: 100%;" required>\
-												                  <option selected="selected" value="1">Computer</option>\
-												                  <option value="2">PSP</option>\
-												                </select>\
-												            </div>\
-															<div class="form-group">\
-															  <label for="description">Description :</label>\
-															  <textarea style="resize: none;" class="form-control" rows="3"  placeholder="Enter product description..." name="description" id="description" required></textarea>\
-															</div>\
-															<div class="form-group">\
-															  <label for="specs">Specs :</label>\
-															  <textarea style="resize: none;" class="form-control" rows="5"  placeholder="Enter product specs..." name="specs" id="specs" required></textarea>\
-															</div>\
+															<form id="formAddProduct" method="post" role="form">\
+																<div class="form-group">\
+																  <label for="name">Product Name :</label>\
+																  <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" required>\
+																</div>\
+																<div class="form-group">\
+													                <label for="category">Category :</label>\
+													                <select id="category" name="category" class="form-control select2" style="width: 100%;" required>\
+													                	@foreach($category as $categoryi)\
+													                  	<option selected="selected" value="{{$categoryi['id']}}">{{$categoryi['name']}}</option>\
+													                  	@endforeach\
+													                </select>\
+													            </div>\
+																<div class="form-group">\
+																  <label for="description">Description :</label>\
+																  <textarea style="resize: none;" class="form-control" rows="3"  placeholder="Enter product description..." name="description" id="description" required></textarea>\
+																</div>\
+																<div class="form-group">\
+																  <label for="specs">Specs :</label>\
+																  <textarea style="resize: none;" class="form-control" rows="5"  placeholder="Enter product specs..." name="specs" id="specs" required></textarea>\
+																</div>\
+																<button type="submit" style="display:none"></button>\
+															</form>\
 															<form id="uploadProductImage" role="form" enctype ="multipart/form-data" method="post">\
 																<input type="file" id="file" name="file[]" style="display:none" multiple>\
 																<input type="hidden" id="processType" value="old" name="processType">\
@@ -247,6 +284,7 @@
 												''),
 											$('<br />'),
 											'Click on here'))))));
+					$('#category').trigger('change');
 					var form = document.getElementById('uploadProductImage');
 					var request = new XMLHttpRequest();
 					form.addEventListener('submit',function(e){
@@ -274,6 +312,7 @@
 				        if (evt.lengthComputable) {
 				            var percentComplete = Math.round(evt.loaded * 100 / evt.total);
 				            $(".progress").find('.progress-bar').css("width",percentComplete+"%").html(percentComplete+"% Complete (upload)");
+				        $('.addProduct').attr("disabled",true);
 				        }
 				        else {
 				          alert('cant upload.')
@@ -282,12 +321,44 @@
 					function transferCompleteFile(evt) {
 				        console.log("The transfer file  is complete.");
 				        $("#processType").val("new");
+				        $('.addProduct').attr("disabled",false);
 				        $(".progress").fadeOut("slow",function(){ 
 				                                                  $(this).remove(); 
 				                                               });
 				    }
 				$('.addProduct').click( function () {
-					$('.submitProduct').click();
+					$('#formAddProduct').find('button').click();
+					var name = $('.formAddProduct').find('#name').val();
+					var category = $('.formAddProduct').find('#category').val();
+					var description = $('.formAddProduct').find('#description').val();
+					var specs = $('.formAddProduct').find('#specs').val();
+					//alert($('#file').get(0).files.length);
+					var check = $('.formAddProduct').find('.browse').find('.image_wrapper').length;
+					
+					$this = $(this);
+					if(!$.trim(name) == '' && !$.trim(category) == '' && !$.trim(description) == '' && !$.trim(specs) == ''){
+						if(check != 0){
+							var _token = "{{ csrf_token() }}";
+							$.post('{{URL::Route('addProduct')}}',{ _token: _token ,name: name, 
+							category : category, description : description, specs : specs} , function(response)
+		    				{
+		    					console.log(response);
+		    					if(response.status = "success"){
+		    						$this.closest(".formAddProduct").fadeOut("slow",function(){ 
+	                                                  $(this).remove(); 
+	                                                });
+		    						defaultDisplay();
+		    					}
+		    				});
+						}
+						else{
+							alert('Please select image of product.');
+						}
+					}
+				});
+				$(document).on("submit", "#formAddProduct", function(e){
+				    e.preventDefault();
+				    return  false;
 				});
 				$('.addImage').click( function () {
 					$('#file').click();
