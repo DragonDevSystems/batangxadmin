@@ -43,6 +43,9 @@
                 </tbody>
               </table>
             </div>
+            <div class="overlay tbl-overlay">
+	        	<i class="fa fa-spinner fa-spin"></i>
+	        </div>
             <!-- /.box-body -->
           </div>
     </section>
@@ -59,9 +62,10 @@
 	{
 		$.get('{{URL::Route('categoryList')}}', function(data)
 		{
-			$('#tbUAList').empty();
+			$('.tbl-overlay').remove();
 			if(data.length != 0)
 			{
+				$('#tbUAList').empty();
 				for (var i = 0; i < data.length; i++) 
 				{
 					$('#tbUAList').append('<tr style="cursor:pointer">\

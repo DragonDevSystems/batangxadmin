@@ -23,38 +23,7 @@
 
     <!-- Main content -->
     <section class="content">
-		<div id="div_user-entry" class="box box-success">
-			<div class="box-header with-border">
-				<h3 class="box-title"> Users</h3>
-				<div class="box-tools pull-right">
-					<button id="btn-new-user" class="btn btn-primary btn-sm" type="button">
-						<i class="fa fa-plus-circle"></i>
-						New
-					</button>
-					<button class="btn btn-box-tool" data-widget="collapse">
-						<i class="fa fa-minus"></i>
-					</button>
-				</div>
-			</div>
-			<div class="box-body" style="min-height:100px">
-				<div class="row">
-					<div class="col-md-12 col-lg-12">
-						<h1 class="text-center">
-							<small>
-								<button id="btn-new-user-icn" class="btn btn-app" title="" data-placement="top" data-toggle="tooltip" type="button">
-									<i class="fa fa-plus-circle fa-3x"></i>
-									Add User
-								</button>
-								<br>
-								Click on the below list for preview
-							</small>
-						</h1>
-					</div>
-				</div>
-			</div>
-			<div class="box-footer">   </div>
-		</div>
-
+		<div id="div_user-entry" class="box box-success"></div>
 		<!-- user admin list -->
 		<div class="box box-primary">
             <!-- /.box-header -->
@@ -72,6 +41,9 @@
                 </tbody>
               </table>
             </div>
+            <div class="overlay tbl-overlay">
+	        	<i class="fa fa-spinner fa-spin"></i>
+	        </div>
             <!-- /.box-body -->
           </div>
     </section>
@@ -82,12 +54,12 @@
   @include('includes.settingSidebar')
 </div>
 <script type="text/javascript">
-
-	
+	defaultDisplay();
 	function adminUserList()
 	{
 		$.get('{{URL::Route('adminUserList')}}', function(data)
 		{
+			$('.tbl-overlay').remove();
 			if(data.length != 0)
 			{
 				for (var i = 0; i < data.length; i++) 
@@ -182,6 +154,69 @@
 			}
 		});
 	}
+
+	function setNewEntry()
+	{
+		$('#div_user-entry').append('<div class="overlay">\
+		        	<i class="fa fa-spinner fa-spin"></i>\
+		        </div>');
+
+		$('#div_user-entry').empty();
+		$('#div_user-entry').append($('<form />' ,{'id' : 'frmEntry', 'onsubmit' : 'return saveNewEntry()'}).append(
+			$('<div />',{ 'class' : 'box-header with-border'}).append(
+				$('<h3 />',{'class':'box-title' , 'text' : 'Add New Permission'}),
+				$('<div />', { 'class' : 'box-tools pull-right'}).append(
+					$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Save' }),
+					$('<button/>', {'class': 'btn btn-danger btn-sm' ,'type' : 'button', 'onClick' : 'defaultDisplay();' , 'html' : '<i class="fa fa-times-circle"></i>Cancel' }),
+					$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
+				$('<div />', { 'class' : 'row'}).append(
+					$('<div />', {'class' : 'col-md-3 col-sm-6'}).append(
+						$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
+							$('<div />' , {'class' : 'form-group'}).append(
+								$('<label />' , { 'class' : 'control-label' , 'for' : 'module' , 'text' : 'Module:'}),
+								$('<select />' , { 'id':'module' ,'class':'form-control select2' ,'name':'module', 'required' : true})))),
+					$('<div />', {'class' : 'col-md-4 col-sm-6'}).append(
+						$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
+							$('<div />' , {'class' : 'form-group'}).append(
+								$('<label />' , { 'class' : 'control-label' , 'for' : 'name' , 'text' : 'Name:'}),
+								$('<input />' , { 'id':'name' ,'class':'form-control' ,'type':'text','name':'name', 'placeholder':'Enter Name', 'required' : true})))))),
+		'<div class="box-footer"></div>'));
+		$('#module').append(
+			'<option value="1">Staff</option>',
+			'<option value="2">Admin</option>',
+			'<option value="3">Super Admin</option>');
+		$(".select2").select2();
+    }
+
+	function defaultDisplay()
+	{
+	   	$('#div_user-entry').append('<div class="overlay">\
+			        	<i class="fa fa-spinner fa-spin"></i>\
+			        </div>');
+	   	$('#div_user-entry').empty();
+		$('#div_user-entry').append(
+				$('<div />' , { 'class' : 'box-header with-border'}).append(
+					$('<h3 />' , { 'class' : 'box-title' , 'text' : 'Users'}),
+					$('<div />' , { 'class' : 'box-tools pull-right'}).append(
+						'<button id="btn-new-user" class="btn btn-primary btn-sm" type="button" onClick="setNewEntry();">\
+							<i class="fa fa-plus-circle"></i>\
+							New\
+						</button>\
+						<button class="btn btn-box-tool" data-widget="collapse">\
+							<i class="fa fa-minus"></i>\
+						</button>')),
+				$('<div />' , { 'class' : 'box-body' , 'style' : 'min-height:100px'}).append(
+					$('<div />' , { 'class' : 'row' }).append(
+						$('<div />' , {'class' : 'col-md-12 col-lg-12'}).append(
+							$('<h1 />' , { 'class': 'text-center'}).append(
+								$('<small />').append(
+									$('<button />' , { 'id':'btn-new-user-icn' , 'class':'btn btn-app' , 'data-placement':'top' , 'data-toggle':'tooltip' , 'type':'button' , 'onClick':'setNewEntry();' , 'html' : '<i class="fa fa-plus-circle fa-3x"></i>Add Category'}).append(
+										''),
+									$('<br />'),
+									'Click on the below list for preview'))))),
+				$('<div />' , { 'class' : 'box-footer'}));
+	}
+
 </script>
 @endsection
 
