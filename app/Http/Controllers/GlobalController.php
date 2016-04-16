@@ -83,7 +83,7 @@ class GlobalController extends Controller {
 
 	public function onlineUser()
 	{
-		try 
+		try
 		{
 			Online::updateCurrent();
 			return Online::whereNotNull('user_id')->select('user_id')->groupBy('user_id')->get()->toArray();
@@ -96,7 +96,7 @@ class GlobalController extends Controller {
 	{
 		try 
 		{
-			return User::where('isOtherVerify','=',1)->get();
+			return User::where('isVerified','=',1)->get();
 		}catch (\Exception $e){
         	return 'Sorry something went worng. Please try again.';
    		}
@@ -106,7 +106,7 @@ class GlobalController extends Controller {
 	{
 		try 
 		{
-			return User::where('isOtherVerify','=',0)->get();
+			return User::where('isVerified','=',0)->get();
 		}catch (\Exception $e){
         	return 'Sorry something went worng. Please try again.';
    		}
@@ -117,7 +117,7 @@ class GlobalController extends Controller {
 		//for current month only
 		try 
 		{
-			return User::where('MONTH(created_at)','=',date('m'))->where('YEAR(created_at)','=',date('Y'))->get();
+			return User::where('created_at', '>=', \Carbon\Carbon::now()->startOfMonth())->get();
 		}catch (\Exception $e){
         	return 'Sorry something went worng. Please try again.';
    		}
