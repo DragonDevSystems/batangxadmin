@@ -248,7 +248,7 @@
 																</div>\
 																<div class="form-group">\
 																  <label for="specs">Specs :</label>\
-																  <textarea style="resize: none;" class="form-control" rows="5"  placeholder="Enter product specs..." name="specs" id="specs" required></textarea>\
+																  <textarea style="resize: none;" class="form-control" rows="5"  placeholder="Enter product specs..." name="specs" id="specs"></textarea>\
 																</div>\
 																<button type="submit" style="display:none"></button>\
 															</form>\
