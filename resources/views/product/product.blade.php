@@ -246,9 +246,18 @@
 																  <label for="description">Description :</label>\
 																  <textarea style="resize: none;" class="form-control" rows="3"  placeholder="Enter product description..." name="description" id="description" required></textarea>\
 																</div>\
-																<div class="form-group">\
-																  <label for="specs">Specs :</label>\
-																  <textarea style="resize: none;" class="form-control" rows="5"  placeholder="Enter product specs..." name="specs" id="specs"></textarea>\
+																<div class="specs_list">\
+																	<label for="specs">Specs :</label>\
+																	<div class="form-group ">\
+																	  	<div class="input-group">\
+																		    <input type="text" name="specs" placeholder="add specs" class="form-control" aria-label="...">\
+																			<div class="input-group-btn">\
+																			<button type="button" class="btn btn-default plus">\
+																				<i class="fa fa-plus" aria-hidden="true"></i>\
+																			</button>\
+																			</div>\
+																		</div>\
+																	</div>\
 																</div>\
 																<button type="submit" style="display:none"></button>\
 															</form>\
@@ -320,20 +329,25 @@
 				                                               });
 				    }
 				$('.addProduct').click( function () {
-					$('#formAddProduct').find('button').click();
+					$('#formAddProduct').find(':submit').click();
 					var name = $('.formAddProduct').find('#name').val();
 					var category = $('.formAddProduct').find('#category').val();
 					var description = $('.formAddProduct').find('#description').val();
-					var specs = $('.formAddProduct').find('#specs').val();
-					//alert($('#file').get(0).files.length);
+					//var specs = $('.formAddProduct').find('#specs').val();
+					$specs =[];
+					$x = 0;
+					$("input[name='specs']").each(function(){
+						$specs[$x]= $(this).val();
+						$x++;
+					});
 					var check = $('.formAddProduct').find('.browse').find('.image_wrapper').length;
 					
 					$this = $(this);
-					if(!$.trim(name) == '' && !$.trim(category) == '' && !$.trim(description) == '' && !$.trim(specs) == ''){
+					if(!$.trim(name) == '' && !$.trim(category) == '' && !$.trim(description) == ''){
 						if(check != 0){
 							var _token = "{{ csrf_token() }}";
 							$.post('{{URL::Route('addProduct')}}',{ _token: _token ,name: name, 
-							category : category, description : description, specs : specs} , function(response)
+							category : category, description : description, specs : $specs} , function(response)
 		    				{
 		    					console.log(response);
 		    					if(response.status = "success"){
@@ -368,6 +382,25 @@
 			}
 		});
     }
+    $(document).on("click",".plus",function(){
+    	$(this).html('<i class="fa fa-minus" aria-hidden="true"></i>').addClass('minus').removeClass('plus');
+    	$('.specs_list').append('<div class="form-group ">\
+								  	<div class="input-group">\
+									    <input type="text" name="specs" placeholder="add specs" class="form-control">\
+										<div class="input-group-btn">\
+										<button type="button" class="btn btn-default plus">\
+											<i class="fa fa-plus" aria-hidden="true"></i>\
+										</button>\
+										</div>\
+									</div>\
+								</div>');
+    });
+    $(document).on("click",".minus",function(){
+    	$(this).closest('.form-group').fadeOut("slow",function(){ 
+				                                                  $(this).remove(); 
+				                                               });
+
+    });
     $(document).on("click",".removeImage",function(){
     	var id = $(this).data('id');
     	var status = confirm('Do you want to remove this image?');

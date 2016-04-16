@@ -109,7 +109,6 @@ class ProductController extends Controller {
 		$category = Input::get('category');
 		$description = Input::get('description');
 		$specs = Input::get('specs');
-
 		$addProductInfo = new ProductInformation();
 		$addProductInfo['name'] = $name;
 		$addProductInfo['pro_cat_id'] = $category;
@@ -121,14 +120,20 @@ class ProductController extends Controller {
 									'prod_id' => $addProductInfo['id'],
 									'status' => 1,
 									));
-			$addProductSpecs = new ProductSpecs();
-			$addProductSpecs['prod_id'] = $addProductInfo['id'];
-			$addProductSpecs['specs'] = $specs;
-			if($addProductSpecs->save()){
-				return Response::json(array(
-				"status" => "success",
-				));
+			foreach ($specs as $specsi) {
+				$addProductSpecs = new ProductSpecs();
+				$addProductSpecs['prod_id'] = $addProductInfo['id'];
+				$addProductSpecs['specs'] = $specsi;
+				if(!$addProductSpecs->save()){
+					return Response::json(array(
+					"status" => "fail",
+					));	
+				}
 			}
+			return Response::json(array(
+					"status" => "success",
+					));
+			
 		}
 
 		return Response::json(array(
