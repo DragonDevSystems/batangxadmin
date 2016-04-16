@@ -39,6 +39,8 @@ Route::group(array('prefix' => '/ajax'),function()
 			Route::get('/admin/uaal', array('uses' => 'UAMController@uaal', 'as' => 'uaal','middleware' => 'auth'));
 			Route::get('/admin/information/{id}', array('uses' => 'GlobalController@userInfoList', 'as' => 'userInfoList','
 				middleware' => 'auth'));
+			Route::get('/admin/userlist', array('uses' => 'GlobalController@userlist', 'as' => 'userlist','
+				middleware' => 'auth'));
 			Route::get('/admin/accountAccessChecker/{event}', array('uses' => 'GlobalController@accountAccessChecker', 'as' => 'accountAccessChecker','
 				middleware' => 'auth'));
 			Route::get('/product/categoryList', array('uses' => 'FileMaintenanceController@categoryList', 'as' => 'categoryList','middleware' => 'auth'));

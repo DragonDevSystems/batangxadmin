@@ -142,4 +142,29 @@ class GlobalController extends Controller {
 				);
 		}
 	}
+
+	public function userlist()
+	{
+		$response = array();
+		$userList = User::where('id','!=',Auth::User()['id'])->where('isAdmin','=',0)->get();
+		return $userList;
+		if(!empty($userList))
+		{
+			foreach ($userList as $userListi) {
+				$response[] = $this->userInfoList($userListi['id']);
+			}
+
+			return Response::json(array(
+	            'status'  => 'success',
+	            'userInfoList'  => $response,
+	        ));
+		}
+		else
+		{
+			return Response::json(array(
+	            'status'  => 'fail',
+	            'message'  => 'The user record is empty or all user has been listed in the admin account.',
+	        ));
+		}
+	}
 }

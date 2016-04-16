@@ -160,32 +160,45 @@
 		$('#div_user-entry').append('<div class="overlay">\
 		        	<i class="fa fa-spinner fa-spin"></i>\
 		        </div>');
-
-		$('#div_user-entry').empty();
-		$('#div_user-entry').append($('<form />' ,{'id' : 'frmEntry', 'onsubmit' : 'return saveNewEntry()'}).append(
-			$('<div />',{ 'class' : 'box-header with-border'}).append(
-				$('<h3 />',{'class':'box-title' , 'text' : 'Add New Permission'}),
-				$('<div />', { 'class' : 'box-tools pull-right'}).append(
-					$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Save' }),
-					$('<button/>', {'class': 'btn btn-danger btn-sm' ,'type' : 'button', 'onClick' : 'defaultDisplay();' , 'html' : '<i class="fa fa-times-circle"></i>Cancel' }),
-					$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
-				$('<div />', { 'class' : 'row'}).append(
-					$('<div />', {'class' : 'col-md-3 col-sm-6'}).append(
-						$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
-							$('<div />' , {'class' : 'form-group'}).append(
-								$('<label />' , { 'class' : 'control-label' , 'for' : 'module' , 'text' : 'Module:'}),
-								$('<select />' , { 'id':'module' ,'class':'form-control select2' ,'name':'module', 'required' : true})))),
-					$('<div />', {'class' : 'col-md-4 col-sm-6'}).append(
-						$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
-							$('<div />' , {'class' : 'form-group'}).append(
-								$('<label />' , { 'class' : 'control-label' , 'for' : 'name' , 'text' : 'Name:'}),
-								$('<input />' , { 'id':'name' ,'class':'form-control' ,'type':'text','name':'name', 'placeholder':'Enter Name', 'required' : true})))))),
-		'<div class="box-footer"></div>'));
-		$('#module').append(
-			'<option value="1">Staff</option>',
-			'<option value="2">Admin</option>',
-			'<option value="3">Super Admin</option>');
-		$(".select2").select2();
+		$.get('{{URL::Route('userlist')}}', function(data)
+		{
+			if(data.length != 0)
+			{
+				if(data.status == "success")
+				{
+					$('#div_user-entry').empty();
+					$('#div_user-entry').append($('<form />' ,{'id' : 'frmEntry', 'onsubmit' : 'return saveNewEntry()'}).append(
+						$('<div />',{ 'class' : 'box-header with-border'}).append(
+							$('<h3 />',{'class':'box-title' , 'text' : 'Add New Permission'}),
+							$('<div />', { 'class' : 'box-tools pull-right'}).append(
+								$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Save' }),
+								$('<button/>', {'class': 'btn btn-danger btn-sm' ,'type' : 'button', 'onClick' : 'defaultDisplay();' , 'html' : '<i class="fa fa-times-circle"></i>Cancel' }),
+								$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
+							$('<div />', { 'class' : 'row'}).append(
+								$('<div />', {'class' : 'col-md-3 col-sm-6'}).append(
+									$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
+										$('<div />' , {'class' : 'form-group'}).append(
+											$('<label />' , { 'class' : 'control-label' , 'for' : 'module' , 'text' : 'Module:'}),
+											$('<select />' , { 'id':'module' ,'class':'form-control select2' ,'name':'module', 'required' : true})))),
+								$('<div />', {'class' : 'col-md-4 col-sm-6'}).append(
+									$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
+										$('<div />' , {'class' : 'form-group'}).append(
+											$('<label />' , { 'class' : 'control-label' , 'for' : 'name' , 'text' : 'Name:'}),
+											$('<input />' , { 'id':'name' ,'class':'form-control' ,'type':'text','name':'name', 'placeholder':'Enter Name', 'required' : true})))))),
+					'<div class="box-footer"></div>'));
+					$('#module').append(
+						'<option value="1">Staff</option>',
+						'<option value="2">Admin</option>',
+						'<option value="3">Super Admin</option>');
+					$(".select2").select2();
+				}
+				else
+				{
+					promptMsg(data.status,data.message);
+					$('.overlay').remove();
+				}
+			}
+		});
     }
 
 	function defaultDisplay()
