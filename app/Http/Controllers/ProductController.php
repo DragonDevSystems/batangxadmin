@@ -23,7 +23,7 @@ class ProductController extends Controller {
 
 	public function getProductView()
 	{
-		$category = ProCategory::all();
+		$category = ProCategory::where('status','=',1)->get();
 		return View::make('product.product')->with("userInfo",$this->userInfo())
 									->with('mt',"pt")->with('category',$category);
 	}

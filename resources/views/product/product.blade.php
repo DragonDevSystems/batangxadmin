@@ -29,6 +29,22 @@
 		<div class="box box-primary">
             <div class="box-header">
             	<h3 class="box-title">Product List</h3>
+            	<div class="box-tools pull-right">
+                  <button class="btn btn-primary btn-sm" type="button" data-placeid="" onClick="setNewEntry();">
+                    <i class="fa fa-plus"></i>
+                    Add Product
+                  </button>
+                  <button id="editCityImageData" class="btn btn-info btn-sm " type="button" disabled>
+                    <i class="fa fa-edit"></i>
+                    Edit
+                  </button>
+                  <button id="deleteCityImageData" class="btn btn-danger btn-sm " type="button" disabled>
+                    <i class="fa fa-trash-o"></i>
+                    Delete
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -64,7 +80,16 @@
 	$(document).ready(function() {
 		productList();
 	    //Initialize datatable Elements
-	    $('#product_list').DataTable();
+	    var table = $('#product_list').DataTable();
+	    $('#product_list tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('active') ) {
+            $(this).removeClass('active');
+        }
+        else {
+            table.$('tr.active').removeClass('active');
+            $(this).addClass('active');
+        }
+    } );
 	    
 	});
 	defaultDisplay();
@@ -317,6 +342,7 @@
 	                                                });
 		    						defaultDisplay();
 		    						productList();
+		    						$(window).scrollTop($('#product_list').offset().top);
 		    					}
 		    				});
 						}
