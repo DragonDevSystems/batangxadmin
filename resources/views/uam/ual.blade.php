@@ -184,13 +184,17 @@
 									$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
 										$('<div />' , {'class' : 'form-group'}).append(
 											$('<label />' , { 'class' : 'control-label' , 'for' : 'name' , 'text' : 'Name:'}),
-											$('<input />' , { 'id':'name' ,'class':'form-control' ,'type':'text','name':'name', 'placeholder':'Enter Name', 'required' : true})))))),
+											$('<select />' , { 'id':'name' ,'class':'form-control select2' ,'type':'text','name':'name', 'placeholder':'Enter Name', 'required' : true})))))),
 					'<div class="box-footer"></div>'));
 					$('#module').append(
 						'<option value="1">Staff</option>',
 						'<option value="2">Admin</option>',
 						'<option value="3">Super Admin</option>');
 					$(".select2").select2();
+					for($i = 0 ;  $i < data.userInfoList.length; $i++)
+					{
+						$('#name').append('<option value="1">'+data.userInfoList[$i].fname+' '+data.userInfoList[$i].lname+'</option>');
+					}
 				}
 				else
 				{

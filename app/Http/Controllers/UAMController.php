@@ -36,7 +36,7 @@ class UAMController extends Controller {
 	public function adminUserList()
 	{
 		$response = array();
-		$userAdmins = User::select('id')->lists('id');
+		$userAdmins = User::where("isAdmin","!=",0)->select('id')->lists('id');
 		if(!empty($userAdmins))
 		{
 			foreach ($userAdmins as $userAdmin) {
