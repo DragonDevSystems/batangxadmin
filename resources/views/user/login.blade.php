@@ -35,7 +35,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b><img width="226" height="77" src="{{env('FILE_PATH_CUSTOM')}}img/gamextreme.png"></a>
+    <a href="{{URL::Route('cusIndex')}}"><b><img width="226" height="77" src="{{env('FILE_PATH_CUSTOM')}}img/gamextreme.png"></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
