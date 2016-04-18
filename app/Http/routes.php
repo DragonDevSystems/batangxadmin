@@ -84,6 +84,7 @@ Route::group(array('prefix' => '/admin'),function()
 		{
 			Route::get('/', array('uses' => 'ProductController@getProductView', 'as' => 'getProductView','middleware' => 'auth'));
 			Route::get('/getProductList', array('uses' => 'ProductController@getProductList', 'as' => 'getProductList','middleware' => 'auth'));
+			Route::get('/getProductInfo', array('uses' => 'ProductController@getProductInfo', 'as' => 'getProductInfo','middleware' => 'auth'));
 			Route::group(array('before' => 'csrf'), function()
 			{
 				Route::post('/addProduct', array('uses' => 'ProductController@addProduct', 'as' => 'addProduct','middleware' => 'auth'));

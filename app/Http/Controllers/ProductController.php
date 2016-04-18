@@ -154,5 +154,26 @@ class ProductController extends Controller {
 		}
 		return Response::json($response);	
 	}
+
+	public function getProductInfo()
+	{
+		$id = Input::get('product');
+		$information = ProductInformation::find($id);
+		$images = ProductImage::where('prod_id','=',$id)->get(array('thumbnail_img'));
+		$specs = ProductSpecs::where('prod_id','=',$id)->get(array('specs'));
+		$category = ProCategory::where('status','=',1)->get(array('id','name'));
+		return Response::json(array(
+				"status" => !empty($id) ? "edit" : "add",
+				"id" => !empty($id) ? $id : "",
+				"name" =>!empty($information) ? $information['name'] : "",
+				"description" =>!empty($information) ? $information['description'] : "",
+				"pro_cat_id" =>!empty($information) ? $information['pro_cat_id'] : "",
+				"images" => !empty($images) ? $images : "",
+				"specs" => !empty($specs) ? $specs : "",
+				"category" => $category,
+				));
+		
+		
+	}
 	
 }

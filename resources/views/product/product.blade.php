@@ -34,13 +34,9 @@
                     <i class="fa fa-plus"></i>
                     Add Product
                   </button>
-                  <button id="editCityImageData" class="btn btn-info btn-sm " type="button" disabled>
+                  <button id="editProduct" class="btn btn-info btn-sm " type="button" disabled>
                     <i class="fa fa-edit"></i>
                     Edit
-                  </button>
-                  <button id="deleteCityImageData" class="btn btn-danger btn-sm " type="button" disabled>
-                    <i class="fa fa-trash-o"></i>
-                    Delete
                   </button>
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -82,14 +78,24 @@
 	    //Initialize datatable Elements
 	    var table = $('#product_list').DataTable();
 	    $('#product_list tbody').on( 'click', 'tr', function () {
-        if ( $(this).hasClass('active') ) {
-            $(this).removeClass('active');
-        }
-        else {
-            table.$('tr.active').removeClass('active');
-            $(this).addClass('active');
-        }
-    } );
+	        if ( $(this).hasClass('active') ) {
+	            $(this).removeClass('active');
+	            $('#editProduct').prop("disabled", true);
+	        }
+	        else {
+	            table.$('tr.active').removeClass('active');
+	            $(this).addClass('active');
+	            $('#editProduct').prop("disabled", false);
+	        }
+    	});
+    	$('#editProduct').on( 'click', function () {
+    		var id = table.cell('.active', 0).data();
+    		//alert(id);
+    		$('#div-entry').append('<div class="overlay">\
+		        	<i class="fa fa-spinner fa-spin"></i>\
+		        </div>');
+    		setNewEntry(id);
+    	});
 	    
 	});
 	defaultDisplay();
@@ -109,7 +115,7 @@
 			
 		});
 	}
-
+	/*
 	function productInfo(cid)
 	{
 		$('#div-entry').append('<div class="overlay">\
@@ -183,7 +189,7 @@
 				promptMsg('fail',"No record found.")
 			}
 		});
-	}
+	}*/
 
 	function defaultDisplay()
 	{
@@ -214,7 +220,7 @@
 				$('<div />' , { 'class' : 'box-footer'}));
 	}
 
-	function setNewEntry()
+	function setNewEntry(id)
 	{
 		$('#div-entry').append('<div class="overlay">\
 		        	<i class="fa fa-spinner fa-spin"></i>\
@@ -225,154 +231,172 @@
 			{
 				if(data.status == "success")
 				{
-					$('#div-entry').empty();
-					$('#div-entry').append('<div class="box-body formAddProduct">\
-													<div class="row">\
-														<div class="col-md-4">\
-															<form id="formAddProduct" method="post" role="form">\
-																<div class="form-group">\
-																  <label for="name">Product Name :</label>\
-																  <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" required>\
-																</div>\
-																<div class="form-group">\
-													                <label for="category">Category :</label>\
-													                <select id="category" name="category" class="form-control select2" style="width: 100%;" required>\
-													                	@foreach($category as $categoryi)\
-													                  	<option selected="selected" value="{{$categoryi['id']}}">{{$categoryi['name']}}</option>\
-													                  	@endforeach\
-													                </select>\
-													            </div>\
-																<div class="form-group">\
-																  <label for="description">Description :</label>\
-																  <textarea style="resize: none;" class="form-control" rows="3"  placeholder="Enter product description..." name="description" id="description" required></textarea>\
-																</div>\
-																<div class="specs_list">\
-																	<label for="specs">Specs :</label>\
-																	<div class="form-group ">\
-																	  	<div class="input-group">\
-																		    <input type="text" name="specs" placeholder="add specs" class="form-control" aria-label="...">\
-																			<div class="input-group-btn">\
-																			<button type="button" class="btn btn-default plus">\
-																				<i class="fa fa-plus" aria-hidden="true"></i>\
-																			</button>\
+					$.get('{{URL::Route('getProductInfo')}}',{ product: id}, function(data)
+					{
+						console.log(data);
+						if(data.length != 0)
+						{
+							$('#div-entry').empty();
+							$('#div-entry').append('<div class="box-body formAddProduct">\
+															<div class="row">\
+																<div class="col-md-4">\
+																	<form id="formAddProduct" method="post" role="form">\
+																		<div class="form-group">\
+																		  <label for="name">Product Name :</label>\
+																		  <input type="text" class="form-control" id="name" name="name" value="'+data.name+'" placeholder="Enter product name" required>\
+																		</div>\
+																		<div class="form-group">\
+															                <label for="category">Category :</label>\
+															                <select id="category" name="category" class="form-control select2" style="width: 100%;" required>\
+															                	@foreach($category as $categoryi)\
+															                  	<option  value="{{$categoryi['id']}}">{{$categoryi['name']}}</option>\
+															                  	@endforeach\
+															                </select>\
+															            </div>\
+																		<div class="form-group">\
+																		  <label for="description">Description :</label>\
+																		  <textarea style="resize: none;" class="form-control" rows="3"  placeholder="Enter product description..." name="description" id="description" required></textarea>\
+																		</div>\
+																		<div class="specs_list">\
+																			<label for="specs">Specs :</label>\
+																			<div class="form-group ">\
+																			  	<div class="input-group">\
+																				    <input type="text" name="specs" placeholder="add specs" class="form-control" aria-label="...">\
+																					<div class="input-group-btn">\
+																					<button type="button" class="btn btn-default plus">\
+																						<i class="fa fa-plus" aria-hidden="true"></i>\
+																					</button>\
+																					</div>\
+																				</div>\
 																			</div>\
 																		</div>\
-																	</div>\
+																		<button type="submit" style="display:none"></button>\
+																	</form>\
+																	<form id="uploadProductImage" role="form" enctype ="multipart/form-data" method="post">\
+																		<input type="file" id="file" name="file[]" style="display:none" multiple>\
+																		<input type="hidden" id="processType" value="old" name="processType">\
+																		<input type="hidden" value="{{ csrf_token() }}" name="_token">\
+																		<button type="submit" class="btn btn-primary submitImage" style="display:none"></button>\
+																	</form>\
 																</div>\
-																<button type="submit" style="display:none"></button>\
-															</form>\
-															<form id="uploadProductImage" role="form" enctype ="multipart/form-data" method="post">\
-																<input type="file" id="file" name="file[]" style="display:none" multiple>\
-																<input type="hidden" id="processType" value="old" name="processType">\
-																<input type="hidden" value="{{ csrf_token() }}" name="_token">\
-																<button type="submit" class="btn btn-primary submitImage" style="display:none"></button>\
-															</form>\
-														</div>\
-														<div class="col-md-8 browse">\
-														</div>\
-													</div>\
-													<div class="box-footer">\
-														<button type="button" class="btn btn-primary addProduct">Add Product</button>\
-													</div>\
-						           				</div>\
-											');
-					$('.browse').append(
-						$('<div />' , { 'class' : 'box-body' , 'style' : 'min-height:100px'}).append(
-							$('<div />' , { 'class' : 'row' }).append(
-								$('<div />' , {'class' : 'col-md-12 col-lg-12'}).append(
-									$('<h1 />' , { 'class': 'text-center'}).append(
-										$('<small />').append(
-											$('<button />' , { 'id':'btn-new-user-icn' , 'class':'btn btn-app addImage' , 'data-placement':'top' , 'data-toggle':'tooltip' , 'type':'button' , 'html' : '<i class="fa fa-plus-circle fa-3x"></i>Add Image'}).append(
-												''),
-											$('<br />'),
-											'Click on here'))))));
-					$('#category').trigger('change');
-					var form = document.getElementById('uploadProductImage');
-					var request = new XMLHttpRequest();
-					form.addEventListener('submit',function(e){
-						e.preventDefault();
-						var formdata = new FormData(form);
-						request.open('post','{{ URL::Route('uploadProductImage')}}');
-						
-						request.onreadystatechange = function() {
-						    if (request.readyState == 4 && request.status == 200) {
-						      arr = JSON.parse(request.responseText);
-						      if(arr.length != 0)
-						      {   
-						        for (var i = 0; i < arr.length; i++) 
-						        { 
-						          $('.removeImage[data-id="'+arr[i].count+'"]').attr("data-id",arr[i].image_id);
+																<div class="col-md-8 browse">\
+																</div>\
+															</div>\
+															<div class="box-footer">\
+																<button type="button" class="btn btn-primary addProduct">Add Product</button>\
+															</div>\
+								           				</div>\
+													');
+							for (var i = 0; i < data.category.length; i++) 
+       						{
+       							if(data.category[i].id == data.pro_cat_id){
+       								$('#category')
+								        .val(data.category[i].id) //select option of select2
+								        .trigger("change"); //apply to select2
+       							}
+       						}
+							
+							$('.browse').append(
+								$('<div />' , { 'class' : 'box-body' , 'style' : 'min-height:100px'}).append(
+									$('<div />' , { 'class' : 'row' }).append(
+										$('<div />' , {'class' : 'col-md-12 col-lg-12'}).append(
+											$('<h1 />' , { 'class': 'text-center'}).append(
+												$('<small />').append(
+													$('<button />' , { 'id':'btn-new-user-icn' , 'class':'btn btn-app addImage' , 'data-placement':'top' , 'data-toggle':'tooltip' , 'type':'button' , 'html' : '<i class="fa fa-plus-circle fa-3x"></i>Add Image'}).append(
+														''),
+													$('<br />'),
+													'Click on here'))))));
+							$('#category').trigger('change');
+							var form = document.getElementById('uploadProductImage');
+							var request = new XMLHttpRequest();
+							form.addEventListener('submit',function(e){
+								e.preventDefault();
+								var formdata = new FormData(form);
+								request.open('post','{{ URL::Route('uploadProductImage')}}');
+								
+								request.onreadystatechange = function() {
+								    if (request.readyState == 4 && request.status == 200) {
+								      arr = JSON.parse(request.responseText);
+								      if(arr.length != 0)
+								      {   
+								        for (var i = 0; i < arr.length; i++) 
+								        { 
+								          $('.removeImage[data-id="'+arr[i].count+'"]').attr("data-id",arr[i].image_id);
+								        }
+								      }
+								    }
+								};
+								request.upload.addEventListener("progress", uploadProgressFile, false);
+								request.addEventListener('load',transferCompleteFile);
+								request.send(formdata);
+							});
+							function uploadProgressFile(evt) {
+						        if (evt.lengthComputable) {
+						            var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+						            $(".progress").find('.progress-bar').css("width",percentComplete+"%").html(percentComplete+"% Complete (upload)");
+						        $('.addProduct').attr("disabled",true);
+						        }
+						        else {
+						          alert('cant upload.')
 						        }
 						      }
+							function transferCompleteFile(evt) {
+						        console.log("The transfer file  is complete.");
+						        $("#processType").val("new");
+						        $('.addProduct').attr("disabled",false);
+						        $(".progress").fadeOut("slow",function(){ 
+						                                                  $(this).remove(); 
+						                                               });
 						    }
-						};
-						request.upload.addEventListener("progress", uploadProgressFile, false);
-						request.addEventListener('load',transferCompleteFile);
-						request.send(formdata);
-					});
-					function uploadProgressFile(evt) {
-				        if (evt.lengthComputable) {
-				            var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-				            $(".progress").find('.progress-bar').css("width",percentComplete+"%").html(percentComplete+"% Complete (upload)");
-				        $('.addProduct').attr("disabled",true);
-				        }
-				        else {
-				          alert('cant upload.')
-				        }
-				      }
-					function transferCompleteFile(evt) {
-				        console.log("The transfer file  is complete.");
-				        $("#processType").val("new");
-				        $('.addProduct').attr("disabled",false);
-				        $(".progress").fadeOut("slow",function(){ 
+						    $('.addProduct').click( function () {
+								$('#formAddProduct').find(':submit').click();
+								var name = $('.formAddProduct').find('#name').val();
+								var category = $('.formAddProduct').find('#category').val();
+								var description = $('.formAddProduct').find('#description').val();
+								alert(category);
+								
+								$specs =[];
+								$x = 0;
+								$("input[name='specs']").each(function(){
+									$specs[$x]= $(this).val();
+									$x++;
+								});
+								var check = $('.formAddProduct').find('.browse').find('.image_wrapper').length;
+								
+								$this = $(this);
+								if(!$.trim(name) == '' && !$.trim(category) == '' && !$.trim(description) == ''){
+									if(check != 0){
+										var _token = "{{ csrf_token() }}";
+										$.post('{{URL::Route('addProduct')}}',{ _token: _token ,name: name, 
+										category : category, description : description, specs : $specs} , function(response)
+					    				{
+					    					console.log(response);
+					    					if(response.status = "success"){
+					    						$this.closest(".formAddProduct").fadeOut("slow",function(){ 
 				                                                  $(this).remove(); 
-				                                               });
-				    }
-				$('.addProduct').click( function () {
-					$('#formAddProduct').find(':submit').click();
-					var name = $('.formAddProduct').find('#name').val();
-					var category = $('.formAddProduct').find('#category').val();
-					var description = $('.formAddProduct').find('#description').val();
-					//var specs = $('.formAddProduct').find('#specs').val();
-					$specs =[];
-					$x = 0;
-					$("input[name='specs']").each(function(){
-						$specs[$x]= $(this).val();
-						$x++;
+				                                                });
+					    						defaultDisplay();
+					    						productList();
+					    						$(window).scrollTop($('#product_list').offset().top);
+					    					}
+					    				});
+									}
+									else{
+										alert('Please select image of product.');
+									}
+								}
+							});
+							$(document).on("submit", "#formAddProduct", function(e){
+							    e.preventDefault();
+							    return  false;
+							});
+							$('.addImage').click( function () {
+								$('#file').click();
+							});
+							$(".select2").select2();
+						    //end
+						}
 					});
-					var check = $('.formAddProduct').find('.browse').find('.image_wrapper').length;
-					
-					$this = $(this);
-					if(!$.trim(name) == '' && !$.trim(category) == '' && !$.trim(description) == ''){
-						if(check != 0){
-							var _token = "{{ csrf_token() }}";
-							$.post('{{URL::Route('addProduct')}}',{ _token: _token ,name: name, 
-							category : category, description : description, specs : $specs} , function(response)
-		    				{
-		    					console.log(response);
-		    					if(response.status = "success"){
-		    						$this.closest(".formAddProduct").fadeOut("slow",function(){ 
-	                                                  $(this).remove(); 
-	                                                });
-		    						defaultDisplay();
-		    						productList();
-		    						$(window).scrollTop($('#product_list').offset().top);
-		    					}
-		    				});
-						}
-						else{
-							alert('Please select image of product.');
-						}
-					}
-				});
-				$(document).on("submit", "#formAddProduct", function(e){
-				    e.preventDefault();
-				    return  false;
-				});
-				$('.addImage').click( function () {
-					$('#file').click();
-				});
-				$(".select2").select2();
 				}
 				else
 				{
