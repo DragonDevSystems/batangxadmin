@@ -53,7 +53,7 @@
         {
             if(data == 1)
             {
-                window.location.replace('{{URL::Route('home')}}');
+                window.location.replace('{{URL::Route('cusIndex')}}');
             }
             else
             {

@@ -13,6 +13,11 @@
 
 Route::get('/', array('uses' =>'HomeController@cusIndex', 'as' => 'cusIndex'));
 
+Route::group(array('prefix' => '/confirmation'),function()
+{
+	Route::get('/{code}/{id}', array('uses' => 'UserController@confirmation','as' => 'confirmation'));
+});
+
 Route::group(array('prefix' => '/admin'),function()
 {
 	Route::get('/', array('uses' =>'HomeController@index', 'as' => 'home'));
