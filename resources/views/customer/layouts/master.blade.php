@@ -34,8 +34,8 @@
 		}
 	</style>
 </head>
-
-<body>
+	
+	<body>
 	@yield('content')
 	@include('customer.user.login')
 	@include('customer.user.registration')
@@ -55,5 +55,40 @@
 			
 		});
 	</script>
+	<div class="modal fade" tabindex="-1" role="dialog" id="prompt_modal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	        <p id="mdl_msg"></p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<script type="text/javascript">
+		function promptMsg($result,$message)
+		{
+			$("#mdl_msg").text($message);
+			$("#prompt_modal").removeClass("modal-danger");
+			$("#prompt_modal").removeClass("modal-success");
+			if($result == "success"){
+				$("#prompt_modal").addClass("modal-success");
+			}
+			else
+			{
+				$("#prompt_modal").addClass("modal-danger");
+			}
+
+			$("#prompt_modal").modal("show");
+		}
+	</script>
+	@if(Session::has('success'))
+		<script type="text/javascript">
+			promptMsg('success',"{{Session::get('success')}}");
+		</script>
+	@elseif (Session::has('fail'))
+		<script type="text/javascript">
+			promptMsg('fail',"{{Session::get('fail')}}");
+		</script>
+	@endif
 </body>
 </html>

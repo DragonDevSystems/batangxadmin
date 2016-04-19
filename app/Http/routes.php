@@ -14,12 +14,19 @@
 Route::get('/', array('uses' =>'HomeController@cusIndex', 'as' => 'cusIndex'));
 Route::get('/about-us', array('uses' =>'HomeController@getAbout', 'as' => 'getAbout'));
 Route::get('/new', array('uses' =>'HomeController@getNews', 'as' => 'getNews'));
-Route::get('/contact-us', array('uses' =>'HomeController@getContactUs', 'as' => 'getContactUs'));
+
 Route::group(array('prefix' => '/confirmation'),function()
 {
 	Route::get('/{code}/{id}', array('uses' => 'UserController@confirmation','as' => 'confirmation'));
 });
-
+Route::group(array('prefix' => '/contact-us'),function()
+{
+	Route::get('/', array('uses' =>'HomeController@getContactUs', 'as' => 'getContactUs'));
+	Route::group(array('before' => 'csrf'), function()
+	{
+		Route::post('/postContactUs',array('uses' => 'CustomerController@postContactUs', 'as' => 'postContactUs')); 
+	});
+});
 Route::group(array('prefix' => '/admin'),function()
 {
 	Route::get('/', array('uses' =>'HomeController@index', 'as' => 'home'));

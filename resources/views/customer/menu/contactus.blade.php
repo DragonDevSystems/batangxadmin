@@ -16,26 +16,27 @@
 				<div class="col span_2_of_3">
 				  <div class="contact-form">
 				  	<h2>Contact Us</h2>
-					    <form method="post" action="contact-post.html">
+					    <form method="post" action="{{URL::Route('postContactUs')}}">
 					    	<div>
 						    	<span><label>Name</label></span>
-						    	<span><input name="userName" type="text" class="textbox" ></span>
+						    	<span><input name="name" type="text" class="textbox" required></span>
 						    </div>
 						    <div>
 						    	<span><label>E-mail</label></span>
-						    	<span><input name="userEmail" type="text" class="textbox"></span>
+						    	<span><input name="email" type="email" class="textbox" required></span>
 						    </div>
 						    <div>
 						     	<span><label>Company Name</label></span>
-						    	<span><input name="userPhone" type="text" class="textbox"></span>
+						    	<span><input name="company" type="text" class="textbox" required></span>
 						    </div>
 						    <div>
 						    	<span><label>Subject</label></span>
-						    	<span><textarea name="userMsg"> </textarea></span>
+						    	<span><textarea name="message" required> </textarea></span>
 						    </div>
 						   <div>
 						   		<span><input type="submit" value="Submit"  class="myButton"></span>
 						  </div>
+						  <input type="hidden" value="{{ csrf_token() }}" name="_token">
 					    </form>
 				  </div>
   				</div>
