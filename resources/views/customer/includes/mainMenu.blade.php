@@ -1,11 +1,10 @@
 <div class="header_bottom">
  	<div class="menu">
  		<ul>
-	    	<li class="active"><a href="index.html">Home</a></li>
-	    	<li><a href="about.html">About</a></li>
-	    	<li><a href="delivery.html">Delivery</a></li>
-	    	<li><a href="news.html">News</a></li>
-	    	<li><a href="contact.html">Contact</a></li>
+	    	<li class="{{ $mt == "home" ? "active" : ""}}"><a href="{{ URL::Route('cusIndex') }}">Home</a></li>
+	    	<li class="{{ $mt == "about" ? "active" : ""}}"><a href="{{ URL::Route('getAbout') }}">About</a></li>
+	    	<li class="{{ $mt == "news" ? "active" : ""}}"><a href="{{ URL::Route('getNews') }}">News</a></li>
+	    	<li class="{{ $mt == "contactus" ? "active" : ""}}"><a href="{{ URL::Route('getContactUs') }}">Contact</a></li>
 	    	<div class="clear"></div>
 			</ul>
  	</div>

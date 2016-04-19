@@ -24,7 +24,22 @@ class HomeController extends Controller {
 
 	public function cusIndex()
 	{
-		return View::Make("customer.home.index");
+		return View::Make("customer.home.index")->with('mt','home');
+	}
+
+	public function getAbout()
+	{
+		return View::Make("customer.menu.about")->with('mt','about');
+	}
+
+	public function getNews()
+	{
+		return View::Make("customer.menu.news")->with('mt','news');
+	}
+
+	public function getContactUs()
+	{
+		return View::Make("customer.menu.contactus")->with('mt','contactus');
 	}
 
 }

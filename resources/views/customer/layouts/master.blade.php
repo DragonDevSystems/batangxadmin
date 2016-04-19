@@ -37,5 +37,23 @@
 
 <body>
 	@yield('content')
+	@include('customer.user.login')
+	@include('customer.user.registration')
+	<script type="text/javascript">
+		$('#btn_login').click(function()
+			{
+				$('#mdl_login').modal('show');
+			}
+		);
+		$('#btn_registration').click(function()
+			{
+				$('#mdl_registration').modal('show');
+			}
+		);
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
 </body>
 </html>

@@ -12,7 +12,9 @@
 */
 
 Route::get('/', array('uses' =>'HomeController@cusIndex', 'as' => 'cusIndex'));
-
+Route::get('/about-us', array('uses' =>'HomeController@getAbout', 'as' => 'getAbout'));
+Route::get('/new', array('uses' =>'HomeController@getNews', 'as' => 'getNews'));
+Route::get('/contact-us', array('uses' =>'HomeController@getContactUs', 'as' => 'getContactUs'));
 Route::group(array('prefix' => '/confirmation'),function()
 {
 	Route::get('/{code}/{id}', array('uses' => 'UserController@confirmation','as' => 'confirmation'));
