@@ -93,6 +93,7 @@
 	        	var id = table.cell('.active', 0).data();
 	        	setNewEntry(id);
 	        }
+	        $(window).scrollTop($('#div-entry').offset().top);
     	});
     	$('#editProduct').on( 'click', function () {
     		var id = table.cell('.active', 0).data();
