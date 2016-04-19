@@ -72,12 +72,38 @@
 
 			$("#prompt_modal").modal("show");
 		}
-
+		function promptConfirmation($message)
+		{
+			//$("#mdl_confirmation_msg").text($message);
+			$('body').append('<div class="modal fade modal-info" tabindex="-1" role="dialog" id="prompt_confirmation">\
+								  <div class="modal-dialog">\
+								    <div class="modal-content">\
+								      <div class="modal-header">\
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">\
+								          <span aria-hidden="true">&times;</span></button>\
+								        <h4 class="modal-title">Comfirmation Message...</h4>\
+								      </div>\
+								      <div class="modal-body">\
+								        <p id="mdl_confirmation_msg">'+$message+'</p>\
+								      </div>\
+								      <div class="modal-footer">\
+								        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>\
+								        <button class="btn btn-outline" type="button" data-dismiss="modal" id="btnYes">Save changes</button>\
+								      </div>\
+								    </div>\
+								  </div>\
+								</div>');
+			$("#prompt_confirmation").modal("show");
+		}
+	    $(document).on("hidden.bs.modal","#prompt_confirmation",function(){
+			$(this).remove();
+		});
+		/*
 		function promptConfirmation($message)
 		{
 			$("#mdl_confirmation_msg").text($message);
 			$("#prompt_confirmation").modal("show");
-		}
+		}*/
 
 	</script>
 	@if(Session::has('success'))
@@ -110,6 +136,7 @@
 	  <!-- /.modal-dialog -->
 	</div>
 
+	<!--
 	<div class="modal fade modal-info" tabindex="-1" role="dialog" id="prompt_confirmation">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -126,10 +153,8 @@
 	        <button class="btn btn-outline" type="button" data-dismiss="modal" id="btnYes">Save changes</button>
 	      </div>
 	    </div>
-	    <!-- /.modal-content -->
 	  </div>
-	  <!-- /.modal-dialog -->
-	</div>
+	</div>-->
 	
 	<!-- ./wrapper -->
 	<!-- Sparkline -->

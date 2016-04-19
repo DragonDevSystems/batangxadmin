@@ -135,6 +135,7 @@ class ProductController extends Controller {
 					if(!$addProductSpecs->save()){
 						return Response::json(array(
 						"status" => "fail",
+						"message" => ($id == "new") ? "Failed to add product." : "Failed to update product.",
 						));	
 					}
 				}
@@ -142,12 +143,14 @@ class ProductController extends Controller {
 			
 			return Response::json(array(
 					"status" => "success",
+					"message" => ($id == "new") ? "Success to add product." : "Success to update product.",
 					));
 			
 		}
 
 		return Response::json(array(
 					"status" => "fail",
+					"message" => ($id == "new") ? "Failed to add product." : "Failed to update product.",
 					));	
 	}
 
