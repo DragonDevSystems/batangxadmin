@@ -1,6 +1,6 @@
 <div class="header_top">
 	<div class="logo">
-		<a href="index.html"><img src="{{env('FILE_PATH_CUSTOM')}}img/logo.png" alt="" /></a>
+		<a href="index.html"><img width="217" height="74" src="{{env('FILE_PATH_CUSTOM')}}img/gamextreme.png" alt="" /></a>
 	</div>
 	  <div class="cart">
 	  	   <p>Welcome to our Online Store! <span>Cart:</span><div id="dd" class="wrapper-dropdown-2"> 0 item(s) - $0.00
