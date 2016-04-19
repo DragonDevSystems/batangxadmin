@@ -359,7 +359,7 @@
 											});
 									}
 									else{
-										alert('Please select image of product.');
+										promptMsg("fail","Please select image.");
 									}
 								}
 							});
