@@ -335,24 +335,27 @@
 									$x++;
 								});
 								var check = $('.formAddProduct').find('.browse').find('.image_wrapper').length;
-								
 								$this = $(this);
 								if(!$.trim(name) == '' && !$.trim(category) == '' && !$.trim(description) == ''){
 									if(check != 0){
 										var _token = "{{ csrf_token() }}";
-										$.post('{{URL::Route('addProduct')}}',{ _token: _token ,name: name, 
-										category : category, description : description, specs : $specs, id : id} , function(response)
-					    				{
-					    					console.log(response);
-					    					if(response.status = "success"){
-					    						$this.closest(".formAddProduct").fadeOut("slow",function(){ 
-				                                                  $(this).remove(); 
-				                                                });
-					    						defaultDisplay();
-					    						productList();
-					    						$(window).scrollTop($('#product_list').offset().top);
-					    					}
-					    				});
+										var message = (id == "new") ? "add" : "update";
+										var status = confirm("Do you want to "+message+" this product?");
+										if(status == true){
+											$.post('{{URL::Route('addProduct')}}',{ _token: _token ,name: name, 
+											category : category, description : description, specs : $specs, id : id} , function(response)
+						    				{
+						    					console.log(response);
+						    					if(response.status = "success"){
+						    						$this.closest(".formAddProduct").fadeOut("slow",function(){ 
+					                                                  $(this).remove(); 
+					                                                });
+						    						defaultDisplay();
+						    						productList();
+						    						$(window).scrollTop($('#product_list').offset().top);
+						    					}
+						    				});
+										}
 									}
 									else{
 										alert('Please select image of product.');
