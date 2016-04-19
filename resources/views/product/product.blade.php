@@ -255,20 +255,10 @@
 															            </div>\
 																		<div class="form-group">\
 																		  <label for="description">Description :</label>\
-																		  <textarea style="resize: none;" class="form-control" rows="3"  placeholder="Enter product description..." name="description" id="description" required></textarea>\
+																		  <textarea style="resize: none;" class="form-control" rows="3"  placeholder="Enter product description..." name="description" id="description" required>'+data.description+'</textarea>\
 																		</div>\
 																		<div class="specs_list">\
 																			<label for="specs">Specs :</label>\
-																			<div class="form-group ">\
-																			  	<div class="input-group">\
-																				    <input type="text" name="specs" placeholder="add specs" class="form-control" aria-label="...">\
-																					<div class="input-group-btn">\
-																					<button type="button" class="btn btn-default plus">\
-																						<i class="fa fa-plus" aria-hidden="true"></i>\
-																					</button>\
-																					</div>\
-																				</div>\
-																			</div>\
 																		</div>\
 																		<button type="submit" style="display:none"></button>\
 																	</form>\
@@ -287,14 +277,41 @@
 															</div>\
 								           				</div>\
 													');
-							for (var i = 0; i < data.category.length; i++) 
-       						{
-       							if(data.category[i].id == data.pro_cat_id){
-       								$('#category')
-								        .val(data.category[i].id) //select option of select2
-								        .trigger("change"); //apply to select2
-       							}
-       						}
+       						$('#category')
+			                  .val(data.pro_cat_id) //select option of select2
+			                  .trigger("change"); //apply to select2
+			                if(data.specs.length != 0){
+				                for (var i = 0; i < data.specs.length; i++) 
+								{
+									$('.specs_list').append('<div class="form-group ">\
+														  	<div class="input-group">\
+															    <input type="text" name="specs" placeholder="add specs" value="'+data.specs[i].specs+'" class="form-control" aria-label="...">\
+																<div class="input-group-btn">\
+																<button type="button" class="btn btn-default minus">\
+																	<i class="fa fa-minus" aria-hidden="true"></i>\
+																</button>\
+																</div>\
+															</div>\
+														</div>');
+
+									if(i == (data.specs.length -1)){
+										//alert('s');
+										$('.specs_list').find('.minus').last().html('<i class="fa fa-plus" aria-hidden="true"></i>').removeClass('minus').addClass('plus');
+									}
+								}
+							}
+							else{
+								$('.specs_list').append('<div class="form-group ">\
+														  	<div class="input-group">\
+															    <input type="text" name="specs" placeholder="add specs" class="form-control" aria-label="...">\
+																<div class="input-group-btn">\
+																<button type="button" class="btn btn-default plus">\
+																	<i class="fa fa-plus" aria-hidden="true"></i>\
+																</button>\
+																</div>\
+															</div>\
+														</div>');
+							}
 							
 							$('.browse').append(
 								$('<div />' , { 'class' : 'box-body' , 'style' : 'min-height:100px'}).append(
@@ -407,17 +424,24 @@
 		});
     }
     $(document).on("click",".plus",function(){
-    	$(this).html('<i class="fa fa-minus" aria-hidden="true"></i>').addClass('minus').removeClass('plus');
-    	$('.specs_list').append('<div class="form-group ">\
-								  	<div class="input-group">\
-									    <input type="text" name="specs" placeholder="add specs" class="form-control">\
-										<div class="input-group-btn">\
-										<button type="button" class="btn btn-default plus">\
-											<i class="fa fa-plus" aria-hidden="true"></i>\
-										</button>\
+    	var checkValue= $(this).closest(".input-group").find("input[name='specs']").val().length;
+    	if(checkValue != 0){
+    		$(this).html('<i class="fa fa-minus" aria-hidden="true"></i>').addClass('minus').removeClass('plus');
+	    	$('.specs_list').append('<div class="form-group ">\
+									  	<div class="input-group">\
+										    <input type="text" name="specs" placeholder="add specs" class="form-control">\
+											<div class="input-group-btn">\
+											<button type="button" class="btn btn-default plus">\
+												<i class="fa fa-plus" aria-hidden="true"></i>\
+											</button>\
+											</div>\
 										</div>\
-									</div>\
-								</div>');
+									</div>');
+    	}
+    	else{
+    		$(this).closest(".input-group").find("input[name='specs']").focus();
+    	}
+    	
     });
     $(document).on("click",".minus",function(){
     	$(this).closest('.form-group').fadeOut("slow",function(){ 
