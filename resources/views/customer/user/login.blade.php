@@ -1,4 +1,4 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="mdl_login" style="opacity:0.6 !important;">
+<div class="modal fade" tabindex="-1" role="dialog" id="mdl_login" style="opacity:1.0 !important;">
 	<div class="modal-dialog modal-vertical-centered">
 		<div class="modal-content">
 			<div class="modal-header">

@@ -19,7 +19,7 @@
 
 		<link href="{{env('FILE_PATH_CUSTOM')}}css/style.css" rel="stylesheet" type="text/css" media="all"/>
 		<link href="{{env('FILE_PATH_CUSTOM')}}css/slider.css" rel="stylesheet" type="text/css" media="all"/>
-		<script type="text/javascript" src="{{env('FILE_PATH_CUSTOM')}}js/jquery-1.7.2.min.js"></script> 
+		<!--<script type="text/javascript" src="{{env('FILE_PATH_CUSTOM')}}js/jquery-1.7.2.min.js"></script>--> 
 		<script type="text/javascript" src="{{env('FILE_PATH_CUSTOM')}}js/move-top.js"></script>
 		<script type="text/javascript" src="{{env('FILE_PATH_CUSTOM')}}js/easing.js"></script>
 		<script type="text/javascript" src="{{env('FILE_PATH_CUSTOM')}}js/startstop-slider.js"></script>
@@ -41,9 +41,9 @@
 	@include('customer.user.registration')
 	<script type="text/javascript">
 		$('#btn_login').click(function()
-			{
-				$('#mdl_login').modal('show');
-			}
+		{
+			$('#mdl_login').modal('show');
+		}
 		);
 		$('#btn_registration').click(function()
 			{
