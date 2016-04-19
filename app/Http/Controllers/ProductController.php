@@ -159,11 +159,11 @@ class ProductController extends Controller {
 	{
 		$id = Input::get('product');
 		$information = ProductInformation::find($id);
-		$images = ProductImage::where('prod_id','=',$id)->get(array('thumbnail_img'));
-		$specs = ProductSpecs::where('prod_id','=',$id)->get(array('specs'));
+		$images = ProductImage::where('prod_id','=',$id)->get(array('thumbnail_img','id'));
+		$specs = ProductSpecs::where('prod_id','=',$id)->get(array('specs','id'));
 		$category = ProCategory::where('status','=',1)->get(array('id','name'));
 		return Response::json(array(
-				"status" => !empty($id) ? "edit" : "add",
+				"status" => !empty($id) ? "Update product" : "Add product",
 				"id" => !empty($id) ? $id : "",
 				"name" =>!empty($information) ? $information['name'] : "",
 				"description" =>!empty($information) ? $information['description'] : "",
@@ -171,9 +171,29 @@ class ProductController extends Controller {
 				"images" => !empty($images) ? $images : "",
 				"specs" => !empty($specs) ? $specs : "",
 				"category" => $category,
-				));
-		
-		
+				));	
+	}
+
+	public function deleteSpecs()
+	{
+		$id = Input::get('specs');
+		$getSpecs = ProductSpecs::find($id);
+		if(!empty($getSpecs)){
+			if($getSpecs->delete()){
+				return Response::json(array(
+					"status" => "success",
+					"message" => "Success to delete previous specs.",
+					));	
+			}
+			return Response::json(array(
+					"status" => "fail",
+					"message" => "Failed to delete previous specs.",
+					));
+		}
+		return Response::json(array(
+					"status" => "fail",
+					"message" => "Failed to delete previous specs.",
+					));
 	}
 	
 }

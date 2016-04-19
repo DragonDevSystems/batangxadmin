@@ -273,13 +273,40 @@
 																</div>\
 															</div>\
 															<div class="box-footer">\
-																<button type="button" class="btn btn-primary addProduct">Add Product</button>\
+																<button type="button" class="btn btn-primary addProduct">'+data.status+'</button>\
 															</div>\
 								           				</div>\
 													');
+							
+							$('.browse').append(
+								$('<div />' , { 'class' : 'box-body' , 'style' : 'min-height:100px'}).append(
+									$('<div />' , { 'class' : 'row' }).append(
+										$('<div />' , {'class' : 'col-md-12 col-lg-12'}).append(
+											$('<h1 />' , { 'class': 'text-center'}).append(
+												$('<small />').append(
+													$('<button />' , { 'id':'btn-new-user-icn' , 'class':'btn btn-app addImage' , 'data-placement':'top' , 'data-toggle':'tooltip' , 'type':'button' , 'html' : '<i class="fa fa-plus-circle fa-3x"></i>Add Image'}).append(
+														''),
+													$('<br />'),
+													'Click on here'))))));
        						$('#category')
 			                  .val(data.pro_cat_id) //select option of select2
 			                  .trigger("change"); //apply to select2
+			                if(data.images.length != 0){
+			                	for (var i = 0; i < data.images.length; i++) 
+								{
+									var template = 
+							        '<div class="col-lg-3 col-md-3 col-xs-6 image_wrapper">'+
+								        '<div  style="width:100%;padding:10px;padding-bottom:0px;padding-top:0px;border:1px solid #e7e7e7;margin-bottom:10px;">'+
+								          '<div class="pull-right">'+
+								            '<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-box-tool removeImage" data-id="'+data.images[i].id+'"><i class="fa fa-trash-o"></i></button>'+
+								          '</div>'+
+								          '<img src="{{env('FILE_PATH_CUSTOM')}}productThumbnail/'+data.images[i].thumbnail_img+'" style="width:100%;height:auto;margin-bottom:5px;">'+
+								        '</div>'+
+							        '</div>';
+							        
+							        $('.browse').append(template);
+								}
+			                }
 			                if(data.specs.length != 0){
 				                for (var i = 0; i < data.specs.length; i++) 
 								{
@@ -287,7 +314,7 @@
 														  	<div class="input-group">\
 															    <input type="text" name="specs" placeholder="add specs" value="'+data.specs[i].specs+'" class="form-control" aria-label="...">\
 																<div class="input-group-btn">\
-																<button type="button" class="btn btn-default minus">\
+																<button data-id="'+data.specs[i].id+'" type="button" class="btn btn-default minus">\
 																	<i class="fa fa-minus" aria-hidden="true"></i>\
 																</button>\
 																</div>\
@@ -295,8 +322,10 @@
 														</div>');
 
 									if(i == (data.specs.length -1)){
-										//alert('s');
-										$('.specs_list').find('.minus').last().html('<i class="fa fa-plus" aria-hidden="true"></i>').removeClass('minus').addClass('plus');
+										//$('.specs_list').find('.minus').last().html('<i class="fa fa-plus" aria-hidden="true"></i>').removeClass('minus').addClass('plus');
+										$('.specs_list').find('.input-group-btn').last().append('<button type="button" data-id="'+data.specs[i].id+'" class="btn btn-default plus">\
+																	<i class="fa fa-plus" aria-hidden="true"></i>\
+																</button>');
 									}
 								}
 							}
@@ -313,16 +342,6 @@
 														</div>');
 							}
 							
-							$('.browse').append(
-								$('<div />' , { 'class' : 'box-body' , 'style' : 'min-height:100px'}).append(
-									$('<div />' , { 'class' : 'row' }).append(
-										$('<div />' , {'class' : 'col-md-12 col-lg-12'}).append(
-											$('<h1 />' , { 'class': 'text-center'}).append(
-												$('<small />').append(
-													$('<button />' , { 'id':'btn-new-user-icn' , 'class':'btn btn-app addImage' , 'data-placement':'top' , 'data-toggle':'tooltip' , 'type':'button' , 'html' : '<i class="fa fa-plus-circle fa-3x"></i>Add Image'}).append(
-														''),
-													$('<br />'),
-													'Click on here'))))));
 							$('#category').trigger('change');
 							var form = document.getElementById('uploadProductImage');
 							var request = new XMLHttpRequest();
@@ -424,8 +443,10 @@
 		});
     }
     $(document).on("click",".plus",function(){
+    	
     	var checkValue= $(this).closest(".input-group").find("input[name='specs']").val().length;
     	if(checkValue != 0){
+    		$(this).closest('.input-group').find('.minus').remove();
     		$(this).html('<i class="fa fa-minus" aria-hidden="true"></i>').addClass('minus').removeClass('plus');
 	    	$('.specs_list').append('<div class="form-group ">\
 									  	<div class="input-group">\
@@ -444,9 +465,30 @@
     	
     });
     $(document).on("click",".minus",function(){
-    	$(this).closest('.form-group').fadeOut("slow",function(){ 
+    	var id = $(this).data('id');
+    	var _token = "{{ csrf_token() }}";
+    	$this = $(this);
+    	if(typeof(id)  !== "undefined"){
+    		var status = confirm("Do you want to remove this previous specs?");
+    		if(status == true){
+    			$.post('{{URL::Route('deleteSpecs')}}',{ _token: _token ,specs: id} , function(response)
+				{
+					if(response.status == "success"){
+						$this.closest('.form-group').fadeOut("slow",function(){ 
 				                                                  $(this).remove(); 
 				                                               });
+						promptMsg(response.status,response.message);
+					}
+				});
+    		}
+    		
+    	}
+    	else{
+    		$(this).closest('.form-group').fadeOut("slow",function(){ 
+				                                                  $(this).remove(); 
+				                                               });
+    	}
+    	
 
     });
     $(document).on("click",".removeImage",function(){
