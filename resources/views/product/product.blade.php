@@ -23,7 +23,8 @@
 
     <!-- Main content -->
     <section class="content">
-		<div id="div-entry" class="box box-success"></div>
+		<div id="div-entry" class="box box-success">
+		</div>
 
 		<!-- product list -->
 		<div class="box box-primary">
@@ -87,10 +88,15 @@
 	            $(this).addClass('active');
 	            $('#editProduct').prop("disabled", false);
 	        }
+	        if($('#editProduct').hasClass('continue_view'))
+	        {
+	        	var id = table.cell('.active', 0).data();
+	        	setNewEntry(id);
+	        }
     	});
     	$('#editProduct').on( 'click', function () {
     		var id = table.cell('.active', 0).data();
-    		//alert(id);
+    		$('#editProduct').addClass('continue_view');
     		$('#div-entry').append('<div class="overlay">\
 		        	<i class="fa fa-spinner fa-spin"></i>\
 		        </div>');
@@ -115,84 +121,10 @@
 			
 		});
 	}
-	/*
-	function productInfo(cid)
-	{
-		$('#div-entry').append('<div class="overlay">\
-	            	<i class="fa fa-spinner fa-spin"></i>\
-	            </div>');
-		$.get('{{URL::Route('categoryInfo',0)}}',{ cid: cid}, function(data)
-		{
-			if(data.length != 0)
-			{
-				$('#div-entry').empty();
-				$('#div-entry').append(
-					$('<div />', {'class': 'box-header with-border' }).append(
-						$('<h3 />' , {'class': 'box-title' , 'text': 'View User [Admin]' }),
-						$('<div/>', {'class': 'box-tools pull-right event-btn' }).append(
-							'<button class="btn btn-success btn-sm" type="button" onClick="setNewEntry();">\
-								<i class="fa fa-plus-circle"></i>\
-								New\
-							</button>\
-							<button id="clicker" class="btn btn-primary btn-sm" type="button">\
-								<i class="fa fa-pencil-square"></i>\
-								Edit\
-							</button>\
-							<button class="btn btn-box-tool" data-widget="collapse">\
-								<i class="fa fa-minus"></i>\
-							</button>'),
-						$('<div />', { 'class' : 'row'}).append(
-							$('<div />', { 'class' : 'col-md-3 col-sm-3'}).append(
-								$('<div />' , { 'class' : 'col-md-12 col-sm-12'}).append(
-									$('<div />' , { 'class' : 'form-group'}).append(
-										$('<label />' , { 'class' : 'control-label' , 'for' : 'name' , 'text' : 'Name'}),
-										$('<input />' , { 'id':'name' ,'class':'form-control' ,'type':'text','value' : data.name,'name':'name', 'placeholder':'Enter Name' , 'disabled': true}))),
-								$('<div />' , { 'class' : 'col-md-12 col-sm-12'}).append(
-									$('<div />' , { 'class' : 'form-group'}).append(
-										$('<label />' , { 'class' : 'control-label' , 'for' : 'description' , 'text' : 'Description'}),
-										$('<input />' , { 'id':'description' ,'class':'form-control' ,'type':'text','value' : data.description,'name':'description', 'placeholder':'Enter Description' , 'disabled': true})))),
-							$('<div />', {'class' : 'col-md-3 col-sm-3'}).append(
-								$('<table />' , {'class' : 'table'}).append(
-									$('<thead />').append(
-										$('<tr>').append(
-											$('<th />' , {'text' : 'Status'}))),
-									$('<tbody />' , { 'id' : 'tbody'+data.id }))))),
-				'<div class="box-footer"></div>');
-
-		        $appendItems = $('#tbody'+data.id);
-		        $appendItems.append($('<select />' , { 'id':'drpStatus' ,'class':'form-control select2' ,'name':'module', 'disabled': true}).append(
-										'<option value="1">Active</option>',
-										'<option value="0">In-Active</option>'));
-		        $("#drpStatus").val(data.status);
-		        $(".select2").select2();
-				$('#clicker').click(function() {
-			        $('select,input[type=text]').each(function() {
-			            if ($(this).attr('disabled')) {
-			                $(this).removeAttr('disabled');
-			            }
-			            else {
-			                $(this).attr({
-			                    'disabled': 'disabled'
-			                });
-			            }
-			        });
-			        $('.event-btn').find('.btn-sm').each(function() {
-			            $(this).remove();
-			        });
-			        $('.event-btn').prepend(
-			            $('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'button', 'onClick':'updateRecord('+data.id+');', 'html' : '<i class="fa fa-times-circle"></i>Save' }),
-						$('<button/>', {'id' : 'clicker' , 'class': 'btn btn-danger btn-sm', 'onClick':'defaultDisplay();', 'type' : 'button', 'html' : '<i class="fa fa-pencil-sq;are"></i>Cancel' }));
-			    });
-			}
-			else
-			{
-				promptMsg('fail',"No record found.")
-			}
-		});
-	}*/
 
 	function defaultDisplay()
 	{
+		$('#editProduct').removeClass('continue_view');
 	   	$('#div-entry').append('<div class="overlay">\
 			        	<i class="fa fa-spinner fa-spin"></i>\
 			        </div>');
@@ -237,6 +169,13 @@
 						if(data.length != 0)
 						{
 							$('#div-entry').empty();
+							$('#div-entry').append('<div class="box-header with-border">\
+						          <h3 class="box-title">Add Product</h3>\
+						          <div class="box-tools pull-right">\
+						            <button type="button" class="btn btn-danger btn-sm"  onClick="defaultDisplay()"><i class="fa fa-undo" aria-hidden="true"></i></button>\
+						          </div>\
+						        </div>');
+
 							$('#div-entry').append('<div class="box-body formAddProduct">\
 															<div class="row">\
 																<div class="col-md-4">\
@@ -273,7 +212,7 @@
 																</div>\
 															</div>\
 															<div class="box-footer">\
-																<button type="button" class="btn btn-primary addProduct">'+data.status+'</button>\
+																<button data-id='+data.id+' type="button" class="btn btn-primary addProduct">'+data.status+'</button>\
 															</div>\
 								           				</div>\
 													');
@@ -312,7 +251,7 @@
 								{
 									$('.specs_list').append('<div class="form-group ">\
 														  	<div class="input-group">\
-															    <input type="text" name="specs" placeholder="add specs" value="'+data.specs[i].specs+'" class="form-control" aria-label="...">\
+															    <input type="text" placeholder="add specs" value="'+data.specs[i].specs+'" class="form-control" aria-label="...">\
 																<div class="input-group-btn">\
 																<button data-id="'+data.specs[i].id+'" type="button" class="btn btn-default minus">\
 																	<i class="fa fa-minus" aria-hidden="true"></i>\
@@ -322,7 +261,6 @@
 														</div>');
 
 									if(i == (data.specs.length -1)){
-										//$('.specs_list').find('.minus').last().html('<i class="fa fa-plus" aria-hidden="true"></i>').removeClass('minus').addClass('plus');
 										$('.specs_list').find('.input-group-btn').last().append('<button type="button" data-id="'+data.specs[i].id+'" class="btn btn-default plus">\
 																	<i class="fa fa-plus" aria-hidden="true"></i>\
 																</button>');
@@ -389,8 +327,7 @@
 								var name = $('.formAddProduct').find('#name').val();
 								var category = $('.formAddProduct').find('#category').val();
 								var description = $('.formAddProduct').find('#description').val();
-								alert(category);
-								
+								var id = $(this).data('id');
 								$specs =[];
 								$x = 0;
 								$("input[name='specs']").each(function(){
@@ -404,7 +341,7 @@
 									if(check != 0){
 										var _token = "{{ csrf_token() }}";
 										$.post('{{URL::Route('addProduct')}}',{ _token: _token ,name: name, 
-										category : category, description : description, specs : $specs} , function(response)
+										category : category, description : description, specs : $specs, id : id} , function(response)
 					    				{
 					    					console.log(response);
 					    					if(response.status = "success"){
@@ -444,7 +381,7 @@
     }
     $(document).on("click",".plus",function(){
     	
-    	var checkValue= $(this).closest(".input-group").find("input[name='specs']").val().length;
+    	var checkValue= $(this).closest(".input-group").find("input").val().length;
     	if(checkValue != 0){
     		$(this).closest('.input-group').find('.minus').remove();
     		$(this).html('<i class="fa fa-minus" aria-hidden="true"></i>').addClass('minus').removeClass('plus');

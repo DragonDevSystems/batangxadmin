@@ -105,11 +105,18 @@ class ProductController extends Controller {
 	
 	public function addProduct()
 	{
+		$id = Input::get('id');
 		$name = Input::get('name');
 		$category = Input::get('category');
 		$description = Input::get('description');
 		$specs = Input::get('specs');
-		$addProductInfo = new ProductInformation();
+
+		if($id == "new"){
+			$addProductInfo = new ProductInformation();
+		}
+		else{
+			$addProductInfo = ProductInformation::find($id);
+		}
 		$addProductInfo['name'] = $name;
 		$addProductInfo['pro_cat_id'] = $category;
 		$addProductInfo['description'] = $description;
@@ -120,16 +127,19 @@ class ProductController extends Controller {
 									'prod_id' => $addProductInfo['id'],
 									'status' => 1,
 									));
-			foreach ($specs as $specsi) {
-				$addProductSpecs = new ProductSpecs();
-				$addProductSpecs['prod_id'] = $addProductInfo['id'];
-				$addProductSpecs['specs'] = $specsi;
-				if(!$addProductSpecs->save()){
-					return Response::json(array(
-					"status" => "fail",
-					));	
+			if(!empty($specs)){
+				foreach ($specs as $specsi) {
+					$addProductSpecs = new ProductSpecs();
+					$addProductSpecs['prod_id'] = $addProductInfo['id'];
+					$addProductSpecs['specs'] = $specsi;
+					if(!$addProductSpecs->save()){
+						return Response::json(array(
+						"status" => "fail",
+						));	
+					}
 				}
 			}
+			
 			return Response::json(array(
 					"status" => "success",
 					));
@@ -164,7 +174,7 @@ class ProductController extends Controller {
 		$category = ProCategory::where('status','=',1)->get(array('id','name'));
 		return Response::json(array(
 				"status" => !empty($id) ? "Update product" : "Add product",
-				"id" => !empty($id) ? $id : "",
+				"id" => !empty($id) ? $id : "new",
 				"name" =>!empty($information) ? $information['name'] : "",
 				"description" =>!empty($information) ? $information['description'] : "",
 				"pro_cat_id" =>!empty($information) ? $information['pro_cat_id'] : "",
