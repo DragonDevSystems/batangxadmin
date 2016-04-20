@@ -34,17 +34,14 @@
 			<div class="col_1_of_4 span_1_of_4">
 				<h4>Contact</h4>
 					<ul>
-						<li><span>+91-123-456789</span></li>
-						<li><span>+00-123-000000</span></li>
+						<li><span>allenjamesxxiv@gmail.com</span></li>
+						<li><span>(02) 842-2782</span></li>
 					</ul>
 					<div class="social-icons">
 						<h4>Follow Us</h4>
 				   		  <ul>
-						      <li><a href="#" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}img/facebook.png" alt="" /></a></li>
-						      <li><a href="#" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}img/twitter.png" alt="" /></a></li>
-						      <li><a href="#" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}img/skype.png" alt="" /> </a></li>
-						      <li><a href="#" target="_blank"> <img src="{{env('FILE_PATH_CUSTOM')}}img/dribbble.png" alt="" /></a></li>
-						      <li><a href="#" target="_blank"> <img src="{{env('FILE_PATH_CUSTOM')}}img/linkedin.png" alt="" /></a></li>
+						      <li><a href="https://www.facebook.com/GamextremePhilippines" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}img/facebook.png" alt="" /></a></li>
+						      <li><a href="http://www.ebay.ph/usr/gamextremephils" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}img/ebay.png" alt="" /></a></li>
 						      <div class="clear"></div>
 					     </ul>
 	 					</div>

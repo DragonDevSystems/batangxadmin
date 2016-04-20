@@ -12,60 +12,66 @@
 	</div>
  <div class="main">
     <div class="content">
-    	    	<div class="section group">
-				<div class="col_1_of_3 span_1_of_3">
-					<h3>Who We Are</h3>
-					<img src="{{env('FILE_PATH_CUSTOM')}}img/about_img.jpg" alt="">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-					<h3>Our History</h3>
-				 <div class="history-desc">
-					<div class="year"><p>1998 -</p></div>
-					<p class="history">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-				 <div class="clear"></div>
-				</div>
-				 <div class="history-desc">
-					<div class="year"><p>2001 -</p></div>
-					<p class="history">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-				 <div class="clear"></div>
-				</div>
-				 <div class="history-desc">
-					<div class="year"><p>2006 -</p></div>
-					<p class="history">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-				 <div class="clear"></div>
-				</div>
-				 <div class="history-desc">
-					<div class="year"><p>2010 -</p></div>
-					<p class="history">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-				 <div class="clear"></div>
+    	<div class="section group">
+			<div class="col_1_of_3 span_1_of_3">
+				<h3>Who We Are</h3>
+				<img src="{{env('FILE_PATH_CUSTOM')}}img/about_img.jpg" alt="">
+				<p>GameXtreme is your one-stop digital hub.
+				Offering the latest in mobile and gaming technology, 
+				GameXtreme provides you with your gadget needs.</p>
+				<p>Based in Philippines. Gamextreme offers high-end Cellphones, 
+				Tablets, Gaming consoles, LCD/LED/Smart
+				TV?s, Music Player (The Platinum Karaoke) & other Electronic items since 2006 at competitive prices.
+				Be right, come over and shop at Gamextreme!</p>
+			</div>
+			<div class="col_1_of_3 span_1_of_3">
+				<h3>Our stores are conveniently located in:</h3>
+				<div class="history-desc">
+					<p class="history">3/F Digital Exchange, Glorietta 3, Makati City</p>
+				 	<div class="clear"></div>
 				</div>
 				<div class="history-desc">
-					<div class="year"><p>2013 -</p></div>
-					<p class="history">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-				 <div class="clear"></div>
+					<p class="history">2/F Bridgeway Link, Greenhills Shopping Center, San Juan</p>
+				 	<div class="clear"></div>
+				</div>
+				<div class="history-desc">
+					<p class="history">3/F VMall, Greenhills Shopping Center, San Juan</p>
+				 	<div class="clear"></div>
+				</div>
+				<div class="history-desc">
+					<p class="history">L14 Lower Level, Shoppesville Plus, Shoppesville, Greenhills Shopping Center, San Juan</p>
+				 	<div class="clear"></div>
+				</div>
+				<div class="history-desc">
+					<p class="history">2/F Pop Culture, Alabang Town Center, Muntinlupa City</p>
+				 	<div class="clear"></div>
+				</div>
+				<div class="history-desc">
+					<p class="history">G/F, Alabang Mall, Alabang Town Center, Muntinlupa City</p>
+				 	<div class="clear"></div>
+				</div>
+				<div class="history-desc">
+					<p class="history">4C-16 168 Shopping Mall, Sta. Elena Street, Binondo, Manila</p>
+				 	<div class="clear"></div>
+				</div>
+				<div class="history-desc">
+					<p class="history">1S01 G/F 168 Shopping Mall, Sta. Elena Street, Binondo, Manila</p>
+				 	<div class="clear"></div>
+				</div>
+				<div class="history-desc">
+					<p class="history">2/F U101 Eastwood Cyber and Fashion Mall, Eastwood City Cyber Park, Bagumbayan, Quezon City</p>
+				 	<div class="clear"></div>
+				</div>
+				<div class="history-desc">
+					<p class="history">WS001 SM Center Pasig, Fontelera Verde, Barangay Ugong, Pasig City</p>
+				 	<div class="clear"></div>
+				</div>
+				<div class="history-desc">
+					<p class="history">627 Ronquillo Street, Quiapo, Manila</p>
+				 	<div class="clear"></div>
 				</div>
 			</div>
-				<div class="col_1_of_3 span_1_of_3">
-					<h3>Opportunities</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-				    <div class="list">
-					     <ul>
-					     	<li><a href="#">Text of the printing</a></li>
-					     	<li><a href="#">Lorem Ipsum has been the standard</a></li>
-					     	<li><a href="#">Dummy text ever since the 1500s</a></li>
-					     	<li><a href="#">Unknown printer took a galley</a></li>
-					     	<li><a href="#">Led it to make a type specimen</a></li>
-					     	<li><a href="#">Not only five centuries</a></li>
-					     	<li><a href="#">Electronic typesetting</a></li>
-					     	<li><a href="#">Unchanged. It was popularised</a></li>
-					     	<li><a href="#">Sheets containing Lorem Ipsume</a></li>
-					     </ul>
-					 </div>
-					 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-				</div>
-			</div>		
+		</div>		
     </div>
  </div>
 </div>

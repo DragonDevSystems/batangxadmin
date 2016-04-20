@@ -49,13 +49,12 @@
       				</div>
       			<div class="company_address">
 				     	<h3>Company Information :</h3>
-						    	<p>500 Lorem Ipsum Dolor Sit,</p>
-						   		<p>22-56-2-9 Sit Amet, Lorem,</p>
-						   		<p>USA</p>
-				   		<p>Phone:(00) 222 666 444</p>
-				   		<p>Fax: (000) 000 00 00 0</p>
-				 	 	<p>Email: <span>info@mycompany.com</span></p>
-				   		<p>Follow on: <span>Facebook</span>, <span>Twitter</span></p>
+						    	<p>Alabang Town Center,</p>
+						   		<p>Alabang-Zapote Road,</p>
+						   		<p>Muntinlupa City, Metro Manila</p>
+				   		<p>Phone:(02) 842-2782</p>
+				 	 	<p>Email: <span>allenjamesxxiv@gmail.com</span></p>
+				   		<p>Follow on: <a href="https://www.facebook.com/GamextremePhilippines" target="_blank"><span>Facebook</span></a>, <a href="http://www.ebay.ph/usr/gamextremephils" target="_blank"><span>e-Bay</span></a>
 				   </div>
 				 </div>
 			  </div>		
