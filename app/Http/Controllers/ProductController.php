@@ -209,4 +209,8 @@ class ProductController extends Controller {
 					));
 	}
 	
+	public function getProByCat()
+	{
+		return View::Make("customer.product.product_by_cat")->with('mt','home');
+	}
 }

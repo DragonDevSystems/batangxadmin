@@ -4,7 +4,7 @@
 	<ul>
 		<h3>Categories</h3>
 		@foreach($categories as $category)
-			<li><a href="#">{{$category['name']}}</a></li>
+			<li><a href="{{ URL::Route('getProByCat') }}">{{$category['name']}}</a></li>
 		@endforeach
 	</ul>
 	</div>					
