@@ -209,8 +209,25 @@ class ProductController extends Controller {
 					));
 	}
 	
-	public function getProByCat()
+	public function getProByCat($category)
 	{
-		return View::Make("customer.product.product_by_cat")->with('mt','home');
+		$response = array();
+		$catInfo = ProCategory::where("name","=",$category)->first();
+		if(!empty($catInfo))
+		{
+			$productList = ProductInformation::where("pro_cat_id","=",$catInfo['id'])->get();
+			//return $productList;
+			if(!empty($productList))
+			{
+				foreach ($productList as $productListi) {
+					$images = ProductImage::where('prod_id','=',$productListi['id'])->first();
+					$response[] = array(
+						"productInfo" => $productListi,
+						"pro_img" => $images['thumbnail_img']
+					);
+				}
+			}
+		}
+		return View::Make("customer.product.product_by_cat")->with('mt','home')->with('response',$response);
 	}
 }

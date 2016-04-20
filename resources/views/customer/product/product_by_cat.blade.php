@@ -11,24 +11,34 @@
 		@include('customer.includes.mainMenu')
 		<div class="header_slide">
 			@include('customer.includes.categories')
-			<div class="header_bottom_right">					 
-				<div class="slider">
-					<div class="grid_1_of_4 images_1_of_4">
-						<a href="preview.html"><img src="{{env('FILE_PATH_CUSTOM')}}img/feature-pic1.jpg" alt="" /></a>
-						<h2>Lorem Ipsum is simply </h2>
-						<div class="price-details">
-							<div class="price-number">
-								<p><span class="rupees">$620.87</span></p>
-							</div>
-							<div class="add-cart">								
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
+			<div class="section group">
+				@if(!empty($response))
+					@for($x = 0 ; $x < count($response) ; $x++)
+						<div class="grid_1_of_4 images_1_of_4">
+							<a href="preview.html"><img width="212" height="212" src="{{env('FILE_PATH_CUSTOM')}}productThumbnail/{{$response[$x]['pro_img']}}" alt="" /></a>
+							 <h2>{{$response[$x]['productInfo']['name']}}</h2>
+							<div class="price-details">
+						       <div class="price-number">
+									<p><span class="rupees">$679.87</span></p>
+							    </div>
+					       		<div class="add-cart">								
+									<h4><a href="preview.html">Add to Cart</a></h4>
+							     </div>
+							 <div class="clear"></div>
+							</div>				     
 						</div>
+					@endfor
+				@else
+					<div class="heading">
+						<h3>No Products yet in this category</h3>
 					</div>
-					<div class="clear"></div>
-				</div>
+				@endif
+				
+
 			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
 	<div class="main">
 		<div class="content">
 			@include('customer.includes.newProduct')
