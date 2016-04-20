@@ -40,12 +40,12 @@
 	@include('customer.user.login')
 	@include('customer.user.registration')
 	<script type="text/javascript">
-		$('#btn_login').click(function()
+		$('.btn_login').click(function()
 		{
 			$('#mdl_login').modal('show');
 		}
 		);
-		$('#btn_registration').click(function()
+		$('.btn_registration').click(function()
 			{
 				$('#mdl_registration').modal('show');
 			}
