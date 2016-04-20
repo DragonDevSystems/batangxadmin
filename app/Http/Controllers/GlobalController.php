@@ -82,6 +82,10 @@ class GlobalController extends Controller {
 		return ProCategory::find($id);
 	}
 
+	public function categoryList()
+	{
+		return ProCategory::all();
+	}
 	public function onlineUser()
 	{
 		try

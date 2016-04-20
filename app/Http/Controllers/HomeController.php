@@ -12,8 +12,16 @@ class HomeController extends Controller {
 	{
 		if(Auth::Check())
 		{
-			$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
-			return View::Make("home.index")->with("userInfo",$userInfo)->with('mt','db');
+			if(Auth::User()['isAdmin'] != 0)
+			{
+				$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
+				return View::Make("home.index")->with("userInfo",$userInfo)->with('mt','db');
+			}
+			else
+			{
+				return $this->cusIndex();
+			}
+			
 		}
 		else
 		{

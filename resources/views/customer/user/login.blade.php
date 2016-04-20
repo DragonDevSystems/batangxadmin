@@ -48,8 +48,9 @@
         $_token = "{{ csrf_token() }}";
         $email = $("#email").val();
         $pass = $("#password").val();
+        $source = "client";
         $remember = $("#chk_remember").is(":checked");
-        $.post('{{URL::Route('postLogin')}}', { _token: $_token, txtUsername: $email , txtPassword: $pass ,remember: $remember}, function(data)
+        $.post('{{URL::Route('postLogin')}}', { _token: $_token, txtUsername: $email , txtPassword: $pass ,remember: $remember,source: $source}, function(data)
         {
             if(data == 1)
             {

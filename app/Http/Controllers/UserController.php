@@ -171,28 +171,39 @@ class UserController extends Controller {
 		}
 		else
 		{
+			$source = Input::get('source');
 			$remember = (Input::has('remember')) ? true : false;
 			
 			$field = filter_var(Input::get('txtUsername'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
 			$auth = Auth::attempt(array(
 				$field => Input::get('txtUsername'),
 				'password' => Input::get('txtPassword'),
-				'isAdmin' => 3,
 			), $remember);
 
 			if($auth)
 			{
-				return 1;
+				if($source == "client")
+				{
+					return 1;
+				}
+				else
+				{
+					$adminLvl = ['1','2','3'];
+					if(in_array(Auth::User()['isAdmin'],$adminLvl))
+					{
+						return 1;
+					}
+					else
+					{
+						Auth::logout();
+					}
+				}
+				
 			}
-			else
-			{
-				return  Response::json(array(
-	                    'status'  => 'fail',
-	                    'message'  => 'You input invalid credentials. Please Try again.',
-	                ));
-				//return 2;
-			}
+			return  Response::json(array(
+                    'status'  => 'fail',
+                    'message'  => 'You input invalid credentials. Please Try again.',
+                ));
 		}
 	}
 
