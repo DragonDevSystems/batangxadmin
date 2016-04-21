@@ -354,6 +354,7 @@
 								var name = $('.formAddProduct').find('#name').val();
 								var category = $('.formAddProduct').find('#category').val();
 								var description = $('.formAddProduct').find('#description').val();
+								var price = $('.formAddProduct').find('#price').val();
 								var id = $(this).data('id');
 								$specs =[];
 								$x = 0;
@@ -370,7 +371,8 @@
 											promptConfirmation("Are you sure you want to "+message+" this record?");
 											$('#btnYes').click(function() {
 												$.post('{{URL::Route('addProduct')}}',{ _token: _token ,name: name, 
-												category : category, description : description, specs : $specs, id : id} , function(response)
+												category : category, description : description, specs : $specs, id : id,
+												price : price} , function(response)
 							    				{
 							    					console.log(response);
 							    					if(response.status = "success"){

@@ -112,6 +112,7 @@ class ProductController extends Controller {
 		$category = Input::get('category');
 		$description = Input::get('description');
 		$specs = Input::get('specs');
+		$price = Input::get('price');
 
 		if($id == "new"){
 			$addProductInfo = new ProductInformation();
@@ -129,12 +130,18 @@ class ProductController extends Controller {
 									'prod_id' => $addProductInfo['id'],
 									'status' => 1,
 									));
+			$price = ProductPrice::where('prod_id', $id)
+										->where('status', 1)
+            							->update(array('status' => 0));
+            $update = ProductPrice::where('id', $price)
+            							->update(array('status' => 1));
 			if(!empty($specs)){
 				foreach ($specs as $specsi) {
 					$addProductSpecs = new ProductSpecs();
 					$addProductSpecs['prod_id'] = $addProductInfo['id'];
 					$addProductSpecs['specs'] = $specsi;
 					if(!$addProductSpecs->save()){
+						
 						return Response::json(array(
 						"status" => "fail",
 						"message" => ($id == "new") ? "Failed to add product." : "Failed to update product.",
