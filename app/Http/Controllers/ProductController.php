@@ -230,4 +230,9 @@ class ProductController extends Controller {
 		}
 		return View::Make("customer.product.product_by_cat")->with('mt','home')->with('response',$response);
 	}
+
+	public function productPreview()
+	{
+		return View::Make("customer.product.product_preview")->with('mt','home');
+	}
 }
