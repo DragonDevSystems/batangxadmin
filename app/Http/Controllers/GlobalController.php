@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 use App\Models\Info;
 use App\Models\User;
 use App\Models\Online;
+use App\Models\ProductInformation;
+use App\Models\ProductSpecs;
+use App\Models\ProductImage;
 use App\Models\ProCategory;
+use App\Models\ProductPrice;
 use Auth;
 use DB;
 use Input;
@@ -172,5 +176,21 @@ class GlobalController extends Controller {
 	            'message'  => 'The user record is empty or all user has been listed in the admin account.',
 	        ));
 		}
+	}
+
+	public function topNewProduct($take)
+	{
+		$response = array();
+		$topNewProduct = ProductInformation::take($take)->orderBy('created_at','desc')->get();
+		foreach ($topNewProduct as $topNewProducti) {
+			$images = ProductImage::where('prod_id','=',$topNewProducti['id'])->orderByRaw("RAND()")->first();
+			$proPrice = ProductPrice::where('prod_id','=',$topNewProducti['id'])->where('status','=',1)->first();
+			$response[] = array(
+				"productInfo" => $topNewProducti,
+				"productPrice" => (!empty($proPrice)) ? '&#8369; '.$proPrice['price'] : "Not specified" ,
+				"pro_img" => $images
+			);
+		}
+		return $response;
 	}
 }

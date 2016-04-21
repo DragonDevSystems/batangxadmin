@@ -74,6 +74,7 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::post('/updateAdmin', array('uses' => 'UAMController@updateAdmin', 'as' => 'updateAdmin','middleware' => 'auth'));
 			});
 		});
+		Route::get('/topNewProduct/{take}', array('uses' => 'GlobalController@topNewProduct', 'as' => 'topNewProduct'));
 	});
 
 	Route::group(array('prefix' => '/uam'),function()
