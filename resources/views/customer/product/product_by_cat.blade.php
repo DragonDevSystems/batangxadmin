@@ -15,14 +15,14 @@
 				@if(!empty($response))
 					@for($x = 0 ; $x < count($response) ; $x++)
 						<div class="grid_1_of_4 images_1_of_4">
-							<a href="{{ URL::Route('productPreview') }}"><img width="212" height="212" src="{{env('FILE_PATH_CUSTOM')}}productThumbnail/{{$response[$x]['pro_img']}}" alt="" /></a>
+							<a href="{{ URL::Route('productPreview',[$response[$x]['productInfo']['id'],$response[$x]['productInfo']['name']]) }}"><img width="212" height="212" src="{{env('FILE_PATH_CUSTOM')}}productThumbnail/{{$response[$x]['pro_img']}}" alt="" /></a>
 							 <h2>{{$response[$x]['productInfo']['name']}}</h2>
 							<div class="price-details">
 						       <div class="price-number">
 									<p><span class="rupees">$679.87</span></p>
 							    </div>
 					       		<div class="add-cart">								
-									<h4><a href="{{ URL::Route('productPreview') }}">Add to Cart</a></h4>
+									<h4><a href="{{ URL::Route('productPreview',[$response[$x]['productInfo']['id'],$response[$x]['productInfo']['name']]) }}">Add to Cart</a></h4>
 							     </div>
 							 <div class="clear"></div>
 							</div>				     

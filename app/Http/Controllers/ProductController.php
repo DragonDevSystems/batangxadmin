@@ -6,6 +6,7 @@ use Auth;
 use View;
 use Input;
 use Response;
+use Redirect;
 use App\Models\ProductInformation;
 use App\Models\ProductSpecs;
 use App\Models\ProductImage;
@@ -231,8 +232,23 @@ class ProductController extends Controller {
 		return View::Make("customer.product.product_by_cat")->with('mt','home')->with('response',$response);
 	}
 
-	public function productPreview()
+	public function productPreview($id,$name)
 	{
-		return View::Make("customer.product.product_preview")->with('mt','home');
+		$response = array();
+		$paramCheck = ProductInformation::where("id","=",$id)->where("name","=",$name)->first();
+		if(!empty($paramCheck))
+		{
+			$images = ProductImage::where('prod_id','=',$paramCheck['id'])->get();
+			$response[] = array(
+				"productInfo" => $paramCheck,
+				"pro_img" => $images
+			);
+			return View::Make("customer.product.product_preview")->with('mt','home')->with('response',$response);
+		}
+		else
+		{
+			return Redirect::route('cusIndex')->with('fail','Product not found,please try again.');
+		}
+		
 	}
 }

@@ -4,28 +4,22 @@
 						   <div id="products_example">
 							   <div id="products">
 								<div class="slides_container">
-									<a href="#" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}img/productslide-1.jpg" alt=" " /></a>
-									<a href="#" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}img/productslide-2.jpg" alt=" " /></a>
-									<a href="#" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}img/productslide-3.jpg" alt=" " /></a>					
-									<a href="#" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}img/productslide-4.jpg" alt=" " /></a>
-									<a href="#" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}img/productslide-5.jpg" alt=" " /></a>
-									<a href="#" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}img/productslide-6.jpg" alt=" " /></a>
+									@for($x = 0 ; $x < count($response[0]['pro_img']) ; $x++)
+									<a href="#" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}productImage/{{$response[0]['pro_img'][$x]['img_file']}}" alt=" " /></a>
+									@endfor
 								</div>
 								<ul class="pagination">
-									<li><a href="#"><img src="{{env('FILE_PATH_CUSTOM')}}img/thumbnailslide-1.jpg" alt=" " /></a></li>
-									<li><a href="#"><img src="{{env('FILE_PATH_CUSTOM')}}img/thumbnailslide-2.jpg" alt=" " /></a></li>
-									<li><a href="#"><img src="{{env('FILE_PATH_CUSTOM')}}img/thumbnailslide-3.jpg" alt=" " /></a></li>
-									<li><a href="#"><img src="{{env('FILE_PATH_CUSTOM')}}img/thumbnailslide-4.jpg" alt=" " /></a></li>
-									<li><a href="#"><img src="{{env('FILE_PATH_CUSTOM')}}img/thumbnailslide-5.jpg" alt=" " /></a></li>
-									<li><a href="#"><img src="{{env('FILE_PATH_CUSTOM')}}img/thumbnailslide-6.jpg" alt=" " /></a></li>
+									@for($x = 0 ; $x < count($response[0]['pro_img']) ; $x++)
+										<li><a href="#"><img src="{{env('FILE_PATH_CUSTOM')}}productThumbnail/{{$response[0]['pro_img'][$x]['thumbnail_img']}}" alt=" " /></a></li>
+									@endfor
 								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="desc span_3_of_2">
-					<h2>Lorem Ipsum is simply dummy text </h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>					
+					<h2>{{$response[0]['productInfo']['name']}}</h2>
+					<p>{{$response[0]['productInfo']['description']}}</p>					
 					<div class="price">
 						<p>Price: <span>$500</span></p>
 					</div>
