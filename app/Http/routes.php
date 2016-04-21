@@ -66,6 +66,8 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::get('/product/categoryInfo/{cid}', array('uses' => 'GlobalController@categoryInfo', 'as' => 'categoryInfo','middleware' => 'auth'));
 
 				Route::post('/product/addCategory', array('uses' => 'FileMaintenanceController@addCategory', 'as' => 'addCategory','middleware' => 'auth'));
+				Route::post('/addAdmin', array('uses' => 'UAMController@addAdmin', 'as' => 'addAdmin','middleware' => 'auth'));
+				Route::post('/updateAdmin', array('uses' => 'UAMController@updateAdmin', 'as' => 'updateAdmin','middleware' => 'auth'));
 			});
 		});
 	});

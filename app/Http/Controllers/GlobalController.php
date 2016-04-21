@@ -31,6 +31,7 @@ class GlobalController extends Controller {
 						"fname"			=> $userInfo['first_name'],
 						"lname"			=> $userInfo['last_name'],
 						"dm"			=> $userInfo['created_at'],
+						"lvl"			=> $username['isAdmin'],
 					);
 		}
 	}
@@ -151,8 +152,9 @@ class GlobalController extends Controller {
 	public function userlist()
 	{
 		$response = array();
-		$userList = User::where('id','!=',Auth::User()['id'])->where('isAdmin','=',"0")->get();
-		if(count($userList) != 0)
+		$userList = User::where('isAdmin','=',0)->get();//where('id','!=',Auth::User()['id'])->where('isAdmin','=',0)->get();
+		//return $userList;
+		if(!empty($userList))
 		{
 			foreach ($userList as $userListi) {
 				$response[] = $this->userInfoList($userListi['id']);

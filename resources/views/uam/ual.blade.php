@@ -62,6 +62,7 @@
 			$('.tbl-overlay').remove();
 			if(data.length != 0)
 			{
+				$('#tbUAList').empty();
 				for (var i = 0; i < data.length; i++) 
 				{
 					$('#tbUAList').append('<tr style="cursor:pointer">\
@@ -99,10 +100,9 @@
 				$('#div_user-entry').append(
 					$('<div />', {'class': 'box-header with-border' }).append(
 						$('<h3 />' , {'class': 'box-title' , 'text': 'View User [Admin]' }),
-						$('<div/>', {'class': 'box-tools pull-right' }).append(
-							$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'button', 'html' : '<i class="fa fa-times-circle"></i>New' }),
+						$('<div/>', {'class': 'box-tools pull-right event-btn' }).append(
+							$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'button', 'onClick':'setNewEntry();', 'html' : '<i class="fa fa-times-circle"></i>New' }),
 							$('<button/>', {'id' : 'clicker' , 'class': 'btn btn-primary btn-sm' ,'type' : 'button', 'html' : '<i class="fa fa-pencil-square"></i>Edit' }),
-							$('<button/>', {'class': 'btn btn-danger btn-sm' ,'type' : 'button', 'html' : '<i class="fa fa-times-circle"></i>Delete' }),
 							$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
 						$('<div />', { 'class' : 'row'}).append(
 							$('<div />', { 'class' : 'col-md-3 col-sm-3'}).append(
@@ -134,7 +134,10 @@
 										'<option value="1">Staff</option>',
 										'<option value="2">Admin</option>',
 										'<option value="3">Super Admin</option>'));
+		       	$("#module").val(data.uinfo.lvl);
+		       	
 		        $(".select2").select2();
+
 				$('#clicker').click(function() {
 			        $('select').each(function() {
 			            if ($(this).attr('disabled')) {
@@ -146,6 +149,13 @@
 			                });
 			            }
 			        });
+			        $('.event-btn').find('.btn-sm').each(function() {
+			            $(this).remove();
+			        });
+
+			        $('.event-btn').prepend(
+			            $('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'button', 'onClick':'updateRecord('+data.uinfo.user_id+');', 'html' : '<i class="fa fa-times-circle"></i>Save'}),
+						$('<button/>', {'id' : 'clicker' , 'class': 'btn btn-danger btn-sm', 'onClick':'defaultDisplay();', 'type' : 'button', 'html' : '<i class="fa fa-pencil-sq;are"></i>Cancel' }));
 			    });
 			}
 			else
@@ -193,7 +203,7 @@
 					$(".select2").select2();
 					for($i = 0 ;  $i < data.userInfoList.length; $i++)
 					{
-						$('#name').append('<option value="1">'+data.userInfoList[$i].fname+' '+data.userInfoList[$i].lname+'</option>');
+						$('#name').append('<option value="'+data.userInfoList[$i].user_id+'">'+data.userInfoList[$i].fname+' '+data.userInfoList[$i].lname+'</option>');
 					}
 				}
 				else
@@ -234,6 +244,59 @@
 				$('<div />' , { 'class' : 'box-footer'}));
 	}
 
+	function saveNewEntry()
+    {
+    	promptConfirmation("Are you sure you want to add this new record?");
+    	$('#btnYes').click(function() {
+    		$_token = "{{ csrf_token() }}";
+    		$uid = $('#name').val();
+	    	$role = $('#module').val();
+	    	$('#div_user-entry').append('<div class="overlay">\
+	        	<i class="fa fa-spinner fa-spin"></i>\
+	        </div>');
+    		$.post('{{URL::Route('addAdmin')}}',{ _token: $_token, role: $role, uid: $uid}, function(data)
+			{
+				if(data.status == "success")
+				{
+					adminUserList();
+					defaultDisplay();
+				}
+				else
+				{
+					$('.overlay').remove();
+				}
+	    		promptMsg(data.status,data.message);
+			});
+    	});
+    	return false;
+    }
+
+    function updateRecord(uid)
+    {
+    	promptConfirmation("Are you sure want to process this changes?");
+    	$('#btnYes').click(function() {
+
+	    	$_token = "{{ csrf_token() }}";
+	    	$role = $('#module').val();
+	    	$('#div_user-entry').append('<div class="overlay">\
+	        	<i class="fa fa-spinner fa-spin"></i>\
+	        </div>');
+    		$.post('{{URL::Route('updateAdmin')}}',{ _token: $_token, role: $role, uid: uid}, function(data)
+			{
+				if(data.status == "success")
+				{
+					adminUserList();
+					defaultDisplay();
+				}
+				else
+				{
+					$('.overlay').remove();
+				}
+	    		promptMsg(data.status,data.message);
+			});
+		});
+    	return false;
+    }
 </script>
 @endsection
 
