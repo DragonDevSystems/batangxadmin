@@ -239,9 +239,11 @@ class ProductController extends Controller {
 		if(!empty($paramCheck))
 		{
 			$images = ProductImage::where('prod_id','=',$paramCheck['id'])->get();
+			$proSpecs = ProductSpecs::where('prod_id','=',$paramCheck['id'])->get();
 			$response[] = array(
 				"productInfo" => $paramCheck,
-				"pro_img" => $images
+				"pro_img" => $images,
+				"pro_specs" => $proSpecs
 			);
 			return View::Make("customer.product.product_preview")->with('mt','home')->with('response',$response);
 		}

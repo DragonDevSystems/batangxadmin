@@ -5,7 +5,7 @@
 							   <div id="products">
 								<div class="slides_container">
 									@for($x = 0 ; $x < count($response[0]['pro_img']) ; $x++)
-									<a href="#" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}productImage/{{$response[0]['pro_img'][$x]['img_file']}}" alt=" " /></a>
+									<a href="#" target="_blank"><img src="{{env('FILE_PATH_CUSTOM')}}productThumbnail/{{$response[0]['pro_img'][$x]['thumbnail_img']}}" alt=" " /></a>
 									@endfor
 								</div>
 								<ul class="pagination">

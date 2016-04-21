@@ -19,6 +19,11 @@
 		});
 	});
 	</script>
+	<style>
+	.table td{
+		   text-align: center;   
+		}
+	</style>
 @endsection
 
 @section('content')
@@ -48,7 +53,6 @@
  	</div>
 		</div>
 	</div>
-</div>
 	@include('customer.includes.footer')
 	<script type="text/javascript">
 		$(document).ready(function() {			
