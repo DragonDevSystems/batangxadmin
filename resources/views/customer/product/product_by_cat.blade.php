@@ -19,7 +19,7 @@
 							 <h2>{{$response[$x]['productInfo']['name']}}</h2>
 							<div class="price-details">
 						       <div class="price-number">
-									<p><span class="rupees">$679.87</span></p>
+									<p><span class="rupees">{{$response[$x]['productPrice']}}</span></p>
 							    </div>
 					       		<div class="add-cart">								
 									<h4><a href="{{ URL::Route('productPreview',[$response[$x]['productInfo']['id'],$response[$x]['productInfo']['name']]) }}">Add to Cart</a></h4>
