@@ -11,6 +11,7 @@ use App\Models\ProductInformation;
 use App\Models\ProductSpecs;
 use App\Models\ProductImage;
 use App\Models\ProCategory;
+use App\Models\ProductPrice;
 use Image;
 use DateTime;
 use File;
@@ -240,8 +241,10 @@ class ProductController extends Controller {
 		{
 			$images = ProductImage::where('prod_id','=',$paramCheck['id'])->get();
 			$proSpecs = ProductSpecs::where('prod_id','=',$paramCheck['id'])->get();
+			$proPrice = ProductPrice::where('prod_id','=',$paramCheck['id'])->where('status','=',1)->first();
 			$response[] = array(
 				"productInfo" => $paramCheck,
+				"productPrice" => (!empty($proPrice)) ? '&#8369; '.$proPrice['price'] : "Not specified" ,
 				"pro_img" => $images,
 				"pro_specs" => $proSpecs
 			);

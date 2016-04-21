@@ -21,7 +21,7 @@
 					<h2>{{$response[0]['productInfo']['name']}}</h2>
 					<p>{{$response[0]['productInfo']['description']}}</p>					
 					<div class="price">
-						<p>Price: <span>$500</span></p>
+						<p>Price: <span>{{$response[0]['productPrice']}}</span></p>
 					</div>
 					<div class="available">
 						<p>Available Options :</p>
