@@ -111,8 +111,10 @@
               $('#btnSubmit').prop('disabled', false);
               if(data.status == "success")
               {
+
                 $('.has-error').empty();
-                $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i> '+data.message+''}));
+                $('#mdl_registration').modal('hide');
+                promptMsg(data.status,data.message)
               }
               else
               {

@@ -124,7 +124,10 @@ class UserController extends Controller {
 						));
 		   				if($auth)
 		   				{
-		   					return Redirect::Route('cusIndex')->with('success','Please check your email to verify your e-mail.Thank you.');
+							return Response::json(array(
+			                    'status'  => 'success',
+			                    'message'  => 'Please check your email to verify your e-mail.Thank you.',
+			                ));
 						}
 					}
 					else
