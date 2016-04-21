@@ -31,16 +31,16 @@ class UserController extends Controller {
 			{
 				if(Auth::Check())
 				{
-					return Redirect::Route('home')->with('success','You already confirmed your email');
+					return Redirect::Route('cusIndex')->with('success','You already confirmed your email');
 				}
 				else
 				{
-					return Redirect::Route('home')->with('success','You already confirmed your email. Please log in now.');
+					return Redirect::Route('cusIndex')->with('success','You already confirmed your email. Please log in now.');
 				}	
 			}
 			else
 			{
-				return Redirect::Route('home')->with('fail','Fail to verify your email. please try again.');
+				return Redirect::Route('cusIndex')->with('fail','Fail to verify your email. please try again.');
 			}
 		}
 	}
@@ -107,7 +107,7 @@ class UserController extends Controller {
 					if ($info -> save())
 					{
 
-						/*$emailcontent = array (
+						$emailcontent = array (
 							'username' => $user -> username,
 						    'link' => URL::route('confirmation', [$vCode , $user -> id])
 
@@ -116,7 +116,7 @@ class UserController extends Controller {
 		    			{ 
 						    $message->to(Input::get('email'),'GameXtreme')->subject('GameXtreme Confirmation Email');
 						    
-		     			});*/
+		     			});
 
 		   				$auth = Auth::attempt(array(
 							'username' => Input::get('username'),
