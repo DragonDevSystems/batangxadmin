@@ -108,6 +108,7 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::post('/uploadProductImage', array('uses' => 'ProductController@uploadProductImage', 'as' => 'uploadProductImage','middleware' => 'auth'));
 				Route::post('/deleteImage', array('uses' => 'ProductController@deleteImage', 'as' => 'deleteImage','middleware' => 'auth'));
 				Route::post('/deleteSpecs', array('uses' => 'ProductController@deleteSpecs', 'as' => 'deleteSpecs','middleware' => 'auth'));
+				Route::post('/addPrice', array('uses' => 'ProductController@addPrice', 'as' => 'addPrice','middleware' => 'auth'));
 			});
 		});
 	});

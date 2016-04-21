@@ -177,6 +177,8 @@ class ProductController extends Controller {
 		$images = ProductImage::where('prod_id','=',$id)->get(array('thumbnail_img','id'));
 		$specs = ProductSpecs::where('prod_id','=',$id)->get(array('specs','id'));
 		$category = ProCategory::where('status','=',1)->get(array('id','name'));
+		$price = ProductPrice::where('prod_id','=',$id)->get();
+		$current_price = ProductPrice::where('prod_id','=',$id)->where('status','=',1)->first();
 		return Response::json(array(
 				"status" => !empty($id) ? "Update product" : "Add product",
 				"id" => !empty($id) ? $id : "new",
@@ -185,6 +187,8 @@ class ProductController extends Controller {
 				"pro_cat_id" =>!empty($information) ? $information['pro_cat_id'] : "",
 				"images" => !empty($images) ? $images : "",
 				"specs" => !empty($specs) ? $specs : "",
+				"price" => !empty($price) ? $price : "",
+				"current_price" => !empty($current_price) ? $current_price['id'] : "",
 				"category" => $category,
 				));	
 	}
@@ -257,5 +261,31 @@ class ProductController extends Controller {
 			return Redirect::route('cusIndex')->with('fail','Product not found,please try again.');
 		}
 		
+	}
+
+	public function addPrice()
+	{
+		$price = Input::get('amount');
+		$id = Input::get('id');
+		
+		$add = new ProductPrice();
+		$add['prod_id'] = $id;
+		$add['price'] = $price;
+		$add['status'] = 0;
+		if($add->save())
+		{
+			$price = ProductPrice::where('prod_id','=',$id)->get();
+			$current_price = ProductPrice::where('prod_id','=',$id)->where('status','=',1)->first();
+			return Response::json(array(
+				"status" => "success",
+				"message" => "Success to add price.",
+				"price" => !empty($price) ? $price : "",
+				"current_price" => !empty($current_price) ? $current_price['id'] : "",
+				));	
+		}
+		return Response::json(array(
+				"status" => "fail",
+				"message" => "fail to add price."
+				));	
 	}
 }

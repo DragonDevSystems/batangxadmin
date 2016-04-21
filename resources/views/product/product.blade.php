@@ -195,7 +195,24 @@
 															            </div>\
 																		<div class="form-group">\
 																		  <label for="description">Description :</label>\
-																		  <textarea style="resize: none;" class="form-control" rows="3"  placeholder="Enter product description..." name="description" id="description" required>'+data.description+'</textarea>\
+																		  <textarea contentEditable="true" style="resize: none;" class="form-control" rows="3"  placeholder="Enter product description..." name="description" id="description" required>'+data.description+'</textarea>\
+																		</div>\
+																		<div class="price_list">\
+																			<div class="form-group ">\
+																			  	<div class="input-group">\
+																				    <input id="input_price" name="input_price" type="text" placeholder="add price" class="form-control" aria-label="...">\
+																					<div class="input-group-btn">\
+																					<button type="button" data-id="'+data.id+'" class="btn btn-default price_add">\
+																						<i class="fa fa-plus" aria-hidden="true"></i>\
+																					</button>\
+																					</div>\
+																				</div>\
+																			</div>\
+																			<div class="form-group">\
+															               		<label for="price">Choose price :</label>\
+																                <select id="price" name="price" class="form-control select2" style="width: 100%;" required>\
+																                </select>\
+																            </div>\
 																		</div>\
 																		<div class="specs_list">\
 																			<label for="specs">Specs :</label>\
@@ -231,6 +248,15 @@
        						$('#category')
 			                  .val(data.pro_cat_id) //select option of select2
 			                  .trigger("change"); //apply to select2
+			                if(data.price.length != 0){
+			                	for (var i = 0; i < data.price.length; i++) 
+								{
+									$('#price').append('<option  value="'+data.price[i].id+'">'+data.price[i].price+'</option>')
+								}
+								$('#price')
+				                  .val(data.current_price) //select option of select2
+				                  .trigger("change"); //apply to select2
+			                }
 			                if(data.images.length != 0){
 			                	for (var i = 0; i < data.images.length; i++) 
 								{
@@ -384,6 +410,36 @@
 			}
 		});
     }
+    
+    $(document).on("click",".price_add",function(){
+    	var id = $(this).data('id');
+    	var amount = $('#input_price').val();
+    	var _token = "{{ csrf_token() }}";
+    	var checkValue= $("#input_price").val().length;
+    	if(checkValue != 0){
+	    	$.post('{{URL::Route('addPrice')}}',{ _token: _token ,amount: amount, id : id} , function(response)
+			{
+				console.log(response);
+				if(response.price.length != 0){
+					$('#price').empty();
+					$('#input_price').val("");
+	            	for (var i = 0; i < response.price.length; i++) 
+					{
+						$('#price').append('<option  value="'+response.price[i].id+'">'+response.price[i].price+'</option>')
+					}
+					$('#price')
+	                  .val(response.current_price) //select option of select2
+	                  .trigger("change"); //apply to select2
+		          	if(response.status == "success"){
+						promptMsg(response.status,response.message);
+					}
+				}
+			});
+		}
+		else{
+			$("#input_price").focus();
+		}
+    });
     $(document).on("click",".plus",function(){
     	
     	var checkValue= $(this).closest(".input-group").find("input").val().length;
