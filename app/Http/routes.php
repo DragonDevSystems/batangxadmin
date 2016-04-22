@@ -112,5 +112,16 @@ Route::group(array('prefix' => '/admin'),function()
 			});
 		});
 	});
+	Route::group(array('prefix' => '/delivery'),function()
+	{
+		Route::group(array('before' => 'auth'), function()
+		{
+			Route::get('/', array('uses' => 'DeliveryController@getDeliveryView', 'as' => 'getDeliveryView','middleware' => 'auth'));
+			Route::group(array('before' => 'csrf'), function()
+			{
+				
+			});
+		});
+	});
 
 });

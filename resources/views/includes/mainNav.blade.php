@@ -54,7 +54,12 @@
         <!--end filemaintenance part -->
         <li class="treeview {{ ($mt == "pt") ? "active" : ""}}">
           <a href="{{ URL::Route('getProductView') }}">
-            <i class="fa fa-users"></i> <span>Products</span> <i class="fa pull-right"></i>
+            <i class="fa fa-gamepad"></i> <span>Products</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
+         <li class="treeview {{ ($mt == "dl") ? "active" : ""}}">
+          <a href="{{ URL::Route('getDeliveryView') }}">
+            <i class="fa fa-truck"></i> <span>Delivery</span> <i class="fa pull-right"></i>
           </a>
         </li>
         <li class="treeview">
