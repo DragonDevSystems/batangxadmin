@@ -130,11 +130,15 @@ class ProductController extends Controller {
 									'prod_id' => $addProductInfo['id'],
 									'status' => 1,
 									));
-			$price = ProductPrice::where('prod_id', $id)
-										->where('status', 1)
-            							->update(array('status' => 0));
-            $update = ProductPrice::where('id', $price)
+			if(!empty($price))
+			{
+				$cleanPrice = ProductPrice::where('prod_id', $id)
+											->where('status', 1)
+	            							->update(array('status' => 0));
+	            $update = ProductPrice::where('id', $price)
             							->update(array('status' => 1));
+			}
+
 			if(!empty($specs)){
 				foreach ($specs as $specsi) {
 					$addProductSpecs = new ProductSpecs();

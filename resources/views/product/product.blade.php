@@ -200,9 +200,9 @@
 																		<div class="price_list">\
 																			<div class="form-group ">\
 																			  	<div class="input-group">\
-																				    <input id="input_price" name="input_price" type="text" placeholder="add price" class="form-control" aria-label="...">\
+																				    <input id="input_price" name="input_price" type="text" placeholder="add price" class="form-control" aria-label="..." disabled>\
 																					<div class="input-group-btn">\
-																					<button type="button" data-id="'+data.id+'" class="btn btn-default price_add">\
+																					<button type="button" data-id="'+data.id+'" class="btn btn-default price_add" disabled>\
 																						<i class="fa fa-plus" aria-hidden="true"></i>\
 																					</button>\
 																					</div>\
@@ -210,7 +210,7 @@
 																			</div>\
 																			<div class="form-group">\
 															               		<label for="price">Choose price :</label>\
-																                <select id="price" name="price" class="form-control select2" style="width: 100%;" required>\
+																                <select id="price" name="price" class="form-control select2" style="width: 100%;" required disabled>\
 																                </select>\
 																            </div>\
 																		</div>\
@@ -256,6 +256,12 @@
 								$('#price')
 				                  .val(data.current_price) //select option of select2
 				                  .trigger("change"); //apply to select2
+			                }
+			                if(data.id != "new")
+			                {
+			                	$('select,input[type=text],.price_add').each(function() {
+						                $(this).removeAttr('disabled');
+						        });
 			                }
 			                if(data.images.length != 0){
 			                	for (var i = 0; i < data.images.length; i++) 
