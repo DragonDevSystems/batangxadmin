@@ -268,8 +268,8 @@ class UserController extends Controller {
 		if(!empty($PasswordRecovery))
 		{
 			$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfo($id);
-			return View('user.resetPassword')
-					->with('mt',"li")
+			return View('customer.user.resetPassword')
+					->with('mt',"home")
 						->with('userInfo',$userInfo)
 							->with('code',$code);
 		}
@@ -278,6 +278,53 @@ class UserController extends Controller {
 			return Redirect::Route("cusIndex")->with("fail","You cannot continue this process, maybe your request link is already expired or invalid link. You ask another request to reset your account password.")->with('mt', "db");
 		}
 
+	}
+
+	public function processResetPass()
+	{
+		$id = Input::get('userid');
+		$code = Input::get('vcode');
+		$pass = Input::get('pass');
+		$PasswordRecovery = PasswordRecovery::where("user_id","=",$id)->where("vcode","=",$code)->first();
+		if(!empty($PasswordRecovery))
+		{
+			$update = User::find($id);
+			if(!empty($update))
+			{
+				$update['password'] = Hash::make($pass);
+				if($update->save())
+				{
+					if($PasswordRecovery->delete())
+					{
+						return Response::json(array(
+		                    'status'  => 'success',
+		                    'message'  => 'Your password is successfully change. You may log in now.Thank you.',
+		                ));
+					}
+					else
+					{
+						return Response::json(array(
+		                    'status'  => 'fail',
+		                    'message'  => 'An error occured while reseting your password. Please try again.',
+		                ));
+					}
+				}
+				else
+				{
+					return Response::json(array(
+		                    'status'  => 'fail',
+		                    'message'  => 'An error occured while reseting your password. Please try again.',
+		                ));
+				}
+			}
+		}
+		else
+		{
+			return Response::json(array(
+		                    'status'  => 'fail',
+		                    'message'  => 'You cannot continue this process, maybe your request link is already expired or invalid link. You ask another request to reset your account password.',
+		                ));
+		}
 	}
 
 }

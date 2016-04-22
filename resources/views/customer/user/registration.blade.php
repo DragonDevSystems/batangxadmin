@@ -54,7 +54,7 @@
           </div>
           <div class="row">
             <div class="col-xs-8">
-              <a href="javascript::void(0)" class="btn_reset">I forgot my password</a><br>
+              <a href="javascript:void(0);" class="btn_reset">I forgot my password</a><br>
             </div>
             <!-- /.col -->
             <div class="col-xs-4">
