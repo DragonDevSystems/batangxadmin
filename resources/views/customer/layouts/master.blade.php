@@ -39,6 +39,7 @@
 	@yield('content')
 	@include('customer.user.login')
 	@include('customer.user.registration')
+	@include('customer.user.resetPass')
 	<script type="text/javascript">
 		$('.btn_login').click(function()
 		{
@@ -48,6 +49,13 @@
 		$('.btn_registration').click(function()
 			{
 				$('#mdl_registration').modal('show');
+			}
+		);
+		$('.btn_reset').click(function()
+			{
+				$('#mdl_login').modal('hide');
+				$('#mdl_registration').modal('hide');
+				$('#mdl_reset').modal('show');
 			}
 		);
 		$(document).ready(function() {			

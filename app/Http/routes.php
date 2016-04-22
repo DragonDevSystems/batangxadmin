@@ -40,6 +40,8 @@ Route::group(array('prefix' => '/admin'),function()
 		{
 			Route::post('/user/create', array('uses' => 'UserController@postCreate', 'as' => 'postCreate'));
 			Route::post('/user/login',array('uses' => 'UserController@postLogin', 'as' => 'postLogin')); 
+			Route::post('/user/resetpass',array('uses' => 'UserController@resetPass', 'as' => 'resetPass')); 
+			Route::get('/user/getPassReset/{code}/{id}',array('uses' => 'UserController@getPassReset', 'as' => 'getPassReset'));
 		});
 	});
 

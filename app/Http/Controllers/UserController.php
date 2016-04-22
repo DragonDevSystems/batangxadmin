@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Info;
 use App\Models\User;
+use App\Models\PasswordRecovery;
 use Validator;
 use Input;
 use Response;
@@ -14,6 +15,7 @@ use Request;
 use Hash;
 use URL;
 use Mail;
+use App;
 class UserController extends Controller {
 
 	public function getLogin()
@@ -212,4 +214,70 @@ class UserController extends Controller {
 		Auth::logout();
 		return Redirect::route('cusIndex');
 	}
+
+	public function resetPass()
+	{
+		$email = Input::get('txtUsername');
+		$field = filter_var($email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+		$result = User::where($field,'=',$email)->first();
+		if(empty($result))
+		{
+			return Response::json(array(
+		                    'status'  => 'fail',
+		                    'message'  => 'No email/username found.',
+		                ));
+		}
+		else
+		{
+			$date = new DateTime();
+			$vCode = date_format($date, 'U').str_random(110);
+			$PasswordRecovery = PasswordRecovery::where("user_id","=",$result['id'])->first();
+			if(empty($PasswordRecovery))
+			{
+				$PasswordRecovery = new PasswordRecovery();
+				$PasswordRecovery -> user_id = $result['id'];
+				$PasswordRecovery -> vcode = $vCode;
+			}
+			else
+			{
+				$PasswordRecovery -> vcode = $vCode;
+			}
+			if($PasswordRecovery->save())
+			{
+				$emailcontent = array (
+					'username' => $result->username,
+				    'link' => URL::route('getPassReset', [$vCode , $result ->id])
+			    );
+				Mail::send('email.forgot', $emailcontent, function($message) use ($result)
+				{
+					$message->to($result['email'],'GameXtreme')->subject('GameXtreme recovery password Email');
+				});
+
+				return Response::json(array(
+		                    'status'  => 'success',
+		                    'message'  => 'Password reset recovery successfully process, please check you email to continue your request.Thank you',
+		                ));
+			}
+
+		}
+	}
+
+	public function getPassReset($code,$id)
+	{
+		$PasswordRecovery = PasswordRecovery::where("user_id","=",$id)->where("vcode","=",$code)->first();
+		if(!empty($PasswordRecovery))
+		{
+			$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfo($id);
+			return View('user.resetPassword')
+					->with('mt',"li")
+						->with('userInfo',$userInfo)
+							->with('code',$code);
+		}
+		else
+		{
+			return Redirect::Route("cusIndex")->with("fail","You cannot continue this process, maybe your request link is already expired or invalid link. You ask another request to reset your account password.")->with('mt', "db");
+		}
+
+	}
+
 }
