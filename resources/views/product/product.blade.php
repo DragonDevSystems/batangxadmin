@@ -368,8 +368,6 @@
 									$specs[$x]= $(this).val();
 									$x++;
 								});
-								alert($specs);
-								
 								var check = $('.formAddProduct').find('.browse').find('.image_wrapper').length;
 								$this = $(this);
 								if(!$.trim(name) == '' && !$.trim(category) == '' && !$.trim(description) == ''){
