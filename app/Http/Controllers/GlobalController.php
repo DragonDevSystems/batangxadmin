@@ -9,10 +9,12 @@ use App\Models\ProductSpecs;
 use App\Models\ProductImage;
 use App\Models\ProCategory;
 use App\Models\ProductPrice;
+use App\Models\AuditTrail;
 use Auth;
 use DB;
 use Input;
 use Response;
+use Request;
 
 class GlobalController extends Controller {
 
@@ -187,10 +189,23 @@ class GlobalController extends Controller {
 			$proPrice = ProductPrice::where('prod_id','=',$topNewProducti['id'])->where('status','=',1)->first();
 			$response[] = array(
 				"productInfo" => $topNewProducti,
-				"productPrice" => (!empty($proPrice)) ? '&#8369; '.$proPrice['price'] : "Not specified" ,
+				"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Not specified" ,
 				"pro_img" => $images
 			);
 		}
 		return $response;
+	}
+
+	public function auditTrail($action,$dataId,$details)
+	{
+		$ip = Request::ip();
+
+		$insert = new AuditTrail();
+		$insert['action'] = $action;
+		$insert['data_id'] = $dataId;
+		$insert['user_id'] = Auth::User()['id'];
+		$insert['details'] = $details;
+		$insert['ip_address'] = $ip;
+		return (!$insert->save()) ? false : true ;
 	}
 }

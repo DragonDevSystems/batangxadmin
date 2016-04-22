@@ -193,6 +193,7 @@ class UserController extends Controller {
 					$adminLvl = ['1','2','3'];
 					if(in_array(Auth::User()['isAdmin'],$adminLvl))
 					{
+						App::make("App\Http\Controllers\GlobalController")->auditTrail("user",Auth::User()['id'],"Login");
 						return 1;
 					}
 					else
@@ -211,6 +212,7 @@ class UserController extends Controller {
 
 	public function getLogout()
 	{
+		App::make("App\Http\Controllers\GlobalController")->auditTrail("user",Auth::User()['id'],"Logout");
 		Auth::logout();
 		return Redirect::route('cusIndex');
 	}

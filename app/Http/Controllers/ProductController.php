@@ -153,7 +153,8 @@ class ProductController extends Controller {
 					}
 				}
 			}
-			
+			$action = ($id == "new") ? "Add" : "Update";
+			App::make("App\Http\Controllers\GlobalController")->auditTrail("product",$addProductInfo['id'],$action." Product ".$addProductInfo['name'].".");
 			return Response::json(array(
 					"status" => "success",
 					"message" => ($id == "new") ? "Success to add product." : "Success to update product.",
@@ -208,7 +209,9 @@ class ProductController extends Controller {
 	{
 		$id = Input::get('specs');
 		$getSpecs = ProductSpecs::find($id);
+		$information = ProductInformation::find($getSpecs['prod_id']);
 		if(!empty($getSpecs)){
+			App::make("App\Http\Controllers\GlobalController")->auditTrail("product",$getSpecs['prod_id'],"Delete specs ".$getSpecs['specs']."for product".$information['name'].".");
 			if($getSpecs->delete()){
 				return Response::json(array(
 					"status" => "success",
@@ -241,7 +244,7 @@ class ProductController extends Controller {
 					$proPrice = ProductPrice::where('prod_id','=',$productListi['id'])->where('status','=',1)->first();
 					$response[] = array(
 						"productInfo" => $productListi,
-						"productPrice" => (!empty($proPrice)) ? '&#8369; '.$proPrice['price'] : "Price N/A" ,
+						"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
 						"pro_img" => $images['thumbnail_img']
 					);
 				}
@@ -261,7 +264,7 @@ class ProductController extends Controller {
 			$proPrice = ProductPrice::where('prod_id','=',$paramCheck['id'])->where('status','=',1)->first();
 			$response[] = array(
 				"productInfo" => $paramCheck,
-				"productPrice" => (!empty($proPrice)) ? '&#8369; '.$proPrice['price'] : "Not specified" ,
+				"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Not specified" ,
 				"pro_img" => $images,
 				"pro_specs" => $proSpecs
 			);
@@ -285,6 +288,8 @@ class ProductController extends Controller {
 		$add['status'] = 0;
 		if($add->save())
 		{
+			$information = ProductInformation::find($add['prod_id']);
+			App::make("App\Http\Controllers\GlobalController")->auditTrail("product",$add['prod_id'],"Add price ".$add['price']." for product ".$information['name']."");
 			$price = ProductPrice::where('prod_id','=',$id)->get();
 			$current_price = ProductPrice::where('prod_id','=',$id)->where('status','=',1)->first();
 			return Response::json(array(
