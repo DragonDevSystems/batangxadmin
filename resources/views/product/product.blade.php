@@ -303,7 +303,7 @@
 							else{
 								$('.specs_list').append('<div class="form-group ">\
 														  	<div class="input-group">\
-															    <input type="text" name="specs" placeholder="add specs" class="form-control" aria-label="...">\
+															    <input type="text" name="specs[]" placeholder="add specs" class="form-control new_specs" aria-label="...">\
 																<div class="input-group-btn">\
 																<button type="button" class="btn btn-default plus">\
 																	<i class="fa fa-plus" aria-hidden="true"></i>\
@@ -364,10 +364,12 @@
 								var id = $(this).data('id');
 								$specs =[];
 								$x = 0;
-								$("input[name='specs']").each(function(){
+								$(".new_specs").each(function(){
 									$specs[$x]= $(this).val();
 									$x++;
 								});
+								alert($specs);
+								
 								var check = $('.formAddProduct').find('.browse').find('.image_wrapper').length;
 								$this = $(this);
 								if(!$.trim(name) == '' && !$.trim(category) == '' && !$.trim(description) == ''){
@@ -456,7 +458,7 @@
     		$(this).html('<i class="fa fa-minus" aria-hidden="true"></i>').addClass('minus').removeClass('plus');
 	    	$('.specs_list').append('<div class="form-group ">\
 									  	<div class="input-group">\
-										    <input type="text" name="specs" placeholder="add specs" class="form-control">\
+										    <input type="text" name="specs[]" placeholder="add specs" class="form-control new_specs">\
 											<div class="input-group-btn">\
 											<button type="button" class="btn btn-default plus">\
 												<i class="fa fa-plus" aria-hidden="true"></i>\
