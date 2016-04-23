@@ -262,9 +262,11 @@ class ProductController extends Controller {
 			$images = ProductImage::where('prod_id','=',$paramCheck['id'])->get();
 			$proSpecs = ProductSpecs::where('prod_id','=',$paramCheck['id'])->get();
 			$proPrice = ProductPrice::where('prod_id','=',$paramCheck['id'])->where('status','=',1)->first();
+			$qty = App::make("App\Http\Controllers\GlobalController")->availabilityCheck($paramCheck['id']);
 			$response[] = array(
 				"productInfo" => $paramCheck,
 				"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Not specified" ,
+				"pro_qty" => (!empty($qty)) ? "Available" : "Out of Stocks" ,
 				"pro_img" => $images,
 				"pro_specs" => $proSpecs
 			);

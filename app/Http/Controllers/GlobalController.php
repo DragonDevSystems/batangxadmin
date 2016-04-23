@@ -10,6 +10,7 @@ use App\Models\ProductImage;
 use App\Models\ProCategory;
 use App\Models\ProductPrice;
 use App\Models\AuditTrail;
+use App\Models\ProductInventory;
 use Auth;
 use DB;
 use Input;
@@ -189,7 +190,7 @@ class GlobalController extends Controller {
 			$proPrice = ProductPrice::where('prod_id','=',$topNewProducti['id'])->where('status','=',1)->first();
 			$response[] = array(
 				"productInfo" => $topNewProducti,
-				"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Not specified" ,
+				"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
 				"pro_img" => $images
 			);
 		}
@@ -207,5 +208,11 @@ class GlobalController extends Controller {
 		$insert['details'] = $details;
 		$insert['ip_address'] = $ip;
 		return (!$insert->save()) ? false : true ;
+	}
+
+	public function availabilityCheck($pid)
+	{
+		$check = ProductInventory::where("prod_id","=",$pid)->first();
+		return (!empty($check)) ? $check['qty'] : 0;
 	}
 }

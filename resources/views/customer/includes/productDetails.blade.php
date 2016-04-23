@@ -24,7 +24,7 @@
 						<p>Price: <span>{{$response[0]['productPrice']}}</span></p>
 					</div>
 					<div class="available">
-						<p>Available Options :</p>
+						<p>Status:  <font color='{{($response[0]["pro_qty"] == "Available") ? "green" : "red"}}' size="4">{{$response[0]['pro_qty']}}</font></p>
 					<ul>
 						<li>Quality:<select>
 							<option>1</option>
