@@ -306,4 +306,24 @@ class ProductController extends Controller {
 				"message" => "fail to add price."
 				));	
 	}
+
+	public function addToCart()
+	{
+		$cus_id = Auth::User()['id'];
+		$prod_id = Input::get('prod_id');
+		$qty = Input::get('qty');
+		$qtyCheck = App::make("App\Http\Controllers\GlobalController")->availabilityCheck($prod_id);
+		if(empty($qtyCheck))
+		{
+			return Response::json(array(
+					"status" => "fail",
+					"message" => "Sorry, the product that you are trying to add in your cart is already out of stock.",
+				));
+		}
+		return Response::json(array(
+			"status" => "fail",
+			"message" => "Available",
+		));
+
+	}
 }

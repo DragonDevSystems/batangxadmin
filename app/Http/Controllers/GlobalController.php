@@ -211,8 +211,8 @@ class GlobalController extends Controller {
 	}
 
 	public function availabilityCheck($pid)
-	{
-		$check = ProductInventory::where("prod_id","=",$pid)->first();
-		return (!empty($check)) ? $check['qty'] : 0;
+	{	
+		$check = ProductInventory::where("prod_id","=",$pid)->first()['qty'];
+		return (!empty($check)) ? $check : 0;
 	}
 }
