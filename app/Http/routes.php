@@ -118,9 +118,12 @@ Route::group(array('prefix' => '/admin'),function()
 		Route::group(array('before' => 'auth'), function()
 		{
 			Route::get('/', array('uses' => 'DeliveryController@getDeliveryView', 'as' => 'getDeliveryView','middleware' => 'auth'));
+			Route::get('/getReceiptList', array('uses' => 'DeliveryController@getReceiptList', 'as' => 'getReceiptList','middleware' => 'auth'));
 			Route::group(array('before' => 'csrf'), function()
 			{
-				
+				Route::post('/addDelivery', array('uses' => 'DeliveryController@addDelivery', 'as' => 'addDelivery','middleware' => 'auth'));
+				Route::post('/deleteDeliveryProduct', array('uses' => 'DeliveryController@deleteDeliveryProduct', 'as' => 'deleteDeliveryProduct','middleware' => 'auth'));
+				Route::post('/addReceipt', array('uses' => 'DeliveryController@addReceipt', 'as' => 'addReceipt','middleware' => 'auth'));
 			});
 		});
 	});
