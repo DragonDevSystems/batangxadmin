@@ -57,9 +57,14 @@
             <i class="fa fa-gamepad"></i> <span>Products</span> <i class="fa pull-right"></i>
           </a>
         </li>
-         <li class="treeview {{ ($mt == "dl") ? "active" : ""}}">
+        <li class="treeview {{ ($mt == "dl") ? "active" : ""}}">
           <a href="{{ URL::Route('getDeliveryView') }}">
             <i class="fa fa-truck"></i> <span>Delivery</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
+        <li class="treeview {{ ($mt == "ml") ? "active" : ""}}">
+          <a href="{{ URL::Route('getContactMailView') }}">
+            <i class="fa fa-envelope-o"></i> <span>Contact Mail</span> <i class="fa pull-right"></i>
           </a>
         </li>
         <li class="treeview">

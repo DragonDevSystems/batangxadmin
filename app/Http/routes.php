@@ -127,5 +127,15 @@ Route::group(array('prefix' => '/admin'),function()
 			});
 		});
 	});
-
+	Route::group(array('prefix' => '/contact-mail'),function()
+	{
+		Route::group(array('before' => 'auth'), function()
+		{
+			Route::get('/', array('uses' => 'ContactMailController@getContactMailView', 'as' => 'getContactMailView','middleware' => 'auth'));
+			Route::group(array('before' => 'csrf'), function()
+			{
+				
+			});
+		});
+	});
 });
