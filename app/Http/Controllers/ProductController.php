@@ -329,10 +329,11 @@ class ProductController extends Controller {
 			));
 		}
 		$update = ProductInventory::where("prod_id","=",$prod_id)->first();
+		$update['qty'] = $update['qty'] - $qty;
+		$update->save();
 		return Response::json(array(
 			"status" => "success",
 			"message" => "Available",
 		));
-
 	}
 }
