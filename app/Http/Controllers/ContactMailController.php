@@ -7,6 +7,7 @@ use View;
 use Input;
 use Response;
 use Redirect;
+use App\Models\ContactUs;
 
 class ContactMailController extends Controller {
 
@@ -17,8 +18,11 @@ class ContactMailController extends Controller {
 
 	public function getContactMailView()
 	{
+		$ContactUs = ContactUs::paginate(10);
+
 		return View::make('contactmail.contactmail')->with("userInfo",$this->userInfo())
-									->with('mt',"ml");
+									->with('mt',"ml")
+									->with('ContactUs',$ContactUs);
 	}
 
 }
