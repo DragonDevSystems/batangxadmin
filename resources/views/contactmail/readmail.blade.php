@@ -57,8 +57,9 @@
                   <i class="fa fa-print"></i></button>
               </div>
               <!-- /.mailbox-controls -->
-              <div class="mailbox-read-message" contenteditable="false">
-                {!! str_replace("\n","<br>", $mail->message) !!}
+              <div class="mailbox-read-message">
+                <p>{!! str_replace("\n","<br>", $mail->message) !!}
+                </p>
               </div>
               <!-- /.mailbox-read-message -->
             </div>
