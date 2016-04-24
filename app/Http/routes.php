@@ -132,6 +132,8 @@ Route::group(array('prefix' => '/admin'),function()
 		Route::group(array('before' => 'auth'), function()
 		{
 			Route::get('/', array('uses' => 'ContactMailController@getContactMailView', 'as' => 'getContactMailView','middleware' => 'auth'));
+			Route::get('/compose', array('uses' => 'ContactMailController@getComposeMailView', 'as' => 'getComposeMailView','middleware' => 'auth'));
+			Route::get('/read-mail/{id}', array('uses' => 'ContactMailController@getReadMailView', 'as' => 'getReadMailView','middleware' => 'auth'));
 			Route::group(array('before' => 'csrf'), function()
 			{
 				

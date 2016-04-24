@@ -41,6 +41,8 @@
 		<link rel="stylesheet" href="{{env('FILE_PATH_CUSTOM')}}dist/css/skins/_all-skins.min.css">
 		<!-- Bootstrap 3.3.6 -->
 		<script src="{{env('FILE_PATH_CUSTOM')}}bootstrap/js/bootstrap.min.js"></script>
+		<!-- bootstrap wysihtml5 - text editor -->
+  		<link rel="stylesheet" href="{{env('FILE_PATH_CUSTOM')}}plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
 		<!-- FLOT CHARTS -->
 		<!--<script src="{{env('FILE_PATH_CUSTOM')}}plugins/flot/jquery.flot.min.js"></script>-->
@@ -188,5 +190,7 @@
 	<script src="{{env('FILE_PATH_CUSTOM')}}dist/js/pages/dashboard.js"></script>
 	<!-- iCheck -->
 	<script src="{{env('FILE_PATH_CUSTOM')}}plugins/iCheck/icheck.min.js"></script>
+	<!-- Bootstrap WYSIHTML5 -->
+	<script src="{{env('FILE_PATH_CUSTOM')}}plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 </body>
 </html>

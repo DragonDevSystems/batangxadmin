@@ -24,34 +24,7 @@
     <!-- Main content -->
     <section class="content">
 		<div class="row">
-        <div class="col-md-3">
-          <a href="compose.html" class="btn btn-primary btn-block margin-bottom">Compose</a>
-
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">Folders</h3>
-
-              <div class="box-tools">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="box-body no-padding">
-              <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#"><i class="fa fa-inbox"></i> Inbox
-                  <span class="label label-primary pull-right">12</span></a></li>
-                <li><a href="#"><i class="fa fa-envelope-o"></i> Sent</a></li>
-                <li><a href="#"><i class="fa fa-file-text-o"></i> Drafts</a></li>
-                <li><a href="#"><i class="fa fa-filter"></i> Junk <span class="label label-warning pull-right">65</span></a>
-                </li>
-                <li><a href="#"><i class="fa fa-trash-o"></i> Trash</a></li>
-              </ul>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /. box -->
-          <!-- /.box -->
-        </div>
+         @include('includes.mailNav')
         <!-- /.col -->
         <div class="col-md-9">
           <div class="box box-primary">
@@ -67,10 +40,7 @@
                 <div class="btn-group">
                   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
                   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
                 </div>
-                <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
               </div>
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped">
@@ -80,7 +50,7 @@
                    <tr>
                     <td><input type="checkbox"></td>
                     <td class="mailbox-star"><a href="javascript:void(0)"><i class="fa fa-star text-yellow"></i></a></td>
-                    <td class="mailbox-name"><a href="javascript:void(0)">{{$mail['name']}}</a></td>
+                    <td class="mailbox-name"><a href="{{ URL::Route('getReadMailView',$mail['id']) }}">{{$mail['name']}}</a></td>
                     <td class="mailbox-subject"><b>{{$mail['company']}}</b> - {{str_limit($mail['message'], $limit = 60, $end = '...')}}
                     </td>
                     <td class="mailbox-attachment"></td>
