@@ -26,12 +26,12 @@
 		<div class="available">
 			<p>Status:  <font color='{{($response[0]["pro_qty"] == "Available") ? "green" : "red"}}' size="4">{{$response[0]['pro_qty']}}</font></p>
 			<ul>
-				<li>Quality:<select>
-					<option>1</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
-					<option>5</option>
+				<li>Quality:<select id="qty">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
 				</select></li>
 			</ul>
 		</div>
@@ -48,9 +48,10 @@
 	{
 		$availability = "{{$response[0]["pro_qty"]}}";
 		var _token = "{{ csrf_token() }}";
+		var qty = $('#qty').val();
 		if($availability == "Available")
 		{
-			$.post('{{URL::Route('addToCart')}}',{ _token: _token ,  prod_id: pid},function(response)
+			$.post('{{URL::Route('addToCart')}}',{ _token: _token ,  prod_id: pid ,  qty: qty},function(response)
    		 	{
    		 		if(response.length != 0)
 				{

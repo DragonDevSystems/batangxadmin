@@ -12,6 +12,7 @@ use App\Models\ProductSpecs;
 use App\Models\ProductImage;
 use App\Models\ProCategory;
 use App\Models\ProductPrice;
+use App\Models\ProductInventory;
 use Image;
 use DateTime;
 use File;
@@ -320,8 +321,16 @@ class ProductController extends Controller {
 					"message" => "Sorry, the product that you are trying to add in your cart is already out of stock.",
 				));
 		}
+		if($qtyCheck < $qty)
+		{
+			return Response::json(array(
+				"status" => "fail",
+				"message" => "Sorry, the number of item of the product that you are trying to add in your cart is already not enought in your order.",
+			));
+		}
+		$update = ProductInventory::where("prod_id","=",$prod_id)->first();
 		return Response::json(array(
-			"status" => "fail",
+			"status" => "success",
 			"message" => "Available",
 		));
 
