@@ -10,6 +10,7 @@ use Redirect;
 use App\Models\ProductInformation;
 use App\Models\ProductDelivery;
 use App\Models\ProductDeliveryReceipt;
+use App\Models\ProductInventory;
 
 class DeliveryController extends Controller {
 
@@ -92,6 +93,15 @@ class DeliveryController extends Controller {
             $products = ProductDelivery::where('receipt_num', '=', 0)
 									->where('user_id', '=', Auth::User()['id'])
 										->update(array('receipt_num' => $addReceipt['id']));
+			$getNewDelivery = ProductDelivery::where('receipt_num','=',$addReceipt['id'])->get();
+			if(!empty($getNewDelivery))
+			{
+				foreach ($getNewDelivery as $getNewDeliveryi) {
+					$update = ProductInventory::where("prod_id","=",$getNewDeliveryi['prod_id'])->first();
+					$update['qty'] = $update['qty'] + $getNewDeliveryi['qty'];
+					$update->save();
+				}
+			}
 			return Response::json(array(
 							"status" => "success",
 							"message" => "Add success.",
