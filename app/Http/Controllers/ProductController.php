@@ -13,9 +13,11 @@ use App\Models\ProductImage;
 use App\Models\ProCategory;
 use App\Models\ProductPrice;
 use App\Models\ProductInventory;
+use App\Models\ProductOnCart;
 use Image;
 use DateTime;
 use File;
+use Request;
 
 class ProductController extends Controller {
 
@@ -314,6 +316,7 @@ class ProductController extends Controller {
 		$prod_id = Input::get('prod_id');
 		$qty = Input::get('qty');
 		$qtyCheck = App::make("App\Http\Controllers\GlobalController")->availabilityCheck($prod_id);
+
 		if(empty($qtyCheck))
 		{
 			return Response::json(array(
@@ -321,6 +324,7 @@ class ProductController extends Controller {
 					"message" => "Sorry, the product that you are trying to add in your cart is already out of stock.",
 				));
 		}
+
 		if($qtyCheck < $qty)
 		{
 			return Response::json(array(
@@ -328,12 +332,22 @@ class ProductController extends Controller {
 				"message" => "Sorry, the number of item of the product that you are trying to add in your cart is already not enought in your order.",
 			));
 		}
+
 		$update = ProductInventory::where("prod_id","=",$prod_id)->first();
 		$update['qty'] = $update['qty'] - $qty;
-		$update->save();
+		if($update->save())
+		{
+			$addCart = new ProductOnCart();
+			$addCart['prod_id'] = $prod_id;
+			$addCart['cus_id'] = $cus_id;
+			$addCart['qty'] = $qty;
+			$addCart['ip_address'] = Request::ip();
+			$addCart->save();
+		}
+
 		return Response::json(array(
 			"status" => "success",
-			"message" => "Available",
+			"message" => "The product is succesfully added in your cart.",
 		));
 	}
 }
