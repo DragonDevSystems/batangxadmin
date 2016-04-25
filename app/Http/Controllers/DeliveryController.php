@@ -98,8 +98,18 @@ class DeliveryController extends Controller {
 			{
 				foreach ($getNewDelivery as $getNewDeliveryi) {
 					$update = ProductInventory::where("prod_id","=",$getNewDeliveryi['prod_id'])->first();
-					$update['qty'] = $update['qty'] + $getNewDeliveryi['qty'];
-					$update->save();
+					if(!empty($update))
+					{
+						$update['qty'] = $update['qty'] + $getNewDeliveryi['qty'];
+						$update->save();
+					}
+					else
+					{
+						$add = new ProductInventory();
+						$add['prod_id'] = $getNewDeliveryi['prod_id'];
+						$add['qty'] = $getNewDeliveryi['qty'];
+						$add->save();
+					}
 				}
 			}
 			return Response::json(array(
