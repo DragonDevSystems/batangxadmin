@@ -12,6 +12,7 @@ use App\Models\ProductPrice;
 use App\Models\AuditTrail;
 use App\Models\ProductInventory;
 use App\Models\ProductOnCart;
+use App\Models\UserImage;
 use Auth;
 use DB;
 use Input;
@@ -73,7 +74,13 @@ class GlobalController extends Controller {
 
 	public function userDpv2($id)
 	{
-		return "img/person1.png";//.$userDPics;
+		$checkDP = UserImage::where('user_id','=',$id)
+											->where('dp','=',1)
+												->first();
+		if(!empty($checkDP)){
+			return "userImage/".$checkDP['img_thumbnail'];
+		}
+		return "img/no-profile.png";//.$userDPics;
 	}
 
 	public function statsbox()

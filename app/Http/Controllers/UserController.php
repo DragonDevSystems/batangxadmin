@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Info;
 use App\Models\User;
 use App\Models\PasswordRecovery;
+use App\Models\UserImage;
 use Validator;
 use Input;
 use Response;
@@ -16,6 +17,7 @@ use Hash;
 use URL;
 use Mail;
 use App;
+use Image;
 class UserController extends Controller {
 
 	public function getLogin()
@@ -327,6 +329,50 @@ class UserController extends Controller {
 		                    'message'  => 'You cannot continue this process, maybe your request link is already expired or invalid link. You ask another request to reset your account password.',
 		                ));
 		}
+	}
+
+	public function uploadProfilePicture()
+	{
+		$image = Input::file('input_profile_image');
+		if(!empty($image))
+		{
+			$date = new DateTime();
+			$tn_name = date_format($date, 'U').str_random(110).'.'.$image->getClientOriginalExtension();
+			$iname = date_format($date, 'U').str_random(110).'.'.$image->getClientOriginalExtension();
+			$data = getimagesize($image->getRealPath());
+			$newResizing = App::make('App\Http\Controllers\GlobalController')->imageResized($data[0],$data[1],750);
+			$move = Image::make($image->getRealPath())->resize($newResizing['width'],$newResizing['height'])->save(env("FILE_PATH_INTERVENTION").'userImage/'.$iname);
+			$newResizingTN = App::make('App\Http\Controllers\GlobalController')->imageResized($data[0],$data[1],260);
+			$move_tn = Image::make($image->getRealPath())->resize($newResizingTN['width'],$newResizingTN['height'])->save(env("FILE_PATH_INTERVENTION").'userImage/'.$tn_name);
+
+			if($move_tn && $move)
+			{
+				$checkDP = UserImage::where('user_id','=',Auth::User()['id'])
+											->where('dp','=',1)
+												->update(array("dp" => 0));
+				$addImage = new UserImage();
+				$addImage['img_filename'] = $iname;
+				$addImage['img_thumbnail'] = $tn_name;
+				$addImage['dp'] = 1;
+				$addImage['user_id'] = Auth::User()['id'];
+				if($addImage->save())
+				{
+					return Response::json(array(
+		                    'status'  => 'success',
+		                    'message'  => 'Succes to upload image',
+		                    "image" => 'userImage/'.$tn_name,
+		                ));
+				}
+				return Response::json(array(
+		                    'status'  => 'fail',
+		                    'message'  => 'Fail to upload image',
+		                ));
+			}
+		}
+		return Response::json(array(
+		                    'status'  => 'fail',
+		                    'message'  => 'Fail to upload image',
+		                ));
 	}
 
 }
