@@ -73,6 +73,7 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::post('/addAdmin', array('uses' => 'UAMController@addAdmin', 'as' => 'addAdmin','middleware' => 'auth'));
 				Route::post('/updateAdmin', array('uses' => 'UAMController@updateAdmin', 'as' => 'updateAdmin','middleware' => 'auth'));
 				Route::post('/addToCart', array('uses' => 'ProductController@addToCart', 'as' => 'addToCart','middleware' => 'auth'));
+				Route::get('/admin/productOnCart', array('uses' => 'GlobalController@productOnCart', 'as' => 'productOnCart','middleware' => 'auth'));
 			});
 		});
 		Route::get('/topNewProduct/{take}', array('uses' => 'GlobalController@topNewProduct', 'as' => 'topNewProduct'));

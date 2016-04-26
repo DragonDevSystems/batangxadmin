@@ -11,6 +11,7 @@ use App\Models\ProCategory;
 use App\Models\ProductPrice;
 use App\Models\AuditTrail;
 use App\Models\ProductInventory;
+use App\Models\ProductOnCart;
 use Auth;
 use DB;
 use Input;
@@ -214,5 +215,30 @@ class GlobalController extends Controller {
 	{	
 		$check = ProductInventory::where("prod_id","=",$pid)->first()['qty'];
 		return (!empty($check)) ? $check : 0;
+	}
+
+	public function productOnCart()
+	{
+		$response = array();
+		$products = array();
+		$check = ProductOnCart::where("cus_id","=",Auth::User()['id'])->get();
+		$totalP = 0;
+		$totalQty = 0;
+		if(!empty($check))
+		{
+			foreach ($check as $checki) {
+				$productPrice = ProductPrice::where("prod_id","=",$checki['prod_id'])->where("status","=",1)->first();
+				if(!empty($productPrice))
+				{
+					$totalP += $productPrice['price'];
+				}
+				$totalQty += $checki['qty'];
+			}
+			$response[] = array(
+					"totalPrice" => '&#8369; '.number_format($totalP, 2),
+					"totalQty" => $totalQty,
+				);
+		}
+		return $response;
 	}
 }
