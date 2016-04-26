@@ -19,10 +19,10 @@
         <li class="active">Dashboard</li>
       </ol>
     </section>
-    @include('includes.statsBox')
+    
     <!-- Main content -->
     <section class="content">
-      
+      @include('includes.statsBox')
       <!-- Main row -->
      <div class="row">
         <!--insert chart -->
