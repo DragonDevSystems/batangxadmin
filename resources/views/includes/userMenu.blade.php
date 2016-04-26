@@ -89,7 +89,13 @@
     $(this).remove();
   });
   $(document).on("change","#input_profile_image",function(){
-    $(".loadmodal").modal("show");
-    $('#submit_profile_pic').click();
+    var chk = $(this).val();
+    if (chk.match(/(?:gif|jpg|png|bmp)$/)) {
+      $(".loadmodal").modal("show");
+      $('#submit_profile_pic').click();
+    }
+    else{
+      promptMsg('fail','PLease choose image.');
+    }
   });
 </script>
