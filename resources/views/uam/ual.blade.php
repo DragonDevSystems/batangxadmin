@@ -131,8 +131,9 @@
 
 		        $appendItems = $('#tbody'+data.uinfo.user_id);
 		        $appendItems.append($('<select />' , { 'id':'module' ,'class':'form-control select2' ,'name':'module', 'disabled': true}).append(
+		        						'<option value="0">Remove Admin</option>',
 										'<option value="1">Staff</option>',
-										'<option value="2">Admin</option>',
+										'<option value="2">Manager</option>',
 										'<option value="3">Super Admin</option>'));
 		       	$("#module").val(data.uinfo.lvl);
 		       	
@@ -197,8 +198,9 @@
 											$('<select />' , { 'id':'name' ,'class':'form-control select2' ,'type':'text','name':'name', 'placeholder':'Enter Name', 'required' : true})))))),
 					'<div class="box-footer"></div>'));
 					$('#module').append(
+						'<option value="0">Remove Admin</option>',
 						'<option value="1">Staff</option>',
-						'<option value="2">Admin</option>',
+						'<option value="2">Manager</option>',
 						'<option value="3">Super Admin</option>');
 					$(".select2").select2();
 					for($i = 0 ;  $i < data.userInfoList.length; $i++)
