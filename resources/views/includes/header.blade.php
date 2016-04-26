@@ -17,7 +17,7 @@
         <ul class="nav navbar-nav">
           @include('includes.userMenu')
           <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+            <!--<a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>-->
           </li>
         </ul>
       </div>
