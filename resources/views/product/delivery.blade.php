@@ -258,9 +258,9 @@
 		    });
 
 			$("#product").select2({
-				minimumResultsForSearch: -1,
+				//minimumResultsForSearch: -1,
 				placeholder: "Select a product.",
-   				allowClear: true
+   				//allowClear: false
 			}).select2("val", null);
 		});
 	}
