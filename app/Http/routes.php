@@ -16,7 +16,11 @@ Route::get('/about-us', array('uses' =>'HomeController@getAbout', 'as' => 'getAb
 Route::get('/new', array('uses' =>'HomeController@getNews', 'as' => 'getNews'));
 Route::get('/category/{category}', array('uses' =>'ProductController@getProByCat', 'as' => 'getProByCat'));
 Route::get('/product/{pro_id}/{pro_name}', array('uses' =>'ProductController@productPreview', 'as' => 'productPreview'));
-
+Route::group(array('before' => 'auth'), function()
+{
+	Route::get('/customer/checkout', array('uses' => 'CustomerController@getCheckOut', 'as' => 'getCheckOut'));
+	Route::get('/customer/checkout/print', array('uses' => 'CustomerController@getCheckOutPrint', 'as' => 'getCheckOutPrint'));
+});
 Route::group(array('prefix' => '/confirmation'),function()
 {
 	Route::get('/{code}/{id}', array('uses' => 'UserController@confirmation','as' => 'confirmation'));

@@ -160,6 +160,7 @@ return [
          * Php Libraries...
          */
         Intervention\Image\ImageServiceProvider::class,
+        Netshell\Paypal\PaypalServiceProvider::class,
     ],
 
     /*
@@ -207,6 +208,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Input' => Illuminate\Support\Facades\Input::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Paypal' => Netshell\Paypal\Facades\Paypal::class,
     ],
 
 ];

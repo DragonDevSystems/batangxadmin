@@ -34,6 +34,8 @@ class GlobalController extends Controller {
 		{
 			return array(
 						"user_id" 		=> $userInfo['user_id'],
+						"mobile" 		=> $userInfo['mobile'],
+						"email" 		=> $userInfo['email'],
 						"un"			=> $username['username'],
 						"userDp"		=> $this->userDpv2($userInfo['user_id']),
 						"fname"			=> $userInfo['first_name'],

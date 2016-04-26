@@ -36,5 +36,17 @@ class CustomerController extends Controller {
 
 	}
 	
-	
+	public function getCheckOut()
+	{
+		$onCartList = App::make("App\Http\Controllers\GlobalController")->onCartList();
+		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
+		return View::Make("checkout.index")->with("userInfo",$userInfo)->with("onCartList",$onCartList)->with('mt','db');
+	}
+
+	public function getCheckOutPrint()
+	{
+		$onCartList = App::make("App\Http\Controllers\GlobalController")->onCartList();
+		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
+		return View::Make("checkout.invoiceprint")->with("userInfo",$userInfo)->with("onCartList",$onCartList)->with('mt','db');
+	}
 }

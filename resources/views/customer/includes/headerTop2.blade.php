@@ -6,7 +6,7 @@
 		<ul>
 			@if(Auth::Check())
 				<li><a href="{{URL::Route('getLogout')}}">Sign out</a></li>
-				<li><a href="#">Checkout</a></li>
+				<li><a href="{{URL::Route('getCheckOut')}}">Checkout</a></li>
 				<li><a href="#">My Account</a></li>
 			@else
 				<li><a href="javascript:void(0);" class="btn_registration">Register</a></li>

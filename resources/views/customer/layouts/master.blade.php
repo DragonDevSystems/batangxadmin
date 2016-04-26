@@ -16,6 +16,8 @@
 		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 		<!-- Bootstrap 3.3.6 -->
 		<script src="{{env('FILE_PATH_CUSTOM')}}bootstrap/js/bootstrap.min.js"></script>
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 
 		<link href="{{env('FILE_PATH_CUSTOM')}}css/style.css" rel="stylesheet" type="text/css" media="all"/>
 		<link href="{{env('FILE_PATH_CUSTOM')}}css/slider.css" rel="stylesheet" type="text/css" media="all"/>
