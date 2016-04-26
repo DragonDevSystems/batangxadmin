@@ -230,7 +230,7 @@ class GlobalController extends Controller {
 				$productPrice = ProductPrice::where("prod_id","=",$checki['prod_id'])->where("status","=",1)->first();
 				if(!empty($productPrice))
 				{
-					$totalP += $productPrice['price'];
+					$totalP += ($productPrice['price'] * $checki['qty']);
 				}
 				$totalQty += $checki['qty'];
 			}
@@ -240,5 +240,71 @@ class GlobalController extends Controller {
 				);
 		}
 		return $response;
+	}
+
+	public function onCartList()
+	{
+		$response = array();
+		$products = array();
+		$check = ProductOnCart::where("cus_id","=",Auth::User()['id'])->get();
+		$totalP = 0;
+		$totalQty = 0;
+		if(!empty($check))
+		{
+			foreach ($check as $checki) {
+				$productPrice = ProductPrice::where("prod_id","=",$checki['prod_id'])->where("status","=",1)->first();
+				$prodInfo = ProductInformation::find($checki['prod_id']);
+				if(!empty($prodInfo))
+				{
+					$products[] = array(
+							"cart_id" => $checki['id'],
+							"prod_id" => $prodInfo['id'],
+							"name" => $prodInfo['name'],
+							"qty" => $checki['qty'],
+							"price" => '&#8369; '.number_format(($productPrice['price'] * $checki['qty']), 2),
+						);
+					$totalQty += $checki['qty'];
+					$totalP += ($productPrice['price'] * $checki['qty']);
+				}
+			}
+			$response[] = array(
+				"productInfo" => $products,
+				"totalPrice" => '&#8369; '.number_format($totalP, 2),
+				"totalQty" => $totalQty,
+			);
+		}
+		return $response;
+	}
+
+	public function removeOnCart()
+	{
+		$cart_id = Input::get('cid');
+		$cartInfo = ProductOnCart::where("id","=",$cart_id)->where("cus_id","=",Auth::User()['id'])->first();
+		if(!empty($cartInfo))
+		{
+			$update = ProductInventory::where("prod_id","=",$cartInfo['prod_id'])->first();
+			if(!empty($update))
+			{
+				$update['qty'] = $update['qty'] + $cartInfo['qty'];
+				if($update->save() && $cartInfo->delete())
+				{
+					return Response::json(array(
+			            'status'  => 'success',
+			            'message'  => 'Successfully remove in your cart.',
+			        ));
+				}
+			}
+			return Response::json(array(
+				            'status'  => 'fail',
+				            'message'  => 'Fail to remove the particular item in your cart due to connection problem. Please try again.',
+				        ));
+		}
+		else
+		{
+			return Response::json(array(
+	            'status'  => 'fail',
+	            'message'  => 'The item that you are trying to remove in your cart is not yet in you cart list.',
+	        ));
+		}
 	}
 }
