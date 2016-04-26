@@ -13,7 +13,6 @@
     <section class="content-header">
       <h1>
         User Access Management
-        <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{ URL::Route('getUAL') }}"><i class="fa fa-dashboard"></i> User Access Management</a></li>
