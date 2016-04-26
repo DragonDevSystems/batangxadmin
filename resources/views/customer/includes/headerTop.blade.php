@@ -5,15 +5,6 @@
 	  <div class="cart">
 	  	   <p>Welcome to our Online Store! <span>Cart:</span><div id="dd" class="wrapper-dropdown-2"><span id="cartInfo"></span>
 	  	   	<ul class="dropdown on-cart-list">
-				<div class="col-md-12">
-					<div class="form-group">
-						<label for="name">qty</label>
-						<label for="name">Product</label>
-						<label for="name">total</label>
-						<button type="button" class="btn btn-danger" style="float: right;height: 30px;width: 30px;text-align: center;">x</button>
-					</div>
-				</div>
-	  	   	<!--<li>2 item(s) lg g4 = P2000 <i class="fa fa-remove"></i></li>-->
 			</ul></div></p>
 	  </div>
 	  <script type="text/javascript">
@@ -28,9 +19,9 @@
 			obj.dd.on('click', function(event){
 				$.get('{{URL::Route('onCartList')}}', function(response)
 		   		{
-		   			if(response.length != 0)
+		   			$('.on-cart-list').empty();
+		   			if(response[0].productInfo.length != 0)
 					{
-		   				$('.on-cart-list').empty();
 		   				for($x=0 ; $x < response[0].productInfo.length ;$x++)
 		   				{
 							$('.on-cart-list').append('<div class="col-md-12">\
@@ -46,6 +37,10 @@
 		   				$('.on-cart-list').append("<li>===========================================</li>")
 		   				$('.on-cart-list').append('<li>'+response[0].totalQty+' item(s) - Total: '+response[0].totalPrice+'</li>')
 
+					}
+					else
+					{
+						$('.on-cart-list').append("<li>No item added in your cart.</li>")
 					}
 				});
 				$(this).toggleClass('active');
