@@ -159,12 +159,6 @@
 																	        </div>\
 															            </div>\
 																	</form>\
-																	<form id="uploadProductImage" role="form" enctype ="multipart/form-data" method="post">\
-																		<input type="file" id="file" name="file[]" style="display:none" multiple>\
-																		<input type="hidden" id="processType" value="old" name="processType">\
-																		<input type="hidden" value="{{ csrf_token() }}" name="_token">\
-																		<button type="submit" class="btn btn-primary submitImage" style="display:none"></button>\
-																	</form>\
 																</div>\
 																<div class="col-md-7">\
 																	<div class="box box-default">\
