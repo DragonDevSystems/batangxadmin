@@ -53,7 +53,26 @@
 		<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
 		<!--<script src="{{env('FILE_PATH_CUSTOM')}}plugins/flot/jquery.flot.categories.min.js"></script>-->
 		<!-- Page script --> 
+		<style>
+			.modal {
+			  text-align: center;
+			  padding: 0!important;
+			}
 
+			.modal:before {
+			  content: '';
+			  display: inline-block;
+			  height: 100%;
+			  vertical-align: middle;
+			  margin-right: -4px;
+			}
+
+			.modal-dialog {
+			  display: inline-block;
+			  text-align: left;
+			  vertical-align: middle;
+			}
+		</style>
 	@yield('addHead')
 </head>
 
