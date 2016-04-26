@@ -1,6 +1,4 @@
 <div class="col-md-3">
-  <a href="{{ URL::Route('getComposeMailView') }}" class="btn btn-primary btn-block margin-bottom">Compose</a>
-
   <div class="box box-solid">
     <div class="box-header with-border">
       <h3 class="box-title">Folders</h3>
@@ -12,10 +10,8 @@
     </div>
     <div class="box-body no-padding">
       <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="#"><i class="fa fa-inbox"></i> Inbox
+        <li class="active"><a href="{{ URL::Route('getContactMailView') }}"><i class="fa fa-inbox"></i> Inbox
           <span class="label label-primary pull-right">{{$unreadMailCount}}</span></a></li>
-        <li><a href="javascript:void(0)"><i class="fa fa-envelope-o"></i> Sent</a></li>
-        <li><a href="javascript:void(0)"><i class="fa fa-file-text-o"></i> Drafts</a></li>
         </li>
         <li><a href="javascript:void(0)"><i class="fa fa-trash-o"></i> Trash</a></li>
       </ul>

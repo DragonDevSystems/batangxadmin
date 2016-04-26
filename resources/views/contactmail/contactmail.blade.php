@@ -45,10 +45,14 @@
                 <table class="table table-hover table-striped">
                   <tbody>
                   @foreach($ContactUs as $mail)
-                  <?php $time = \Carbon\Carbon::createFromTimeStamp(strtotime($mail['created_at']))->diffForHumans(); ?>
+                  <?php $time = \Carbon\Carbon::createFromTimeStamp(strtotime($mail['created_at']))->diffForHumans(); 
+                    $read = $mail['read'] == 1 ? "text-yellow" : "";
+                  ?>
                    <tr>
                     <td><input type="checkbox"></td>
-                    <td class="mailbox-star"><a href="javascript:void(0)"><i class="fa fa-star text-yellow"></i></a></td>
+                    <td class="mailbox-star"><a href="javascript:void(0)">
+                      <i class="fa fa-star {{$read}}"></i>
+                    </a></td>
                     <td class="mailbox-name"><a href="{{ URL::Route('getReadMailView',$mail['id']) }}">{{$mail['name']}}</a></td>
                     <td class="mailbox-subject"><b>{{$mail['company']}}</b> - {{str_limit($mail['message'], $limit = 60, $end = '...')}}
                     </td>

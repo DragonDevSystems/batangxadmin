@@ -65,10 +65,6 @@
             <!-- /.box-body -->
             <!-- /.box-footer -->
             <div class="box-footer">
-              <div class="pull-right">
-                <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
-                <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
-              </div>
               <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
               <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
             </div>
