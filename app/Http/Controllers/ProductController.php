@@ -110,6 +110,10 @@ class ProductController extends Controller {
 	
 	public function addProduct()
 	{
+		$validate = App::make("App\Http\Controllers\GlobalController")->accountAccessChecker('add','product');
+		if($validate['status'] == "fail"){
+			return $validate;
+		}
 		$id = Input::get('id');
 		$name = Input::get('name');
 		$category = Input::get('category');
@@ -210,6 +214,10 @@ class ProductController extends Controller {
 
 	public function deleteSpecs()
 	{
+		$validate = App::make("App\Http\Controllers\GlobalController")->accountAccessChecker('update','product');
+		if($validate['status'] == "fail"){
+			return $validate;
+		}
 		$id = Input::get('specs');
 		$getSpecs = ProductSpecs::find($id);
 		$information = ProductInformation::find($getSpecs['prod_id']);

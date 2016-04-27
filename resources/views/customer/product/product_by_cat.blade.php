@@ -11,7 +11,7 @@
 		@include('customer.includes.mainMenu')
 		<div class="header_slide">
 			@include('customer.includes.categories')
-			<div class="section group">
+			<div class="header_bottom_right">
 				@if(!empty($response))
 					@for($x = 0 ; $x < count($response) ; $x++)
 						<div class="grid_1_of_4 images_1_of_4">
@@ -33,8 +33,6 @@
 						<h3>No Products yet in this category</h3>
 					</div>
 				@endif
-				
-
 			</div>
 			<div class="clear"></div>
 		</div>
