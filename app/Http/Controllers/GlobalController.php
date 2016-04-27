@@ -263,6 +263,7 @@ class GlobalController extends Controller {
 							"prod_id" => $prodInfo['id'],
 							"name" => $prodInfo['name'],
 							"qty" => $checki['qty'],
+							"unit_price" =>'&#8369; '.number_format($productPrice['price'], 2),
 							"price" => '&#8369; '.number_format(($productPrice['price'] * $checki['qty']), 2),
 						);
 					$totalQty += $checki['qty'];
