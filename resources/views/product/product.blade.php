@@ -157,7 +157,7 @@
 		$('#div-entry').append('<div class="overlay">\
 		        	<i class="fa fa-spinner fa-spin"></i>\
 		        </div>');
-		$.get('{{URL::Route('accountAccessChecker',["add","product"])}}', function(data)
+		$.get('{{URL::Route('accountAccessChecker',["add","                        									"])}}', function(data)
 		{
 			if(data.length != 0)
 			{

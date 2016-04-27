@@ -81,7 +81,26 @@ class GlobalController extends Controller {
 	            	);
 		        break;
 		    case "product":
-		        echo "Your favorite color is blue!";
+		        	if(($uaccess == 2 || $uaccess == 3) && ($event == "add" || $event == "update" || $event == "view"))
+					{
+						return array(
+			                'status'  => 'success',
+			                'message'  => 'Permission granted.',
+			            );
+					}
+
+					if(($uaccess == 3) && ($event == "delete"))
+					{
+						return array(
+			                'status'  => 'success',
+			                'message'  => 'Permission granted.',
+			            );
+					}
+					
+					return array(
+	                	'status'  => 'fail',
+	                	'message'  => 'You have no permission to add, update, and delete data or records.',
+	            	);
 		        break;
 		    case "fm":
 		         if(($uaccess == 2 || $uaccess == 3) && ($event == "add" || $event == "update" || $event == "view"))
