@@ -51,13 +51,18 @@
     request.addEventListener('load',transferCompleteFile);
     function transferCompleteFile(evt) {
       console.log("The transfer file  is complete.");
-      $(".loadmodal").modal("hide");
+      $(".loadmodal").fadeOut("slow",function(){ 
+                                                  $(this).modal("hide"); 
+                                                });
       promptMsg('success','Upload success.');
     }
     function uploadProgressFile(evt) {
         if (evt.lengthComputable) {
             var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-            $(".progress").find('.progress-bar').css("width",percentComplete+"%").html(percentComplete+"% Complete (upload)");
+            $(".progress").find('.progress-bar').css("width",percentComplete+"%").html(percentComplete+"% Complete (uploading ...)");
+            if(percentComplete == 100){
+              $(".progress").find('.progress-bar').css("width",percentComplete+"%").html(percentComplete+"% Complete (complete ...)");
+            }
         }
         else {
           alert('cant upload.')
@@ -65,33 +70,13 @@
       }
   });
   $(document).on("click","#CPP",function(){
-    $('body').append('<div class="modal loadmodal" data-keyboard="false" data-backdrop="static">\
-            <div class="modal-dialog">\
-              <div class="modal-content">\
-                <div class="modal-header">\
-                  <h4 class="modal-title">Uploading ...</h4>\
-                </div>\
-                <div class="modal-body">\
-                  <div class="progress">\
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"\
-                    aria-valuemin="0" aria-valuemax="100" style="width:40%">\
-                      40% Complete (success)\
-                    </div>\
-                  </div>\
-                </div>\
-              </div>\
-            </div>\
-          </div>');
-    //$(".loadmodal").modal("show");
    $('#input_profile_image').click();
-  });
-  $(document).on("hidden.bs.modal",".loadmodal",function(){
-    $(this).remove();
   });
   $(document).on("change","#input_profile_image",function(){
     var chk = $(this).val();
     if (chk.match(/(?:gif|jpg|png|bmp)$/)) {
-      $(".loadmodal").modal("show");
+      //$(".loadmodal").modal("show");
+      loadingModal();
       $('#submit_profile_pic').click();
     }
     else{

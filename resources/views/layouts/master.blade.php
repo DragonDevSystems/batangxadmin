@@ -43,7 +43,7 @@
 		<script src="{{env('FILE_PATH_CUSTOM')}}bootstrap/js/bootstrap.min.js"></script>
 		<!-- bootstrap wysihtml5 - text editor -->
   		<link rel="stylesheet" href="{{env('FILE_PATH_CUSTOM')}}plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+  		<link rel="stylesheet" href="{{env('FILE_PATH_CUSTOM')}}css/custom.css">
 		<!-- FLOT CHARTS -->
 		<!--<script src="{{env('FILE_PATH_CUSTOM')}}plugins/flot/jquery.flot.min.js"></script>-->
 		<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
@@ -116,8 +116,34 @@
 								</div>');
 			$("#prompt_confirmation").modal("show");
 		}
+		function loadingModal()
+		{
+			$('body').append('<div class="modal loadmodal" data-keyboard="false" data-backdrop="static">\
+					            <div class="modal-dialog">\
+					              <div class="modal-content">\
+					                <div class="modal-header">\
+					                  <h4 class="modal-title">Uploading ...</h4>\
+					                </div>\
+					                <div class="modal-body">\
+					                  <div class="progress">\
+					                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"\
+					                    aria-valuemin="0" aria-valuemax="100" style="width:0%">\
+					                      0% Complete (uploading ...)\
+					                    </div>\
+					                  </div>\
+					                </div>\
+					              </div>\
+					            </div>\
+					          </div>');
+			$(".loadmodal").modal("show");
+		}
 	    $(document).on("hidden.bs.modal","#prompt_confirmation",function(){
+	    	$('body').addClass('remove_body_padding');
 			$(this).remove();
+		});
+		$(document).on("hidden.bs.modal",".loadmodal",function(){
+			$('body').addClass('remove_body_padding');
+		    $(this).remove();
 		});
 		/*
 		function promptConfirmation($message)

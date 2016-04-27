@@ -267,11 +267,11 @@
 								{
 									var template = 
 							        '<div class="col-lg-3 col-md-3 col-xs-6 image_wrapper">'+
-								        '<div  style="width:100%;padding:10px;padding-bottom:0px;padding-top:0px;border:1px solid #e7e7e7;margin-bottom:10px;">'+
+								        '<div class="img_container">'+
 								          '<div class="pull-right">'+
 								            '<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-box-tool removeImage" data-id="'+data.images[i].id+'"><i class="fa fa-trash-o"></i></button>'+
 								          '</div>'+
-								          '<img src="{{env('FILE_PATH_CUSTOM')}}productThumbnail/'+data.images[i].thumbnail_img+'" style="width:100%;height:auto;margin-bottom:5px;">'+
+								          '<img src="{{env('FILE_PATH_CUSTOM')}}productThumbnail/'+data.images[i].thumbnail_img+'">'+
 								        '</div>'+
 							        '</div>';
 							        
@@ -339,8 +339,11 @@
 							function uploadProgressFile(evt) {
 						        if (evt.lengthComputable) {
 						            var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-						            $(".progress").find('.progress-bar').css("width",percentComplete+"%").html(percentComplete+"% Complete (upload)");
-						        $('.addProduct').attr("disabled",true);
+						            $(".progress").find('.progress-bar').css("width",percentComplete+"%").html(percentComplete+"% Complete (uploading ...)");
+							            if(percentComplete == 100){
+							              $(".progress").find('.progress-bar').css("width",percentComplete+"%").html(percentComplete+"% Complete (complete ...)");
+							            }
+						        	$('.addProduct').attr("disabled",true);
 						        }
 						        else {
 						          alert('cant upload.')
@@ -350,9 +353,9 @@
 						        console.log("The transfer file  is complete.");
 						        $("#processType").val("new");
 						        $('.addProduct').attr("disabled",false);
-						        $(".progress").fadeOut("slow",function(){ 
-						                                                  $(this).remove(); 
-						                                               });
+						         $(".loadmodal").fadeOut("slow",function(){ 
+                                                  $(this).modal("hide"); 
+                                                });
 						    }
 						    $('.addProduct').click( function () {
 								$('#formAddProduct').find(':submit').click();
@@ -513,12 +516,7 @@
 	    }
   	});
     $(document).on("change","#file",function(e){
-    	$(this).closest(".box-body").append('<div class="progress">\
-                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"\
-                aria-valuemin="0" aria-valuemax="100" style="width:0%">\
-                  0% Complete (success)\
-                </div>\
-              </div>')
+    	loadingModal();
     	$('.submitImage').click();
     	var fileCollection = new Array();
 	    var  files = e.target.files;
@@ -532,11 +530,11 @@
 	      {
 	        var template = 
 	        '<div class="col-lg-3 col-md-3 col-xs-6 image_wrapper">'+
-		        '<div  style="width:100%;padding:10px;padding-bottom:0px;padding-top:0px;border:1px solid #e7e7e7;margin-bottom:10px;">'+
+		        '<div class="img_container">'+
 		          '<div class="pull-right">'+
 		            '<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-box-tool removeImage" data-id="'+$x+'"><i class="fa fa-trash-o"></i></button>'+
 		          '</div>'+
-		          '<img src="'+e.target.result+'" style="width:100%;height:auto;margin-bottom:5px;">'+
+		          '<img src="'+e.target.result+'">'+
 		        '</div>'+
 	        '</div>';
 	        
