@@ -214,7 +214,7 @@ class ProductController extends Controller {
 
 	public function deleteSpecs()
 	{
-		$validate = App::make("App\Http\Controllers\GlobalController")->accountAccessChecker('update','product');
+		$validate = App::make("App\Http\Controllers\GlobalController")->accountAccessChecker('delete','product');
 		if($validate['status'] == "fail"){
 			return $validate;
 		}
