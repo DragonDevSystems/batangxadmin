@@ -61,15 +61,22 @@
 			$('.tbl-overlay').remove();
 			if(data.length != 0)
 			{
-				$('#tbUAList').empty();
+				//$('#tbUAList').empty();
+				$('#dtUAList').DataTable().clear().draw();
 				for (var i = 0; i < data.length; i++) 
 				{
-					$('#tbUAList').append('<tr style="cursor:pointer">\
+					/*$('#tbUAList').append('<tr style="cursor:pointer">\
 							                  <td>'+data[i].user_id+'</td>\
 							                  <td><img src="{{env('FILE_PATH_CUSTOM')}}'+data[i].userDp+'" style="margin:0px auto;width:30px;height:30px;" class="img-circle" alt="User Image">  '+data[i].un+'</td>\
 							                  <td>'+data[i].fname+'</td>\
 							                  <td>'+data[i].lname+'</td>\
-							                </tr>');
+							                </tr>');*/
+					$('#dtUAList').DataTable().row.add([''+data[i].user_id+'', 
+                                                    '<img src="{{env('FILE_MAIN_PATH')}}'+data[i].userDp+'" style="margin:0px auto;width:30px;height:30px;" class="img-circle" alt="User Image">'+data[i].un+'', 
+                                                    ''+data[i].fname+'', 
+                                                    ''+data[i].lname+'', 
+                                                    ]).draw();
+
 				}
 				var table = $("#dtUAList").DataTable();
 				$('#dtUAList tbody').on('click', 'tr', function () {
