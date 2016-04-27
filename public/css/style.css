@@ -243,6 +243,7 @@ body {
 }
 .categories{
 	border:1px solid #EEE;
+	margin-top: 10px;
 }
 .categories h3{
 	font-size:1.2em;
@@ -299,6 +300,7 @@ body {
 	border: 1px solid #EBE8E8;
 	border-radius: 3px;
 	margin-top: 2.6%;
+	margin-bottom: 2.6%;
 }
 .heading {
 	float: left;
@@ -342,7 +344,7 @@ body {
 	padding: 1.5%;
 	text-align: center;
 	position: relative;
-  	margin-top: 0px;
+  	margin-top: 10px;
   	margin-bottom:10px;
 }
 .images_1_of_4  img {
