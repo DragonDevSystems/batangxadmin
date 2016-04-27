@@ -157,12 +157,7 @@
 		$('#div-entry').append('<div class="overlay">\
 		        	<i class="fa fa-spinner fa-spin"></i>\
 		        </div>');
-<<<<<<< HEAD
 		$.get('{{URL::Route('accountAccessChecker',["view","product"])}}', function(data)
-=======
-		$.get('{{URL::Route('accountAccessChecker',["add","                        									"])}}', function(data)
->>>>>>> origin/master
-		{
 			if(data.length != 0)
 			{
 				if(data.status == "success")
