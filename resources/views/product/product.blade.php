@@ -158,6 +158,7 @@
 		        	<i class="fa fa-spinner fa-spin"></i>\
 		        </div>');
 		$.get('{{URL::Route('accountAccessChecker',["view","product"])}}', function(data)
+		{
 			if(data.length != 0)
 			{
 				if(data.status == "success")
