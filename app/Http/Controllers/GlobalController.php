@@ -52,24 +52,80 @@ class GlobalController extends Controller {
 		return User::find($id)['userImages'];
 	}
 
-	public function accountAccessChecker($event)
+	public function accountAccessChecker($event,$module)
 	{
 		$event = (!empty($event)) ? $event : Input::get('event');
+		$module = (!empty($module)) ? $module : Input::get('module');
 		$uaccess = Auth::User()['isAdmin'];
-		if(($uaccess == 2 || $uaccess == 3) && ($event == "add" || $event == "update" || $event == "update"))
+		switch ($module) {
+		    case "uam":
+			        if(($uaccess == 2 || $uaccess == 3) && ($event == "add" || $event == "update" || $event == "view"))
+					{
+						return array(
+			                'status'  => 'success',
+			                'message'  => 'Permission granted.',
+			            );
+					}
+
+					if(($uaccess == 3) && ($event == "delete"))
+					{
+						return array(
+			                'status'  => 'success',
+			                'message'  => 'Permission granted.',
+			            );
+					}
+
+					return array(
+	                	'status'  => 'fail',
+	                	'message'  => 'You have no permission to add, update, and delete data or records.',
+	            	);
+		        break;
+		    case "product":
+		        echo "Your favorite color is blue!";
+		        break;
+		    case "fm":
+		         if(($uaccess == 2 || $uaccess == 3) && ($event == "add" || $event == "update" || $event == "view"))
+					{
+						return array(
+			                'status'  => 'success',
+			                'message'  => 'Permission granted.',
+			            );
+					}
+
+					if(($uaccess == 3) && ($event == "delete"))
+					{
+						return array(
+			                'status'  => 'success',
+			                'message'  => 'Permission granted.',
+			            );
+					}
+					return array(
+	                	'status'  => 'fail',
+	                	'message'  => 'You have no permission to add, update, and delete data or records.',
+	            	);
+		        break;
+		    default:
+			        return array(
+	                	'status'  => 'fail',
+	                	'message'  => 'You have no permission to add, update, and delete data or records.',
+	            	);
+            	break;
+        	
+		}
+		/*if(($uaccess == 2 || $uaccess == 3) && ($event == "add" || $event == "update" || $event == "delete"))
 		{
-			return Response::json(array(
+			return array(
                 'status'  => 'success',
                 'message'  => 'Permission granted.',
-            ));
+            );
 		}
 		else
 		{
-			return Response::json(array(
+			return array(
                 'status'  => 'fail',
                 'message'  => 'You have no permission to add, update, and delete data or records.',
-            ));
-		}
+            );
+		}*/
 	}
 
 	public function userDpv2($id)

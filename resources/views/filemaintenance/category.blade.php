@@ -197,7 +197,7 @@
 		$('#div-entry').append('<div class="overlay">\
 		        	<i class="fa fa-spinner fa-spin"></i>\
 		        </div>');
-		$.get('{{URL::Route('accountAccessChecker',0)}}',{ event: "add"}, function(data)
+		$.get('{{URL::Route('accountAccessChecker',["add","fm"])}}', function(data)
 		{
 			if(data.length != 0)
 			{
@@ -275,7 +275,7 @@
     {
     	promptConfirmation("Are you sure want to process this changes?");
     	$('#btnYes').click(function() {
-    		$.get('{{URL::Route('accountAccessChecker',0)}}',{ event: "add"}, function(data)
+    		$.get('{{URL::Route('accountAccessChecker',["add","fm"])}}', function(data)
 			{
 				$('#div-entry').append('<div class="overlay">\
 							        	<i class="fa fa-spinner fa-spin"></i>\

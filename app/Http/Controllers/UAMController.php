@@ -54,6 +54,17 @@ class UAMController extends Controller {
 
 	public function addAdmin()
 	{
+		$acctCheck = App::make("App\Http\Controllers\GlobalController")->accountAccessChecker("add","uam");
+		if(!empty($acctCheck))
+		{
+			if($acctCheck['status'] == "fail")
+			{
+				return Response::json(array(
+		            'status'  => 'fail',
+		            'message'  => $acctCheck['message'],
+		        ));
+			}
+		}
 		$uid = Input::get('uid');
 		$role = Input::get('role');
 		$userCheck = User::where("id","=",$uid)->where("isAdmin","=",0)->first();
@@ -83,6 +94,17 @@ class UAMController extends Controller {
 
 	public function updateAdmin()
 	{
+		$acctCheck = App::make("App\Http\Controllers\GlobalController")->accountAccessChecker("update","uam");
+		if(!empty($acctCheck))
+		{
+			if($acctCheck['status'] == "fail")
+			{
+				return Response::json(array(
+		            'status'  => 'fail',
+		            'message'  => $acctCheck['message'],
+		        ));
+			}
+		}
 		$uid = Input::get('uid');
 		$role = Input::get('role');
 		$roleChecker = User::where("id","=",$uid)->where("isAdmin","!=",0)->first();

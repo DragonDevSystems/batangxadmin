@@ -70,7 +70,7 @@ Route::group(array('prefix' => '/admin'),function()
 					middleware' => 'auth'));
 				Route::get('/admin/userlist', array('uses' => 'GlobalController@userlist', 'as' => 'userlist','
 					middleware' => 'auth'));
-				Route::get('/admin/accountAccessChecker/{event}', array('uses' => 'GlobalController@accountAccessChecker', 'as' => 'accountAccessChecker','
+				Route::get('/admin/accountAccessChecker/{event}/{module}', array('uses' => 'GlobalController@accountAccessChecker', 'as' => 'accountAccessChecker','
 					middleware' => 'auth'));
 				Route::get('/product/categoryList', array('uses' => 'FileMaintenanceController@categoryList', 'as' => 'categoryList','middleware' => 'auth'));
 				Route::get('/product/categoryInfo/{cid}', array('uses' => 'GlobalController@categoryInfo', 'as' => 'categoryInfo','middleware' => 'auth'));

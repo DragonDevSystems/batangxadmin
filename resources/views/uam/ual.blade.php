@@ -170,43 +170,57 @@
 		$('#div_user-entry').append('<div class="overlay">\
 		        	<i class="fa fa-spinner fa-spin"></i>\
 		        </div>');
-		$.get('{{URL::Route('userlist')}}', function(data)
+		$.get('{{URL::Route('accountAccessChecker',["add","uam"])}}', function(data)
 		{
 			if(data.length != 0)
 			{
 				if(data.status == "success")
 				{
-					$('#div_user-entry').empty();
-					$('#div_user-entry').append($('<form />' ,{'id' : 'frmEntry', 'onsubmit' : 'return saveNewEntry()'}).append(
-						$('<div />',{ 'class' : 'box-header with-border'}).append(
-							$('<h3 />',{'class':'box-title' , 'text' : 'Add New Permission'}),
-							$('<div />', { 'class' : 'box-tools pull-right'}).append(
-								$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Save' }),
-								$('<button/>', {'class': 'btn btn-danger btn-sm' ,'type' : 'button', 'onClick' : 'defaultDisplay();' , 'html' : '<i class="fa fa-times-circle"></i>Cancel' }),
-								$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
-							$('<div />', { 'class' : 'row'}).append(
-								$('<div />', {'class' : 'col-md-3 col-sm-6'}).append(
-									$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
-										$('<div />' , {'class' : 'form-group'}).append(
-											$('<label />' , { 'class' : 'control-label' , 'for' : 'module' , 'text' : 'Module:'}),
-											$('<select />' , { 'id':'module' ,'class':'form-control select2' ,'name':'module', 'required' : true})))),
-								$('<div />', {'class' : 'col-md-4 col-sm-6'}).append(
-									$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
-										$('<div />' , {'class' : 'form-group'}).append(
-											$('<label />' , { 'class' : 'control-label' , 'for' : 'name' , 'text' : 'Name:'}),
-											$('<select />' , { 'id':'name' ,'class':'form-control select2' ,'type':'text','name':'name', 'placeholder':'Enter Name', 'required' : true})))))),
-					'<div class="box-footer"></div>'));
-					$('#module').append(
-						'<option value="0">Remove Admin</option>',
-						'<option value="1">Staff</option>',
-						'<option value="2">Manager</option>',
-						'<option value="3">Super Admin</option>');
-					$(".select2").select2();
-					for($i = 0 ;  $i < data.userInfoList.length; $i++)
+					$.get('{{URL::Route('userlist')}}', function(data)
 					{
-						$('#name').append('<option value="'+data.userInfoList[$i].user_id+'">'+data.userInfoList[$i].fname+' '+data.userInfoList[$i].lname+'</option>');
-					}
-				}
+						if(data.length != 0)
+						{
+							if(data.status == "success")
+							{
+								$('#div_user-entry').empty();
+								$('#div_user-entry').append($('<form />' ,{'id' : 'frmEntry', 'onsubmit' : 'return saveNewEntry()'}).append(
+									$('<div />',{ 'class' : 'box-header with-border'}).append(
+										$('<h3 />',{'class':'box-title' , 'text' : 'Add New Permission'}),
+										$('<div />', { 'class' : 'box-tools pull-right'}).append(
+											$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Save' }),
+											$('<button/>', {'class': 'btn btn-danger btn-sm' ,'type' : 'button', 'onClick' : 'defaultDisplay();' , 'html' : '<i class="fa fa-times-circle"></i>Cancel' }),
+											$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
+										$('<div />', { 'class' : 'row'}).append(
+											$('<div />', {'class' : 'col-md-3 col-sm-6'}).append(
+												$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
+													$('<div />' , {'class' : 'form-group'}).append(
+														$('<label />' , { 'class' : 'control-label' , 'for' : 'module' , 'text' : 'Module:'}),
+														$('<select />' , { 'id':'module' ,'class':'form-control select2' ,'name':'module', 'required' : true})))),
+											$('<div />', {'class' : 'col-md-4 col-sm-6'}).append(
+												$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
+													$('<div />' , {'class' : 'form-group'}).append(
+														$('<label />' , { 'class' : 'control-label' , 'for' : 'name' , 'text' : 'Name:'}),
+														$('<select />' , { 'id':'name' ,'class':'form-control select2' ,'type':'text','name':'name', 'placeholder':'Enter Name', 'required' : true})))))),
+								'<div class="box-footer"></div>'));
+								$('#module').append(
+									'<option value="0">Remove Admin</option>',
+									'<option value="1">Staff</option>',
+									'<option value="2">Manager</option>',
+									'<option value="3">Super Admin</option>');
+								$(".select2").select2();
+								for($i = 0 ;  $i < data.userInfoList.length; $i++)
+								{
+									$('#name').append('<option value="'+data.userInfoList[$i].user_id+'">'+data.userInfoList[$i].fname+' '+data.userInfoList[$i].lname+'</option>');
+								}
+							}
+							else
+							{
+								promptMsg(data.status,data.message);
+								$('.overlay').remove();
+							}
+						}
+					});
+						}
 				else
 				{
 					promptMsg(data.status,data.message);

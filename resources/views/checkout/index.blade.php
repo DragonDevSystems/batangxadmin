@@ -35,6 +35,7 @@
 													<td>{{$onCartList[0]['productInfo'][$x]['name']}}</td>
 													<td>{{$onCartList[0]['productInfo'][$x]['unit_price']}}</td>
 													<td>{{$onCartList[0]['productInfo'][$x]['price']}}</td>
+													<td><button type="button" class="btn btn-danger" data-widget="remove"><i class="fa fa-remove"></i></button></td>
 												</tr>
 											@endfor
 										@endif
