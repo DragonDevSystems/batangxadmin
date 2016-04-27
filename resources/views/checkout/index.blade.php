@@ -14,6 +14,7 @@
 		<div class="content">
 			<div class="section group">
 				<div class="col span_2_of_3">
+				@if($onCartList[0]['totalQty'] != 0)
 					<div class="contact-form">
 						<div class="row">
 							<div class="col-xs-12 table-responsive">
@@ -28,7 +29,7 @@
 									</thead>
 									<tbody>
 										
-										@if($onCartList[0]['totalQty'] != 0)
+										
 											@for($x=0 ; $x < count($onCartList[0]['productInfo']) ; $x++)
 												<tr>
 													<td>{{$onCartList[0]['productInfo'][$x]['qty']}}</td>
@@ -38,7 +39,7 @@
 													<td><button type="button" class="btn btn-danger" data-widget="remove"><i class="fa fa-remove"></i></button></td>
 												</tr>
 											@endfor
-										@endif
+										
 
 									</tbody>
 								</table>
@@ -84,6 +85,11 @@
 							</div>
 						</div>
 					</div>
+					@else
+						<div class="contact-form">
+							<p><font color='red' size="4">No item ready for check out!.</font></p>
+						</div>
+					@endif
 				</div>
 			</div>
 		</div>
