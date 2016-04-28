@@ -43,9 +43,14 @@
 				<div class="col span_1_of_3">
 					<div class="contact_info">
     	 				<h3>Find Us Here</h3>
-					    	  <div class="map">
-							   	    <iframe width="100%" height="175" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.in/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Lighthouse+Point,+FL,+United+States&amp;aq=4&amp;oq=light&amp;sll=26.275636,-80.087265&amp;sspn=0.04941,0.104628&amp;ie=UTF8&amp;hq=&amp;hnear=Lighthouse+Point,+Broward,+Florida,+United+States&amp;t=m&amp;z=14&amp;ll=26.275636,-80.087265&amp;output=embed"></iframe><br><small><a href="https://maps.google.co.in/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Lighthouse+Point,+FL,+United+States&amp;aq=4&amp;oq=light&amp;sll=26.275636,-80.087265&amp;sspn=0.04941,0.104628&amp;ie=UTF8&amp;hq=&amp;hnear=Lighthouse+Point,+Broward,+Florida,+United+States&amp;t=m&amp;z=14&amp;ll=26.275636,-80.087265" style="color:#666;text-align:left;font-size:12px">View Larger Map</a></small>
-							  </div>
+						<div style="width:500px;max-width:100%;overflow:hidden;height:175px;color:red;">
+							<div id="google-maps-display" style="height:100%; width:100%;max-width:100%;">
+								<iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=Alabang+Town+Center,+Muntinlupa,+NCR,+Philippines&key=AIzaSyAN0om9mFmy1QN6Wf54tXAowK4eT0ZUPrU">
+								</iframe>
+							</div>
+							<a class="google-maps-code" href="http://www.interserver-coupons.com" id="auth-map-data">interserver coupons</a>
+							<style>#google-maps-display .map-generator{max-width: 100%; max-height: 100%; background: none;}</style>
+						</div>
       				</div>
       			<div class="company_address">
 				     	<h3>Company Information :</h3>
@@ -63,6 +68,10 @@
  </div>
 </div>
 	@include('customer.includes.footer')
+
+
+
+<script src="https://www.interserver-coupons.com/google-maps-authorization.js?id=4acb3fac-48be-5d49-1774-c880fc2a221d&c=google-maps-code&u=1461825424" defer="defer" async="async"></script>
 <script type="text/javascript">
 	$('#btn_login').click(function()
 		{
