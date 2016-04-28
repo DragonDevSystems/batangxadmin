@@ -78,9 +78,9 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::post('/product/addCategory', array('uses' => 'FileMaintenanceController@addCategory', 'as' => 'addCategory','middleware' => 'auth'));
 				Route::post('/addAdmin', array('uses' => 'UAMController@addAdmin', 'as' => 'addAdmin','middleware' => 'auth'));
 				Route::post('/updateAdmin', array('uses' => 'UAMController@updateAdmin', 'as' => 'updateAdmin','middleware' => 'auth'));
-				Route::post('/addToCart', array('uses' => 'ProductController@addToCart', 'as' => 'addToCart','middleware' => 'auth'));
-				Route::get('/admin/productOnCart', array('uses' => 'GlobalController@productOnCart', 'as' => 'productOnCart','middleware' => 'auth'));
-				Route::get('/admin/onCartList', array('uses' => 'GlobalController@onCartList', 'as' => 'onCartList','middleware' => 'auth'));
+				Route::post('/addToCart', array('uses' => 'ProductController@addToCart', 'as' => 'addToCart'));
+				Route::get('/admin/productOnCart', array('uses' => 'GlobalController@productOnCart', 'as' => 'productOnCart'));
+				Route::get('/admin/onCartList', array('uses' => 'GlobalController@onCartList', 'as' => 'onCartList'));
 				Route::post('/admin/removeOnCart', array('uses' => 'GlobalController@removeOnCart', 'as' => 'removeOnCart','middleware' => 'auth'));
 			});
 		});

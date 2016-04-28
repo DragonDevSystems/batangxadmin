@@ -320,42 +320,52 @@ class ProductController extends Controller {
 
 	public function addToCart()
 	{
-		$cus_id = Auth::User()['id'];
-		$prod_id = Input::get('prod_id');
-		$qty = Input::get('qty');
-		$qtyCheck = App::make("App\Http\Controllers\GlobalController")->availabilityCheck($prod_id);
-
-		if(empty($qtyCheck))
+		if(Auth::check())
 		{
-			return Response::json(array(
-					"status" => "fail",
-					"message" => "Sorry, the product that you are trying to add in your cart is already out of stock.",
-				));
-		}
+			$cus_id = Auth::User()['id'];
+			$prod_id = Input::get('prod_id');
+			$qty = Input::get('qty');
+			$qtyCheck = App::make("App\Http\Controllers\GlobalController")->availabilityCheck($prod_id);
 
-		if($qtyCheck < $qty)
+			if(empty($qtyCheck))
+			{
+				return Response::json(array(
+						"status" => "fail",
+						"message" => "Sorry, the product that you are trying to add in your cart is already out of stock.",
+					));
+			}
+
+			if($qtyCheck < $qty)
+			{
+				return Response::json(array(
+					"status" => "fail",
+					"message" => "Sorry, the number of item of the product that you are trying to add in your cart is already not enought in your order.",
+				));
+			}
+
+			$update = ProductInventory::where("prod_id","=",$prod_id)->first();
+			$update['qty'] = $update['qty'] - $qty;
+			if($update->save())
+			{
+				$addCart = new ProductOnCart();
+				$addCart['prod_id'] = $prod_id;
+				$addCart['cus_id'] = $cus_id;
+				$addCart['qty'] = $qty;
+				$addCart['ip_address'] = Request::ip();
+				$addCart->save();
+			}
+
+			return Response::json(array(
+				"status" => "success",
+				"message" => "The product is succesfully added in your cart.",
+			));
+		}
+		else
 		{
 			return Response::json(array(
 				"status" => "fail",
-				"message" => "Sorry, the number of item of the product that you are trying to add in your cart is already not enought in your order.",
+				"message" => "Please sign or sign up to continue your shopping.Thank you.",
 			));
 		}
-
-		$update = ProductInventory::where("prod_id","=",$prod_id)->first();
-		$update['qty'] = $update['qty'] - $qty;
-		if($update->save())
-		{
-			$addCart = new ProductOnCart();
-			$addCart['prod_id'] = $prod_id;
-			$addCart['cus_id'] = $cus_id;
-			$addCart['qty'] = $qty;
-			$addCart['ip_address'] = Request::ip();
-			$addCart->save();
-		}
-
-		return Response::json(array(
-			"status" => "success",
-			"message" => "The product is succesfully added in your cart.",
-		));
 	}
 }
