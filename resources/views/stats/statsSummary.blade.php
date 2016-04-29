@@ -46,12 +46,7 @@
             <div class="box-body">
               <table id="dtUAList" class="table table-bordered table-striped table-hover">
                 <thead>
-                <tr>
-                  <th>User ID</th>
-                  <th>Username</th>
-                  <th>Firstname</th>
-                  <th>Lastname</th>
-                </tr>
+                <tr></tr>
                 </thead>
                 <tbody id="tbUAList">
                 </tbody>
@@ -77,14 +72,19 @@
 			$('.tbl-overlay').remove();
 			if(data.length != 0)
 			{
+				for (var i = 0; i < data.header.length; i++) 
+				{
+				$('#dtUAList thead tr').append('<th>'+data.header[i]+'</th>');
+				}
 				//$('#tbUAList').empty();
 				$('#dtUAList').DataTable().clear().draw();
-				for (var i = 0; i < data.length; i++) 
+				for (var i = 0; i < data.datInfo.length; i++) 
 				{
-					$('#dtUAList').DataTable().row.add([''+data[i].user_id+'', 
-                                                    ''+data[i].un+'', 
-                                                    ''+data[i].fname+'', 
-                                                    ''+data[i].lname+'', 
+					$('#dtUAList').DataTable().row.add([
+													''+data.datInfo[i].User_ID+'', 
+                                                    ''+data.datInfo[i].Username+'', 
+                                                    ''+data.datInfo[i].Firstname+'', 
+                                                    ''+data.datInfo[i].Lastname+'', 
                                                     ]).draw();
 
 				}

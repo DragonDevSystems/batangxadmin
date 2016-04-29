@@ -439,17 +439,36 @@ class GlobalController extends Controller {
 	public function statsSummary($entry)
 	{
 		$header = array();
-		$response = array();
+		//$response = array();
 		$datInfo = array();
 		switch ($entry) {
 
 			case 'NU':
-					
+					$data = ['User_ID','Username','Firstname','Lastname'];
+					$header = $data;
+					$newUser = $this->newUser();
+					if(!empty($newUser))
+					{
+						foreach ($newUser as $newUseri) {
+							$userInfo = $this->userInfoList($newUseri['id']);
+							$datInfo[] = array(
+									"User_ID" => $userInfo['user_id'],
+									"Username" => $userInfo['un'],
+									"Firstname" => $userInfo['fname'],
+									"Lastname" => $userInfo['lname'],
+								);
+						}
+					}
 				break;
-			
 			default:
 				# code...
 				break;
 		}
+
+		return Response::json(array(
+	            'status'  => 'success',
+	            'header' => $header,
+	            'datInfo' => $datInfo,
+	        ));
 	}
 }
