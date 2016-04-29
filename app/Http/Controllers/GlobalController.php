@@ -227,7 +227,7 @@ class GlobalController extends Controller {
 		try
 		{
 			Online::updateCurrent();
-			return ContactUs::where('read','=',1)->get();
+			return ContactUs::where('read','=',0)->get();
 		}catch (\Exception $e){
         	return 'Sorry something went worng. Please try again.';
    		}
