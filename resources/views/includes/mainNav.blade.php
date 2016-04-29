@@ -67,11 +67,19 @@
             <i class="fa fa-envelope-o"></i> <span>Contact Mail</span> <i class="fa pull-right"></i>
           </a>
         </li>
+
         <li class="{{ ($mt == "wi") ? "active" : ""}} treeview">
           <a href="{{ URL::Route('getWalkIn') }}">
             <i class="fa fa-money"></i> <span>Walk-in</span> <i class="fa pull-right"></i>
           </a>
         </li>
+
+        <li class="treeview {{ ($mt == "nw") ? "active" : ""}}">
+          <a href="{{ URL::Route('getNewsView') }}">
+            <i class="fa fa-newspaper-o"></i> <span>News</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
+
       </ul>
     </section>
     <!-- /.sidebar -->
