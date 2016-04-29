@@ -95,7 +95,7 @@ class CustomerController extends Controller {
 				$remove = ProductOnCart::find($checki['id']);
 				$remove->delete();
 			}
-			/*$userInfo = User::find(Auth::User()['id']);
+			$userInfo = User::find(Auth::User()['id']);
 			$emailcontent = array (
 				'username' => $userInfo->username,
 			    'link' => URL::route('getCheckOutPrint', [$vCode , $productInovice ->id])
@@ -104,7 +104,7 @@ class CustomerController extends Controller {
 			Mail::send('email.reservationConfirmation', $emailcontent, function($message) use ($userInfo)
 			{
 				$message->to($userInfo['email'],'GameXtreme')->subject('GameXtreme reservation confirmation.');
-			});*/
+			});
 
 			return Response::json(array(
 					"status" => "success",
