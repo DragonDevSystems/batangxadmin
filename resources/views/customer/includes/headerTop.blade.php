@@ -29,13 +29,13 @@
 															<label for="name">'+response[0].productInfo[$x].qty+'</label>\
 															<label for="name">'+response[0].productInfo[$x].name+'</label>\
 															<label for="name">'+response[0].productInfo[$x].price+'</label>\
-															<button type="button" onClick="removeItemCart('+response[0].productInfo[$x].cart_id+');" class="btn btn-danger" style="float: right;height: 30px;width: 30px;text-align: center;"><i class="fa fa-remove"></i></button>\
+															<button type="button" onClick="removeItemCart('+response[0].productInfo[$x].cart_id+');" class="btn btn-danger pull-right"><i class="fa fa-remove"></i></button>\
 														</div>\
 													</div>');
 
 		   				}
-		   				$('.on-cart-list').append("<li>===========================================</li>")
-		   				$('.on-cart-list').append('<li>'+response[0].totalQty+' item(s) - Total: '+response[0].totalPrice+'</li>')
+		   				$('.on-cart-list').append("<li>========================================</li>")
+		   				$('.on-cart-list').append('<li class="pull-right">'+response[0].totalQty+' item(s) = Total: '+response[0].totalPrice+'</li>')
 
 					}
 					else

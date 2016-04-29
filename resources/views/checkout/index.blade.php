@@ -79,9 +79,10 @@
 						<!-- this row will not appear when printing -->
 						<div class="row no-print">
 							<div class="col-xs-12">
-								<a href="{{URL::Route('getCheckOutPrint')}}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-								<button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
-								</button>
+								<!--<a href="{{URL::Route('getCheckOutPrint')}}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>-->
+								<a href="javascript:void(0);" onClick="cashOnDelivery();" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Cash on Pick-up
+								</a>
+								<a href="{{URL::Route('getCheckout')}}" class="btn pull-right btn-success"><!--<img height="49" width="200" src="{{env('FILE_PATH_CUSTOM')}}img/checkoutpaypal.png" alt="Paypal">--><i class="fa fa-cc-paypal"></i>Check out with paypal</a>
 							</div>
 						</div>
 					</div>
@@ -96,5 +97,17 @@
 	</div>
 </div>
 @include('customer.includes.footer')
-
+<script type="text/javascript">
+	function cashOnDelivery()
+	{
+		var _token = "{{ csrf_token() }}";
+		$.post('{{URL::Route('cashOnDelivery')}}',{ _token: _token},function(response)
+	 	{
+	 		if(response.length != 0)
+			{
+				promptMsg(response.status,response.message)
+			}
+	 	});
+	}
+</script>
 @endsection

@@ -364,7 +364,7 @@ class ProductController extends Controller {
 		{
 			return Response::json(array(
 				"status" => "fail",
-				"message" => "Please sign or sign up to continue your shopping.Thank you.",
+				"message" => "Please sign in or sign up to continue your shopping.Thank you.",
 			));
 		}
 	}
