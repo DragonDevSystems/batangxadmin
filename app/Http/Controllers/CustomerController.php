@@ -64,7 +64,7 @@ class CustomerController extends Controller {
 		$invoiceCheck = ProductInvoice::where('id','=',$id)->where('vcode','=',$vcode)->first();
 		if(!empty($invoiceCheck))
 		{
-			$onCartList = App::make("App\Http\Controllers\GlobalController")->onCartList($invoiceCheck['cus_id']);
+			$onCartList = App::make("App\Http\Controllers\GlobalController")->onReserveList($invoiceCheck['cus_id']);
 			$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList($invoiceCheck['cus_id']);
 			return View::Make("checkout.invoiceprint")->with("userInfo",$userInfo)->with("onCartList",$onCartList)->with('mt','db');
 		}

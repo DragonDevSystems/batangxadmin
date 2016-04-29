@@ -13,6 +13,7 @@ use App\Models\AuditTrail;
 use App\Models\ProductInventory;
 use App\Models\ProductOnCart;
 use App\Models\UserImage;
+use App\Models\ProductReserve;
 use Auth;
 use DB;
 use Input;
@@ -331,6 +332,41 @@ class GlobalController extends Controller {
 		$response = array();
 		$products = array();
 		$check = ProductOnCart::where("cus_id","=",$cus_id)->get();
+		$totalP = 0;
+		$totalQty = 0;
+		if(!empty($check))
+		{
+			foreach ($check as $checki) {
+				$productPrice = ProductPrice::where("prod_id","=",$checki['prod_id'])->where("status","=",1)->first();
+				$prodInfo = ProductInformation::find($checki['prod_id']);
+				if(!empty($prodInfo))
+				{
+					$products[] = array(
+							"cart_id" => $checki['id'],
+							"prod_id" => $prodInfo['id'],
+							"name" => $prodInfo['name'],
+							"qty" => $checki['qty'],
+							"unit_price" =>'&#8369; '.number_format($productPrice['price'], 2),
+							"price" => '&#8369; '.number_format(($productPrice['price'] * $checki['qty']), 2),
+						);
+					$totalQty += $checki['qty'];
+					$totalP += ($productPrice['price'] * $checki['qty']);
+				}
+			}
+			$response[] = array(
+				"productInfo" => $products,
+				"totalPrice" => '&#8369; '.number_format($totalP, 2),
+				"totalQty" => $totalQty,
+			);
+		}
+		return $response;
+	}
+
+	public function onReserveList($cus_id)
+	{
+		$response = array();
+		$products = array();
+		$check = ProductReserve::where("cus_id","=",$cus_id)->get();
 		$totalP = 0;
 		$totalQty = 0;
 		if(!empty($check))
