@@ -326,11 +326,11 @@ class GlobalController extends Controller {
 		return $response;
 	}
 
-	public function onCartList()
+	public function onCartList($cus_id)
 	{
 		$response = array();
 		$products = array();
-		$check = ProductOnCart::where("cus_id","=",Auth::User()['id'])->get();
+		$check = ProductOnCart::where("cus_id","=",$cus_id)->get();
 		$totalP = 0;
 		$totalQty = 0;
 		if(!empty($check))

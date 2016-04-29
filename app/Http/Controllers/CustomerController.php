@@ -22,6 +22,8 @@ use Redirect;
 use Request;
 use DateTime;
 use App\Models\ContactUs;
+use URL;
+use Mail;
 
 class CustomerController extends Controller {
 
@@ -52,16 +54,25 @@ class CustomerController extends Controller {
 	
 	public function getCheckOut()
 	{
-		$onCartList = App::make("App\Http\Controllers\GlobalController")->onCartList();
+		$onCartList = App::make("App\Http\Controllers\GlobalController")->onCartList(Auth::User()['id']);
 		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
 		return View::Make("checkout.index")->with("userInfo",$userInfo)->with("onCartList",$onCartList)->with('mt','db');
 	}
 
 	public function getCheckOutPrint($vcode,$id)
 	{
-		$onCartList = App::make("App\Http\Controllers\GlobalController")->onCartList();
-		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
-		return View::Make("checkout.invoiceprint")->with("userInfo",$userInfo)->with("onCartList",$onCartList)->with('mt','db');
+		$invoiceCheck = ProductInvoice::where('id','=',$id)->where('vcode','=',$vcode)->first();
+		if(!empty($invoiceCheck))
+		{
+			$onCartList = App::make("App\Http\Controllers\GlobalController")->onCartList($invoiceCheck['cus_id']);
+			$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList($invoiceCheck['cus_id']);
+			return View::Make("checkout.invoiceprint")->with("userInfo",$userInfo)->with("onCartList",$onCartList)->with('mt','db');
+		}
+		else
+		{
+			return "URL is broken or link is already expire.";
+		}
+
 	}
 
 	public function cashOnDelivery()
