@@ -122,7 +122,10 @@
 					            <div class="modal-dialog">\
 					              <div class="modal-content">\
 					                <div class="modal-header">\
-					                  <h4 class="modal-title">Uploading ...</h4>\
+					                  <h4 class="modal-title">\
+						                    <span class="glyphicon glyphicon-time">\
+						                    </span>Please Wait\
+						                 </h4>\
 					                </div>\
 					                <div class="modal-body">\
 					                  <div class="progress">\

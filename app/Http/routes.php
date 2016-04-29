@@ -149,9 +149,10 @@ Route::group(array('prefix' => '/admin'),function()
 			Route::get('/', array('uses' => 'ContactMailController@getContactMailView', 'as' => 'getContactMailView','middleware' => 'auth'));
 			Route::get('/compose', array('uses' => 'ContactMailController@getComposeMailView', 'as' => 'getComposeMailView','middleware' => 'auth'));
 			Route::get('/read-mail/{id}', array('uses' => 'ContactMailController@getReadMailView', 'as' => 'getReadMailView','middleware' => 'auth'));
+			Route::get('/getNextMail', array('uses' => 'ContactMailController@getNextMail', 'as' => 'getNextMail','middleware' => 'auth'));
 			Route::group(array('before' => 'csrf'), function()
 			{
-				
+				Route::post('/moveToTrash', array('uses' => 'ContactMailController@moveToTrash', 'as' => 'moveToTrash','middleware' => 'auth'));
 			});
 		});
 	});

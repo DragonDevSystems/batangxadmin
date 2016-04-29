@@ -31,29 +31,18 @@
               <h3 class="box-title">Read Mail</h3>
 
               <div class="box-tools pull-right">
-                <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="Previous"><i class="fa fa-chevron-left"></i></a>
-                <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="Next"><i class="fa fa-chevron-right"></i></a>
+                <a href="javascript:void(0)" class="btn btn-box-tool next" data-type="prev" data-toggle="tooltip" title="Previous"><i class="fa fa-chevron-left"></i></a>
+                <a href="javascript:void(0)" class="btn btn-box-tool next" data-type="next" data-toggle="tooltip" title="Next"><i class="fa fa-chevron-right"></i></a>
               </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
               <div class="mailbox-read-info">
                 <h5>From: {{$mail['email']}}
-                  <span class="mailbox-read-time pull-right">15 Feb. 2015 11:03 PM</span></h5>
-              </div>
-              <!-- /.mailbox-read-info -->
-              <div class="mailbox-controls with-border text-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete">
-                    <i class="fa fa-trash-o"></i></button>
-                  <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
-                    <i class="fa fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
-                    <i class="fa fa-share"></i></button>
-                </div>
-                <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
-                  <i class="fa fa-print"></i></button>
+                   <?php $time = \Carbon\Carbon::createFromTimeStamp(strtotime($mail['created_at']))->toDayDateTimeString(); 
+                    $read = $mail['read'] == 1 ? "text-yellow" : "";
+                  ?>
+                  <span class="mailbox-read-time pull-right">{{$time}}</span></h5>
               </div>
               <!-- /.mailbox-controls -->
               <div class="mailbox-read-message">
@@ -65,7 +54,7 @@
             <!-- /.box-body -->
             <!-- /.box-footer -->
             <div class="box-footer">
-              <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
+              <button type="button" class="btn btn-default trash_mail" data-id="{{$mail['id']}}"><i class="fa fa-trash-o"></i> Delete</button>
               <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
             </div>
             <!-- /.box-footer -->
@@ -83,15 +72,30 @@
   @include('includes.settingSidebar')
 </div>
 <script type="text/javascript">
-  $('#test').click(function()
+	$(document).on("click",".trash_mail",function(){
+    var id = $(this).data('id');
+    var _token = "{{ csrf_token() }}";
+    promptConfirmation("Do you want to move this mail to trash?");
+    $('#btnYes').click(function() {
+      
+      $.post('{{URL::Route('moveToTrash')}}',{ _token: _token, id: id } , function(response)
+      {
+        console.log(response);
+        if(response.status == "success"){
+          promptMsg(response.status,response.message);
+          window.location.href = "{{URL::Route('getContactMailView')}}";
+        }
+      });
+    });
+  });
+  $(document).on("click",".next",function(){
+    var id = "{{$mail['id']}}";
+    var type = $(this).data('type');
+    $.get('{{URL::Route('getNextMail')}}',{  id: id , type : type } , function(response)
     {
-     var q = $('#editable').va();
-     alert(q);
-    }
-  );
-	$(document).ready(function() {
-		$("#compose-textarea").wysihtml5();
-	});
+      window.location.href = response.url;
+    });
+  });
 </script>
 @endsection
 

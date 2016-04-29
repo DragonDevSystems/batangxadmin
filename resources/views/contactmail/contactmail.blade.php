@@ -37,8 +37,7 @@
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                 </button>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
+                  <button type="button" class="btn btn-default btn-sm trash_mail"><i class="fa fa-trash-o"></i></button>
                 </div>
               </div>
               <div class="table-responsive mailbox-messages">
@@ -49,7 +48,7 @@
                     $read = $mail['read'] == 1 ? "text-yellow" : "";
                   ?>
                    <tr>
-                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox" data-id="{{$mail['id']}}"></td>
                     <td class="mailbox-star"><a href="javascript:void(0)">
                       <i class="fa fa-star {{$read}}"></i>
                     </a></td>
@@ -90,6 +89,55 @@
   @include('includes.settingSidebar')
 </div>
 <script type="text/javascript">
+  $(document).on("click",".trash_mail",function(){
+    if($('.mailbox-messages input[type="checkbox"]:checked').length != 0){
+      promptConfirmation("Do you want to move this mail to trash?");
+      $('#btnYes').click(function() {
+        $('.mailbox-messages input[type="checkbox"]:checked').each(function () {
+          var id = $(this).data('id');
+          var _token = "{{ csrf_token() }}";
+          $.post('{{URL::Route('moveToTrash')}}',{ _token: _token, id: id } , function(response)
+          {
+            if(response.status == "success"){
+             promptMsg(response.status,response.message);
+            }
+          });
+          $(this).closest('tr').fadeOut("slow",function(){ 
+                                      $(this).remove(); 
+                                    });
+        });
+      });
+    }
+    /*$id = [];
+    $i = 0;
+    $('.mailbox-messages input[type="checkbox"]:checked').each(function () {
+      if (this.checked) {
+        $id[$i] = $(this).data('id'); 
+      }
+      $i++;
+    });
+    var _token = "{{ csrf_token() }}";
+    if($id.length != 0){
+      promptConfirmation("Do you want to move this mail to trash?");
+      $('#btnYes').click(function() {
+        $.post('{{URL::Route('moveToTrash')}}',{ _token: _token, id: $id } , function(response)
+        {
+          console.log(response);
+          if(response.status == "success"){
+            promptMsg(response.status,response.message);
+            $('.mailbox-messages input[type="checkbox"]:checked').each(function () {
+              $(this).closest('tr').fadeOut("slow",function(){ 
+                                      $(this).remove(); 
+                                    });
+            });
+          }
+        });
+      });
+    }
+    else{
+      promptMsg("fail","Please choose email.")
+    }*/
+  });
 	$(document).ready(function() {
 		$('.mailbox-messages input[type="checkbox"]').iCheck({
 	      checkboxClass: 'icheckbox_flat-blue',
