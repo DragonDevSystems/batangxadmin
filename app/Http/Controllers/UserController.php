@@ -248,6 +248,7 @@ class UserController extends Controller {
 			}
 			if($PasswordRecovery->save())
 			{
+				
 				$emailcontent = array (
 					'username' => $result->username,
 				    'link' => URL::route('getPassReset', [$vCode , $result ->id])

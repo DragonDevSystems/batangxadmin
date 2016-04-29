@@ -19,7 +19,7 @@ Route::get('/product/{pro_id}/{pro_name}', array('uses' =>'ProductController@pro
 Route::group(array('before' => 'auth'), function()
 {
 	Route::get('/customer/checkout', array('uses' => 'CustomerController@getCheckOut', 'as' => 'getCheckOut'));
-	Route::get('/customer/checkout/print', array('uses' => 'CustomerController@getCheckOutPrint', 'as' => 'getCheckOutPrint'));
+	Route::get('/customer/checkout/print/{vcode}/{id}', array('uses' => 'CustomerController@getCheckOutPrint', 'as' => 'getCheckOutPrint'));
 	Route::get('/customer/checkout/paypal', array('uses' => 'PaypalController@getCheckout', 'as' => 'getCheckout'));
 	Route::post('/customer/getDone/paypal', array('uses' => 'PaypalController@getDone', 'as' => 'getDone'));
 	Route::get('/customer/getCancel/paypal', array('uses' => 'PaypalController@getCancel', 'as' => 'getCancel'));

@@ -12,6 +12,7 @@ use App\Models\ProductOnCart;
 use App\Models\ProductReserve;
 use App\Models\ProductInvoice;
 use App\Models\UserImage;
+use App\Models\User;
 use App;
 use Auth;
 use View;
@@ -67,8 +68,11 @@ class CustomerController extends Controller {
 		$check = ProductOnCart::where("cus_id","=",Auth::User()['id'])->get();
 		if(!empty($check))
 		{
+			$vCode = date_format($date, 'U').str_random(110);
 			$productInovice = new ProductInvoice();
+			$productInovice['cus_id'] = Auth::User()['id'];
 			$productInovice['remarks'] = "reserved/ Cash on delivery";
+			$productInovice['vcode'] = $vCode;
 			if(!$productInovice->save())
 			{
 				return Response::json(array(
@@ -86,8 +90,19 @@ class CustomerController extends Controller {
 				$proreserve['qty'] = $checki['qty'];
 				$proreserve['ip_address'] = Request::ip();
 				$proreserve->save();
+				$remove = ProductOnCart::find($checki['id']);
+				$remove->delete();
 			}
-			$check->delete();
+			$userInfo = User::find(Auth::User()['id']);
+			$emailcontent = array (
+				'username' => $userInfo->username,
+			    'link' => URL::route('getCheckOutPrint', [$vCode , $productInovice ->id])
+		    );
+
+			Mail::send('email.reservationConfirmation', $emailcontent, function($message) use ($userInfo)
+			{
+				$message->to($userInfo['email'],'GameXtreme')->subject('GameXtreme reservation confirmation.');
+			});
 
 			return Response::json(array(
 					"status" => "success",
