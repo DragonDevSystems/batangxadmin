@@ -133,4 +133,57 @@ class CustomerController extends Controller {
 					));
 		}
 	}
+
+	function getMyaccount()
+	{
+		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
+		return View::Make("customer.user.myaccount")->with("userInfo",$userInfo)->with('mt','db');
+	}
+
+	function getInvoiceList($cus_id)
+	{
+		$response = array();
+		$invoiceList = ProductInvoice::where("cus_id","=",$cus_id)->get();
+		if(!empty($invoiceList))
+		{
+			foreach ($invoiceList as $invoiceListi) {
+				$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList($invoiceListi['cus_id']);
+				switch ($invoiceListi['status']) {
+					case 1:
+						$status = "reserved";
+						break;
+					case 2:
+						$status = "purchased";
+						break;
+					case 3:
+						$status = "Cancel by user";
+						break;
+					case 4:
+						$status = "Cancel by sytem";
+						break;
+					default:
+						$status = "Error/No status";
+						break;
+				}
+				$response[] = array(
+						"invoice_num" => str_pad($invoiceListi['id'], 6, '0', STR_PAD_LEFT),
+						"invoice_date" => \Carbon\Carbon::createFromTimeStamp(strtotime($invoiceListi['created_at']))->toDayDateTimeString(),
+						"cus_name" => $userInfo['fname'].' '.$userInfo['lname'],
+						"invoice_link" => URL::route('getCheckOutPrint', [$invoiceListi['vcode'] , $invoiceListi['id']]),
+						"status" => $status,
+					);
+			}
+			return Response::json(array(
+	            'status'  => 'success',
+	            'dataInfo' => $response,
+	        ));
+		}
+		else
+		{
+			Response::json(array(
+	            'status'  => 'fail',
+	            'message' => 'No invoice available in your account.',
+	        ));
+		}
+	}
 }

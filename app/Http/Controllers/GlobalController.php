@@ -169,7 +169,7 @@ class GlobalController extends Controller {
 								"count" =>count($this->newUser()),
 								"bg_color" => "bg-aqua",
 								"content_title" => "New Users This Month",
-								"Ionicons" => "ion-bag",
+								"Ionicons" => "ion-person-add",
 								"link" => URL::Route('statsList','NU'),
 							),//new user this month
 						array(

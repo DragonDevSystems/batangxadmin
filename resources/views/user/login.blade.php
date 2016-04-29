@@ -95,7 +95,12 @@
 
 
 <script>
-
+    $(document).keypress(function(e) {
+        if(e.which == 13) {
+           validateCreds()
+        }
+    });
+    
     $(function () {
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',

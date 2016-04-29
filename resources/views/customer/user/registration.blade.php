@@ -83,6 +83,12 @@
       return re.test(email);
     }
 
+    $(document).keypress(function(e) {
+        if(e.which == 13) {
+           regUser()
+        }
+    });
+    
     function regUser()
     {
       $_token = "{{ csrf_token() }}";

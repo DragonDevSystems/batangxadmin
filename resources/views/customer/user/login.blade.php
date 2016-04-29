@@ -43,6 +43,12 @@
 </div>
 <label class="control-label"></label>
 <script type="text/javascript">
+	$(document).keypress(function(e) {
+	    if(e.which == 13) {
+	       validateCreds()
+	    }
+	});
+	
 	function validateCreds()
     {
         $_token = "{{ csrf_token() }}";
