@@ -20,6 +20,7 @@ use Input;
 use Response;
 use Redirect;
 use Request;
+use DateTime;
 use App\Models\ContactUs;
 
 class CustomerController extends Controller {
@@ -56,7 +57,7 @@ class CustomerController extends Controller {
 		return View::Make("checkout.index")->with("userInfo",$userInfo)->with("onCartList",$onCartList)->with('mt','db');
 	}
 
-	public function getCheckOutPrint()
+	public function getCheckOutPrint($vcode,$id)
 	{
 		$onCartList = App::make("App\Http\Controllers\GlobalController")->onCartList();
 		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
@@ -68,6 +69,7 @@ class CustomerController extends Controller {
 		$check = ProductOnCart::where("cus_id","=",Auth::User()['id'])->get();
 		if(!empty($check))
 		{
+			$date = new DateTime();
 			$vCode = date_format($date, 'U').str_random(110);
 			$productInovice = new ProductInvoice();
 			$productInovice['cus_id'] = Auth::User()['id'];
@@ -93,7 +95,7 @@ class CustomerController extends Controller {
 				$remove = ProductOnCart::find($checki['id']);
 				$remove->delete();
 			}
-			$userInfo = User::find(Auth::User()['id']);
+			/*$userInfo = User::find(Auth::User()['id']);
 			$emailcontent = array (
 				'username' => $userInfo->username,
 			    'link' => URL::route('getCheckOutPrint', [$vCode , $productInovice ->id])
@@ -102,7 +104,7 @@ class CustomerController extends Controller {
 			Mail::send('email.reservationConfirmation', $emailcontent, function($message) use ($userInfo)
 			{
 				$message->to($userInfo['email'],'GameXtreme')->subject('GameXtreme reservation confirmation.');
-			});
+			});*/
 
 			return Response::json(array(
 					"status" => "success",

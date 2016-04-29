@@ -79,7 +79,6 @@
 						<!-- this row will not appear when printing -->
 						<div class="row no-print">
 							<div class="col-xs-12">
-								<!--<a href="{{URL::Route('getCheckOutPrint')}}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>-->
 								<a href="javascript:void(0);" onClick="cashOnDelivery();" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Cash on Pick-up
 								</a>
 								<a href="{{URL::Route('getCheckout')}}" class="btn pull-right btn-success"><!--<img height="49" width="200" src="{{env('FILE_PATH_CUSTOM')}}img/checkoutpaypal.png" alt="Paypal">--><i class="fa fa-cc-paypal"></i>Check out with paypal</a>
