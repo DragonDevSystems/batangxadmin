@@ -51,7 +51,7 @@
 		var qty = $('#qty').val();
 		if($availability == "Available")
 		{
-			$.post('{{URL::Route('addToCart')}}',{ _token: _token ,  prod_id: pid ,  qty: qty},function(response)
+			$.post('{{URL::Route('addToCart',Auth::User()['id'])}}',{ _token: _token ,  prod_id: pid ,  qty: qty},function(response)
    		 	{
    		 		if(response.length != 0)
 				{

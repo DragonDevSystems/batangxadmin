@@ -151,6 +151,27 @@
 			}
 		});
     }
+
+    function addToCart()
+	{
+		/*$availability = 0;
+		var _token = "{{ csrf_token() }}";
+		var qty = $('#qty').val();
+		if($availability == "Available")
+		{
+			$.post('{{URL::Route('addToCart',0)}}',{ _token: _token ,  prod_id: pid ,  qty: qty, cus_id : cus_id},function(response)
+   		 	{
+   		 		if(response.length != 0)
+				{
+					promptMsg(response.status,response.message)
+				}
+   		 	});
+		}
+		else
+		{
+			promptMsg("fail","Out of stocks.")
+		}*/
+	}
 </script>
 @endsection
 

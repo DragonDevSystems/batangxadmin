@@ -318,11 +318,11 @@ class ProductController extends Controller {
 				));	
 	}
 
-	public function addToCart()
+	public function addToCart($cus_id)
 	{
 		if(Auth::check())
 		{
-			$cus_id = Auth::User()['id'];
+			$cus_id = (!empty($cus_id)) ? $cus_id : Input::get('cus_id');
 			$prod_id = Input::get('prod_id');
 			$qty = Input::get('qty');
 			$qtyCheck = App::make("App\Http\Controllers\GlobalController")->availabilityCheck($prod_id);
