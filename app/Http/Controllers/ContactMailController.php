@@ -36,6 +36,17 @@ class ContactMailController extends Controller {
 									->with('unreadMailCount',$this->unreadMailCount())
 									->with('unreadTrashCount',$this->unreadTrashCount());
 	}
+	public function getTrashMailView()
+	{
+		$ContactUs = ContactUs::where('isTrash','=',1)->paginate(10);
+
+		return View::make('contactmail.contactmail')->with("userInfo",$this->userInfo())
+									->with('mt',"ml")
+									->with('ContactUs',$ContactUs)
+									->with('unreadMailCount',$this->unreadMailCount())
+									->with('unreadTrashCount',$this->unreadTrashCount());
+	}
+
 	public function getComposeMailView()
 	{
 		return View::make('contactmail.composemail')->with("userInfo",$this->userInfo())

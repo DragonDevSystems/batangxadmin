@@ -147,6 +147,7 @@ Route::group(array('prefix' => '/admin'),function()
 		Route::group(array('before' => 'auth'), function()
 		{
 			Route::get('/', array('uses' => 'ContactMailController@getContactMailView', 'as' => 'getContactMailView','middleware' => 'auth'));
+			Route::get('/trash-mail', array('uses' => 'ContactMailController@getTrashMailView', 'as' => 'getTrashMailView','middleware' => 'auth'));
 			Route::get('/compose', array('uses' => 'ContactMailController@getComposeMailView', 'as' => 'getComposeMailView','middleware' => 'auth'));
 			Route::get('/read-mail/{id}', array('uses' => 'ContactMailController@getReadMailView', 'as' => 'getReadMailView','middleware' => 'auth'));
 			Route::get('/getNextMail', array('uses' => 'ContactMailController@getNextMail', 'as' => 'getNextMail','middleware' => 'auth'));

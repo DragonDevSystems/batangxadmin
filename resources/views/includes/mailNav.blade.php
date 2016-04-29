@@ -13,7 +13,7 @@
         <li class="active"><a href="{{ URL::Route('getContactMailView') }}"><i class="fa fa-inbox"></i> Inbox
           <span class="label label-primary pull-right">{{$unreadMailCount}}</span></a></li>
         </li>
-        <li><a href="javascript:void(0)"><i class="fa fa-trash-o"></i> Trash
+        <li><a href="{{ URL::Route('getTrashMailView') }}"><i class="fa fa-trash-o"></i> Trash
         <span class="label label-primary pull-right">{{$unreadTrashCount}}</span></a></li>
       </ul>
     </div>
