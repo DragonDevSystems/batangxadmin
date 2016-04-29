@@ -19,6 +19,7 @@ use DB;
 use Input;
 use Response;
 use Request;
+use View;
 
 class GlobalController extends Controller {
 
@@ -426,6 +427,29 @@ class GlobalController extends Controller {
 	            'status'  => 'fail',
 	            'message'  => 'The item that you are trying to remove in your cart is not yet in you cart list.',
 	        ));
+		}
+	}
+
+	public function statsList($entry)
+	{
+		$userInfo = $this->userInfoList(Auth::User()['id']);
+		return View::Make("stats.statsSummary")->with("userInfo",$userInfo)->with('mt','db')->with('entry',$entry);
+	}
+
+	public function statsSummary($entry)
+	{
+		$header = array();
+		$response = array();
+		$datInfo = array();
+		switch ($entry) {
+
+			case 'NU':
+					
+				break;
+			
+			default:
+				# code...
+				break;
 		}
 	}
 }

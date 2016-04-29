@@ -11,7 +11,7 @@
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <!--<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
+            <a href="{{ URL::Route('statsList','NU') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -26,7 +26,7 @@
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <!--<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
+            <a href="{{ URL::Route('statsList','OU') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -41,7 +41,7 @@
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <!--<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
+            <a href="{{ URL::Route('statsList','RU') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -56,7 +56,7 @@
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <!--<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
+            <a href="{{ URL::Route('statsList','UVU') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

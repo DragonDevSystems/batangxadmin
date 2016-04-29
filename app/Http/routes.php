@@ -86,6 +86,8 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::get('/admin/productOnCart', array('uses' => 'GlobalController@productOnCart', 'as' => 'productOnCart'));
 				Route::get('/admin/onCartList/{id}', array('uses' => 'GlobalController@onCartList', 'as' => 'onCartList'));
 				Route::post('/admin/removeOnCart', array('uses' => 'GlobalController@removeOnCart', 'as' => 'removeOnCart','middleware' => 'auth'));
+				Route::get('/admin/stats/{entry}', array('uses' => 'GlobalController@statsList', 'as' => 'statsList','middleware' => 'auth'));
+				Route::get('/admin/statsSummary/{entry}', array('uses' => 'GlobalController@statsSummary', 'as' => 'statsSummary','middleware' => 'auth'));
 			});
 		});
 		Route::get('/topNewProduct/{take}', array('uses' => 'GlobalController@topNewProduct', 'as' => 'topNewProduct'));

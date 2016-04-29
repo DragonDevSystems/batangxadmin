@@ -72,7 +72,7 @@
 							                  <td>'+data[i].lname+'</td>\
 							                </tr>');*/
 					$('#dtUAList').DataTable().row.add([''+data[i].user_id+'', 
-                                                    '<img src="{{env('FILE_MAIN_PATH')}}'+data[i].userDp+'" style="margin:0px auto;width:30px;height:30px;" class="img-circle" alt="User Image">'+data[i].un+'', 
+                                                    '<img src="{{env('FILE_PATH_CUSTOM')}}'+data[i].userDp+'" style="margin:0px auto;width:30px;height:30px;" class="img-circle" alt="User Image">'+data[i].un+'', 
                                                     ''+data[i].fname+'', 
                                                     ''+data[i].lname+'', 
                                                     ]).draw();
