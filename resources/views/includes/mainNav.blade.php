@@ -67,9 +67,9 @@
             <i class="fa fa-envelope-o"></i> <span>Contact Mail</span> <i class="fa pull-right"></i>
           </a>
         </li>
-        <li class="treeview">
-          <a href="{{ URL::Route('home') }}">
-            <i class="fa fa-gears"></i> <span>Accounts Management</span> <i class="fa pull-right"></i>
+        <li class="{{ ($mt == "wi") ? "active" : ""}} treeview">
+          <a href="{{ URL::Route('getWalkIn') }}">
+            <i class="fa fa-money"></i> <span>Walk-in</span> <i class="fa pull-right"></i>
           </a>
         </li>
       </ul>

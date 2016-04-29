@@ -8,16 +8,32 @@
   <!-- title row -->
   <div class="row">
     <div class="col-xs-12">
-      <h2 class="page-header">
-        <img width="150" height="51" src="{{env('FILE_PATH_CUSTOM')}}img/gamextreme.png" alt="" />
-        <small class="pull-right">Date: {{$invoiceDate}}</small>
-      </h2>
+      <div class="col-xs-4">
+        <h2 class="page-header">
+          <img width="150" height="51" src="{{env('FILE_PATH_CUSTOM')}}img/gamextreme.png" alt="" />
+        </h2>
+      </div>
+      <div class="col-xs-4">
+        <h2 class="page-header">
+          <div class="col-md-5" >
+            <font size="1" style="padding: .5px;">Alabang Town Center,</font><br>
+            <font size="1" style="padding: .5px;">Muntinlupa City, Metro Manila</font><br>
+            <font size="1" style="padding: .5px;">Phone: (02) 842-2782</font><br>
+            <font size="1" style="padding: .5px;">Email: allenjamesxxiv@gmail.com</font><br>
+          </div>
+        </h2>
+      </div>
+      <div class="col-xs-4">
+        <h2 class="page-header">
+          <small class="pull-right">Date: {{$invoiceDate}}</small>
+        </h2>
+      </div>
     </div>
     <!-- /.col -->
   </div>
   <!-- info row -->
   <div class="row invoice-info">
-    <div class="col-sm-4 invoice-col">
+    <!--<div class="col-sm-4 invoice-col">
       From
       <address>
       <strong>GameXtreme</strong><br>
@@ -28,7 +44,7 @@
       </address>
     </div>
   <!-- /.col -->
-  <div class="col-sm-4 invoice-col">
+  <div class="col-sm-8  invoice-col">
     To
     <address>
       <strong>{{$userInfo['fname']}} {{$userInfo['lname']}}</strong><br>

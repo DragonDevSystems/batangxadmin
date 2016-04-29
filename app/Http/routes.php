@@ -49,6 +49,7 @@ Route::group(array('prefix' => '/admin'),function()
 		Route::group(array('before' => 'csrf'), function()
 		{
 			Route::post('/user/create', array('uses' => 'UserController@postCreate', 'as' => 'postCreate'));
+			Route::post('/user/createClient', array('uses' => 'UserController@createClient', 'as' => 'createClient'));
 			Route::post('/user/login',array('uses' => 'UserController@postLogin', 'as' => 'postLogin')); 
 			Route::post('/user/resetpass',array('uses' => 'UserController@resetPass', 'as' => 'resetPass')); 
 			Route::get('/user/getPassReset/{code}/{id}',array('uses' => 'UserController@getPassReset', 'as' => 'getPassReset'));
@@ -75,6 +76,8 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::get('/admin/information/{id}', array('uses' => 'GlobalController@userInfoList', 'as' => 'userInfoList','
 					middleware' => 'auth'));
 				Route::get('/admin/userlist', array('uses' => 'GlobalController@userlist', 'as' => 'userlist','
+					middleware' => 'auth'));
+				Route::get('/admin/allProduct', array('uses' => 'GlobalController@allProduct', 'as' => 'allProduct','
 					middleware' => 'auth'));
 				Route::get('/admin/accountAccessChecker/{event}/{module}', array('uses' => 'GlobalController@accountAccessChecker', 'as' => 'accountAccessChecker','
 					middleware' => 'auth'));
@@ -120,6 +123,7 @@ Route::group(array('prefix' => '/admin'),function()
 			Route::get('/', array('uses' => 'ProductController@getProductView', 'as' => 'getProductView','middleware' => 'auth'));
 			Route::get('/getProductList', array('uses' => 'ProductController@getProductList', 'as' => 'getProductList','middleware' => 'auth'));
 			Route::get('/getProductInfo', array('uses' => 'ProductController@getProductInfo', 'as' => 'getProductInfo','middleware' => 'auth'));
+			Route::get('/getWalkIn', array('uses' => 'CustomerController@getWalkIn', 'as' => 'getWalkIn','middleware' => 'auth'));
 			Route::group(array('before' => 'csrf'), function()
 			{
 				Route::post('/addProduct', array('uses' => 'ProductController@addProduct', 'as' => 'addProduct','middleware' => 'auth'));

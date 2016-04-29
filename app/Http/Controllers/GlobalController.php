@@ -56,6 +56,11 @@ class GlobalController extends Controller {
 		return User::find($id)['userImages'];
 	}
 
+	public function allProduct()
+	{
+		return ProductInformation::all();
+	}
+
 	public function accountAccessChecker($event,$module)
 	{
 		$event = (!empty($event)) ? $event : Input::get('event');
