@@ -6,6 +6,7 @@ use Auth;
 use Shinobi;
 use App;
 use Redirect;
+use App\Models\News;
 class HomeController extends Controller {
 
 	public function index()
@@ -42,7 +43,8 @@ class HomeController extends Controller {
 
 	public function getNews()
 	{
-		return View::Make("customer.menu.news")->with('mt','news');
+		$news = News::paginate(3);
+		return View::Make("customer.menu.news")->with('mt','news')->with('news',$news);
 	}
 
 	public function getContactUs()
