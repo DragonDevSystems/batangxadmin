@@ -14,12 +14,14 @@ use App\Models\ProductInventory;
 use App\Models\ProductOnCart;
 use App\Models\UserImage;
 use App\Models\ProductReserve;
+use App\Models\ContactUs;
 use Auth;
 use DB;
 use Input;
 use Response;
 use Request;
 use View;
+use URL;
 
 class GlobalController extends Controller {
 
@@ -162,15 +164,56 @@ class GlobalController extends Controller {
 
 	public function statsbox()
 	{
-		return array(
-						"nu" 	=> count($this->newUser()),//new user this month
-						"ou"	=> count($this->onlineUser()),// online user near realtime
-						"ru"	=> count($this->registeredUser()),// total of registered user
-						"uvu"	=> count($this->unverifiedUser()),//un-verified user
-					);
+		return Response::json(
+						[array(
+								"count" =>count($this->newUser()),
+								"bg_color" => "bg-aqua",
+								"content_title" => "New Users This Month",
+								"Ionicons" => "ion-bag",
+								"link" => URL::Route('statsList','NU'),
+							),//new user this month
+						array(
+								"count"	=> count($this->onlineUser()),
+								"bg_color" => "bg-green",
+								"content_title" => "Online User",
+								"Ionicons" => "ion-stats-bars",
+								"link" => URL::Route('statsList','OU'),
+							),// online user near realtime
+						array(
+								"count"	=> count($this->registeredUser()),
+								"bg_color" => "bg-yellow",
+								"content_title" => "Registered User",
+								"Ionicons" => "ion-person-add",
+								"link" => URL::Route('statsList','RU'),
+							),// total of registered user
+						array(
+								"count"	=> count($this->unverifiedUser()),
+								"bg_color" => "bg-red",
+								"content_title" => "Unverified User",
+								"Ionicons" => "ion-pie-graph",
+								"link" => URL::Route('statsList','UVU'),
+							),//un-verified user
+						array(
+								"count"	=> count($this->unReadMessage()),
+								"bg_color" => "bg-blue",
+								"content_title" => "Message (Contact us Page)",
+								"Ionicons" => "ion-android-mail",
+								"link" => URL::Route('getContactMailView'),
+							),//un-read message from contact us
+						]);
 
 	}
 
+	public function unReadMessage()
+	{
+		try
+		{
+			Online::updateCurrent();
+			return ContactUs::where('read','=',1)->get();;
+		}catch (\Exception $e){
+        	return 'Sorry something went worng. Please try again.';
+   		}
+	}
 	public function categoryInfo($cid)
 	{
 		$id = (!empty($cid)) ? $cid : Input::get("cid");
@@ -439,7 +482,6 @@ class GlobalController extends Controller {
 	public function statsSummary($entry)
 	{
 		$header = array();
-		//$response = array();
 		$datInfo = array();
 		switch ($entry) {
 
@@ -447,15 +489,70 @@ class GlobalController extends Controller {
 					$data = ['User_ID','Username','Firstname','Lastname'];
 					$header = $data;
 					$newUser = $this->newUser();
+					$summaryTitle = "New Registered User";
 					if(!empty($newUser))
 					{
 						foreach ($newUser as $newUseri) {
 							$userInfo = $this->userInfoList($newUseri['id']);
 							$datInfo[] = array(
-									"User_ID" => $userInfo['user_id'],
-									"Username" => $userInfo['un'],
-									"Firstname" => $userInfo['fname'],
-									"Lastname" => $userInfo['lname'],
+									0 => $userInfo['user_id'],
+									1 => $userInfo['un'],
+									2 => $userInfo['fname'],
+									3 => $userInfo['lname'],
+								);
+						}
+					}
+				break;
+			case 'OU':
+					$data = ['User_ID','Username','Firstname','Lastname'];
+					$header = $data;
+					$onLine = $this->onlineUser();
+					$summaryTitle = "Online User";
+					if(!empty($onLine))
+					{
+						foreach ($onLine as $onLinei) {
+							$userInfo = $this->userInfoList($onLinei['user_id']);
+							$datInfo[] = array(
+									0 => $userInfo['user_id'],
+									1 => $userInfo['un'],
+									2 => $userInfo['fname'],
+									3 => $userInfo['lname'],
+								);
+						}
+					}
+				break;
+				case 'RU':
+					$data = ['User_ID','Username','Firstname','Lastname'];
+					$header = $data;
+					$regUser = $this->registeredUser();
+					$summaryTitle = "Registered User";
+					if(!empty($regUser))
+					{
+						foreach ($regUser as $regUseri) {
+							$userInfo = $this->userInfoList($regUseri['id']);
+							$datInfo[] = array(
+									0 => $userInfo['user_id'],
+									1 => $userInfo['un'],
+									2 => $userInfo['fname'],
+									3 => $userInfo['lname'],
+								);
+						}
+					}
+				break;
+				case 'UVU':
+					$data = ['User_ID','Username','Firstname','Lastname'];
+					$header = $data;
+					$regUser = $this->unverifiedUser();
+					$summaryTitle = "Unverified User";
+					if(!empty($regUser))
+					{
+						foreach ($regUser as $regUseri) {
+							$userInfo = $this->userInfoList($regUseri['id']);
+							$datInfo[] = array(
+									0 => $userInfo['user_id'],
+									1 => $userInfo['un'],
+									2 => $userInfo['fname'],
+									3 => $userInfo['lname'],
 								);
 						}
 					}
@@ -469,6 +566,7 @@ class GlobalController extends Controller {
 	            'status'  => 'success',
 	            'header' => $header,
 	            'datInfo' => $datInfo,
+	            'summaryTitle' => $summaryTitle,
 	        ));
 	}
 }

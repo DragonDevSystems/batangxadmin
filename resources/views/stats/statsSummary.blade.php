@@ -11,13 +11,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        User Access Management
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="{{ URL::Route('getUAL') }}"><i class="fa fa-dashboard"></i> User Access Management</a></li>
-        <li class="active">User Access Level</li>
-      </ol>
+      <h1 id="summTitle"></h1>
     </section>
 
     <!-- Main content -->
@@ -72,21 +66,15 @@
 			$('.tbl-overlay').remove();
 			if(data.length != 0)
 			{
+				$('#summTitle').text(data.summaryTitle);
 				for (var i = 0; i < data.header.length; i++) 
 				{
-				$('#dtUAList thead tr').append('<th>'+data.header[i]+'</th>');
+					$('#dtUAList thead tr').append('<th>'+data.header[i]+'</th>');
 				}
-				//$('#tbUAList').empty();
 				$('#dtUAList').DataTable().clear().draw();
 				for (var i = 0; i < data.datInfo.length; i++) 
 				{
-					$('#dtUAList').DataTable().row.add([
-													''+data.datInfo[i].User_ID+'', 
-                                                    ''+data.datInfo[i].Username+'', 
-                                                    ''+data.datInfo[i].Firstname+'', 
-                                                    ''+data.datInfo[i].Lastname+'', 
-                                                    ]).draw();
-
+					$('#dtUAList').DataTable().row.add(data.datInfo[i]).draw();
 				}
 				var table = $("#dtUAList").DataTable();
 				$('#dtUAList tbody').on('click', 'tr', function () {
