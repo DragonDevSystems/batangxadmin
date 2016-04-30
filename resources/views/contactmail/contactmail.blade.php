@@ -45,7 +45,7 @@
                   <tbody>
                   @foreach($ContactUs as $mail)
                   <?php $time = \Carbon\Carbon::createFromTimeStamp(strtotime($mail['created_at']))->diffForHumans(); 
-                    $read = $mail['read'] == 1 ? "text-yellow" : "";
+                    $read = $mail['read'] == 0 ? "text-yellow" : "";
                   ?>
                    <tr>
                     <td><input type="checkbox" data-id="{{$mail['id']}}"></td>

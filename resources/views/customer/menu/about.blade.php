@@ -15,7 +15,7 @@
     	<div class="section group">
 			<div class="col_1_of_3 span_1_of_3">
 				<h3>Who We Are</h3>
-				<img src="{{env('FILE_PATH_CUSTOM')}}img/about_img.jpg" alt="">
+				<img src="{{env('FILE_PATH_CUSTOM')}}img/gamextreme.png" alt="">
 				<p>GameXtreme is your one-stop digital hub.
 				Offering the latest in mobile and gaming technology, 
 				GameXtreme provides you with your gadget needs.</p>

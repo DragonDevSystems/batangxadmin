@@ -19,11 +19,11 @@ class ContactMailController extends Controller {
 
 	public function unreadMailCount()
 	{
-		return  count(ContactUs::where('read','=',1)->get());
+		return  count(ContactUs::where('read','=',0)->get());
 	}
 	public function unreadTrashCount()
 	{
-		return  count(ContactUs::where('read','=',1)->where('isTrash','=',1)->get());
+		return  count(ContactUs::where('read','=',0)->where('isTrash','=',1)->get());
 	}
 
 	public function getContactMailView()
@@ -57,7 +57,7 @@ class ContactMailController extends Controller {
 	public function getReadMailView($id)
 	{
 		$mail = ContactUs::find($id);
-		$mail['read'] = 0;
+		$mail['read'] = 1;
 		$mail->save();
 		return View::make('contactmail.readmail')->with("userInfo",$this->userInfo())
 									->with('mt',"ml")
