@@ -66,7 +66,10 @@ class CustomerController extends Controller {
 		{
 			$onCartList = App::make("App\Http\Controllers\GlobalController")->onReserveList($invoiceCheck['cus_id'],$invoiceCheck['id']);
 			$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList($invoiceCheck['cus_id']);
-			return View::Make("checkout.invoiceprint")->with("userInfo",$userInfo)->with("onCartList",$onCartList)->with('mt','db');
+			$accountNum = str_pad($userInfo['user_id'], 8, '0', STR_PAD_LEFT); //8digit
+			$invoiceNum = str_pad($invoiceCheck['id'], 6, '0', STR_PAD_LEFT); //6digit
+			$invoiceDate = $invoiceCheck['created_at'];
+			return View::Make("checkout.invoiceprint")->with("userInfo",$userInfo)->with("onCartList",$onCartList)->with('mt','db')->with("accountNum",$accountNum)->with("invoiceNum",$invoiceNum)->with("invoiceDate",$invoiceDate);
 		}
 		else
 		{
