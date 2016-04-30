@@ -37,6 +37,28 @@
 					     </ul>
 	 					</div>
 			</div>
+			<div class="col_1_of_4 span_1_of_4">
+				<div style="width:300px">
+					<h4>Tell Us your testimonial</h4>
+					@if(Auth::Check())
+						<div class="contact-form" >
+							<form method="post" action="{{URL::Route('postTestimonial')}}">
+								<ul>
+							    	<span><textarea cols="50" id="testimonial" name="testimonial" required></textarea></span>
+							   		<li><input type="hidden" value="{{ csrf_token() }}" name="_token"></li>
+								</ul>
+								<div class="social-icons">
+									<span><input type="submit"  class="myButton"></span>
+								</div>
+							</form>
+						</div>
+					@else
+						<ul>
+							<li><span>Please Log in to be able to create you're testimonial.</span></li>
+						</ul>
+					@endif
+				</div>
+			</div>
 		</div>			
     </div>
     <div class="copy_right">

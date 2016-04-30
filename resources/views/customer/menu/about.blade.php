@@ -46,6 +46,9 @@
 					<p class="history">2/F Pop Culture, Alabang Town Center, Muntinlupa City</p>
 				 	<div class="clear"></div>
 				</div>
+			</div>
+			<div class="col_1_of_3 span_1_of_3">
+				<h3></h3>
 				<div class="history-desc">
 					<p class="history">G/F, Alabang Mall, Alabang Town Center, Muntinlupa City</p>
 				 	<div class="clear"></div>
@@ -71,7 +74,24 @@
 				 	<div class="clear"></div>
 				</div>
 			</div>
-		</div>		
+		</div>	
+		<div id="block_body" style="background:url({{env('FILE_PATH_CUSTOM')}}img/bg.gif)">
+			<div id="block" style="background:url({{env('FILE_PATH_CUSTOM')}}img/bg.gif)">
+				<h3 stle="background:url({{env('FILE_PATH_CUSTOM')}}img/h3.png)">Latest testimonial</h3>
+				<div class="photo" style="background:url({{env('FILE_PATH_CUSTOM')}}img/photo-bg.png)">
+					<img src="{{env('FILE_PATH_CUSTOM')}}img/photo-bg.png" alt="" class="photo-bg"/>
+					<img src="{{env('FILE_PATH_CUSTOM')}}img/photo.jpg" alt="" class="photo" />
+				</div>
+				<p class="content" style="background:url({{env('FILE_PATH_CUSTOM')}}img/bg.gif)">
+					<span class="laquo" style="background:url({{env('FILE_PATH_CUSTOM')}}img/laquo.png)">&nbsp;</span>
+					{{$testimonial['message']}}
+					<span class="raquo" style="background:url({{env('FILE_PATH_CUSTOM')}}img/raquo.png)">&nbsp;</span>
+				</p>
+				<div class="sign" style="background:url({{env('FILE_PATH_CUSTOM')}}img/bg.gif)">
+					<a href="javascript:void(0)">{{$testiInfo['fname']}} {{$testiInfo['lname']}}</a>
+				</div>
+			</div>
+		</div>
     </div>
  </div>
 </div>

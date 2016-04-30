@@ -7,6 +7,7 @@ use Shinobi;
 use App;
 use Redirect;
 use App\Models\News;
+use App\Models\Testimonials;
 class HomeController extends Controller {
 
 	public function index()
@@ -38,12 +39,15 @@ class HomeController extends Controller {
 
 	public function getAbout()
 	{
-		return View::Make("customer.menu.about")->with('mt','about');
+		$testimonial = Testimonials::orderBy('created_at', 'DESC')->first();
+		$testiInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList($testimonial['user_id']);
+		return View::Make("customer.menu.about")->with('mt','about')->with('testimonial',$testimonial)->with('testiInfo',$testiInfo);
 	}
 
 	public function getNews()
 	{
-		$news = News::paginate(3);
+
+		$news = News::orderBy('created_at', 'DESC')->paginate(3);
 		return View::Make("customer.menu.news")->with('mt','news')->with('news',$news);
 	}
 

@@ -173,7 +173,9 @@ Route::group(array('prefix' => '/admin'),function()
 			Route::get('/getNewsList', array('uses' => 'NewsController@getNewsList', 'as' => 'getNewsList','middleware' => 'auth'));
 			Route::group(array('before' => 'csrf'), function()
 			{
-				Route::post('/addNews', array('uses' => 'NewsController@addNews', 'as' => 'addNews','middleware' => 'auth'));});
+				Route::post('/addNews', array('uses' => 'NewsController@addNews', 'as' => 'addNews','middleware' => 'auth'));
+				Route::post('/create_testimonial', array('uses' => 'NewsController@postTestimonial', 'as' => 'postTestimonial','middleware' => 'auth'));
+			});
 		});
 
 	});

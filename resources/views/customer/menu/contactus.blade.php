@@ -31,7 +31,7 @@
 						    </div>
 						    <div>
 						    	<span><label>Subject</label></span>
-						    	<span><textarea name="message" required> </textarea></span>
+						    	<span><textarea name="message" required></textarea></span>
 						    </div>
 						   <div>
 						   		<span><input type="submit" value="Submit"  class="myButton"></span>

@@ -11,6 +11,7 @@ use Response;
 use Redirect;
 use Image;
 use App\Models\News;
+use App\Models\Testimonials;
 
 class NewsController extends Controller {
 
@@ -74,5 +75,17 @@ class NewsController extends Controller {
 			}
 		}
 		return Response::json($data);
+	}
+
+	public function postTestimonial()
+	{
+		$message = Input::get('testimonial');
+		$add = new Testimonials();
+		$add['message'] = $message;
+		$add['user_id'] = Auth::User()['id'];
+		if($add->save()){
+			Return Redirect::route('cusIndex')->with('success','Success to create testimonial.');
+		}
+		Return Redirect::route('cusIndex')->with('fail','Fail to create testimonial.');
 	}
 }
