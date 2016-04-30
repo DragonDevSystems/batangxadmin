@@ -90,23 +90,45 @@
 </div>
 <script type="text/javascript">
   $(document).on("click",".trash_mail",function(){
+    var type = "{{$mm}}";
     if($('.mailbox-messages input[type="checkbox"]:checked').length != 0){
-      promptConfirmation("Do you want to move this mail to trash?");
-      $('#btnYes').click(function() {
-        $('.mailbox-messages input[type="checkbox"]:checked').each(function () {
-          var id = $(this).data('id');
-          var _token = "{{ csrf_token() }}";
-          $.post('{{URL::Route('moveToTrash')}}',{ _token: _token, id: id } , function(response)
-          {
-            if(response.status == "success"){
-             promptMsg(response.status,response.message);
-            }
+      if(type == "inbox"){
+        promptConfirmation("Do you want to move this mail to trash?");
+        $('#btnYes').click(function() {
+          $('.mailbox-messages input[type="checkbox"]:checked').each(function () {
+            var id = $(this).data('id');
+            var _token = "{{ csrf_token() }}";
+            $.post('{{URL::Route('moveToTrash')}}',{ _token: _token, id: id } , function(response)
+            {
+              if(response.status == "success"){
+               promptMsg(response.status,response.message);
+              }
+            });
+            $(this).closest('tr').fadeOut("slow",function(){ 
+                                        $(this).remove(); 
+                                      });
           });
-          $(this).closest('tr').fadeOut("slow",function(){ 
-                                      $(this).remove(); 
-                                    });
         });
-      });
+      }
+      else{
+        promptConfirmation("Do you want to remove this mail permanently?");
+        $('#btnYes').click(function() {
+          $('.mailbox-messages input[type="checkbox"]:checked').each(function () {
+            var id = $(this).data('id');
+            var _token = "{{ csrf_token() }}";
+            $.post('{{URL::Route('deleteMail')}}',{ _token: _token, id: id } , function(response)
+            {
+              if(response.status == "success"){
+               promptMsg(response.status,response.message);
+              }
+            });
+            $(this).closest('tr').fadeOut("slow",function(){ 
+                                        $(this).remove(); 
+                                      });
+          });
+        });
+      }
+     
     }
     /*$id = [];
     $i = 0;

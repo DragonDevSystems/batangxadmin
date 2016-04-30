@@ -154,6 +154,7 @@ Route::group(array('prefix' => '/admin'),function()
 			Route::group(array('before' => 'csrf'), function()
 			{
 				Route::post('/moveToTrash', array('uses' => 'ContactMailController@moveToTrash', 'as' => 'moveToTrash','middleware' => 'auth'));
+				Route::post('/deleteMail', array('uses' => 'ContactMailController@deleteMail', 'as' => 'deleteMail','middleware' => 'auth'));
 			});
 		});
 	});

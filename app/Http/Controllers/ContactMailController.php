@@ -138,4 +138,19 @@ class ContactMailController extends Controller {
 					));
 	}
 
+	public function deleteMail()
+	{
+		$id = Input::get('id');
+		$deleteMail = ContactUs::find($id);
+		if($deleteMail->delete()){
+			return Response::json(array(
+					"status" 			=> "success",
+					"message"			=> "Success to delete mail.",
+				));
+		}
+		return Response::json(array(
+					"status" 			=> "fail",
+					"message"			=> "Fail to delete mail.",
+				));
+	}
 }
