@@ -32,6 +32,7 @@ class ContactMailController extends Controller {
 
 		return View::make('contactmail.contactmail')->with("userInfo",$this->userInfo())
 									->with('mt',"ml")
+									->with('mm','inbox')
 									->with('ContactUs',$ContactUs)
 									->with('unreadMailCount',$this->unreadMailCount())
 									->with('unreadTrashCount',$this->unreadTrashCount());
@@ -42,6 +43,7 @@ class ContactMailController extends Controller {
 
 		return View::make('contactmail.contactmail')->with("userInfo",$this->userInfo())
 									->with('mt',"ml")
+									->with('mm','trash')
 									->with('ContactUs',$ContactUs)
 									->with('unreadMailCount',$this->unreadMailCount())
 									->with('unreadTrashCount',$this->unreadTrashCount());
@@ -54,14 +56,23 @@ class ContactMailController extends Controller {
 									->with('unreadMailCount',$this->unreadMailCount());
 	}
 
-	public function getReadMailView($id)
+	public function getReadMailView($type,$id)
 	{
 		$mail = ContactUs::find($id);
 		$mail['read'] = 1;
 		$mail->save();
+		if($type == "inbox"){
+			$count = count(ContactUs::where('isTrash','=',0)->get());
+		}
+		else{
+			$count = count(ContactUs::where('isTrash','=',1)->get());
+		}
+		
 		return View::make('contactmail.readmail')->with("userInfo",$this->userInfo())
 									->with('mt',"ml")
+									->with('mm',$type)
 									->with('mail',$mail)
+									->with('count',$count)
 									->with('unreadMailCount',$this->unreadMailCount())
 									->with('unreadTrashCount',$this->unreadTrashCount());
 	}
@@ -89,21 +100,41 @@ class ContactMailController extends Controller {
 	{
 		$id = Input::get('id');
 		$type = Input::get('type');
+		$type_for = Input::get('type_for');
 		if($type == "next"){
-			$next = ContactUs::where('id', '>', $id)->where('isTrash','=',0)->orderBy('id','asc')->first();
-			if(empty($next)){
-				$next = ContactUs::where('id', '<', $id)->where('isTrash','=',0)->orderBy('id','asc')->first();
+			if($type_for == "inbox"){
+				$next = ContactUs::where('id', '>', $id)->where('isTrash','=',0)->orderBy('id','asc')->first();
+				if(empty($next)){
+					$next = ContactUs::where('id', '<', $id)->where('isTrash','=',0)->orderBy('id','asc')->first();
+				}
 			}
+			else{
+				$next = ContactUs::where('id', '>', $id)->where('isTrash','=',1)->orderBy('id','asc')->first();
+				if(empty($next)){
+					$next = ContactUs::where('id', '<', $id)->where('isTrash','=',1)->orderBy('id','asc')->first();
+				}
+			}
+			
 		}
 		else{
-			$next = ContactUs::where('id', '<', $id)->where('isTrash','=',0)->orderBy('id','desc')->first();
-			if(empty($next)){
-				$next = ContactUs::where('id', '>', $id)->where('isTrash','=',0)->orderBy('id','desc')->first();
-			}	
+			if($type_for == "inbox"){
+				$next = ContactUs::where('id', '<', $id)->where('isTrash','=',0)->orderBy('id','desc')->first();
+				if(empty($next)){
+					$next = ContactUs::where('id', '>', $id)->where('isTrash','=',0)->orderBy('id','desc')->first();
+				}
+			}
+			else{
+				$next = ContactUs::where('id', '<', $id)->where('isTrash','=',1)->orderBy('id','desc')->first();
+				if(empty($next)){
+					$next = ContactUs::where('id', '>', $id)->where('isTrash','=',1)->orderBy('id','desc')->first();
+				}
+
+			}
+				
 		}
 		return Response::json(array(
 						"id" 		=> $next['id'],
-						"url"		=> URL::Route('getReadMailView',$next['id']),
+						"url"		=> URL::Route('getReadMailView',[$type_for,$next['id']]),
 					));
 	}
 

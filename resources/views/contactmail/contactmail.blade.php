@@ -52,7 +52,7 @@
                     <td class="mailbox-star"><a href="javascript:void(0)">
                       <i class="fa fa-star {{$read}}"></i>
                     </a></td>
-                    <td class="mailbox-name"><a href="{{ URL::Route('getReadMailView',$mail['id']) }}">{{$mail['name']}}</a></td>
+                    <td class="mailbox-name"><a href="{{ URL::Route('getReadMailView',[$mm,$mail['id']]) }}">{{$mail['name']}}</a></td>
                     <td class="mailbox-subject"><b>{{$mail['company']}}</b> - {{str_limit($mail['message'], $limit = 60, $end = '...')}}
                     </td>
                     <td class="mailbox-attachment"></td>

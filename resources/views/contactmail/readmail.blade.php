@@ -29,11 +29,12 @@
           <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Read Mail</h3>
-
+              @if($count > 1)
               <div class="box-tools pull-right">
                 <a href="javascript:void(0)" class="btn btn-box-tool next" data-type="prev" data-toggle="tooltip" title="Previous"><i class="fa fa-chevron-left"></i></a>
                 <a href="javascript:void(0)" class="btn btn-box-tool next" data-type="next" data-toggle="tooltip" title="Next"><i class="fa fa-chevron-right"></i></a>
               </div>
+              @endif
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
@@ -90,8 +91,9 @@
   });
   $(document).on("click",".next",function(){
     var id = "{{$mail['id']}}";
+    var type_for = "{{$mm}}";
     var type = $(this).data('type');
-    $.get('{{URL::Route('getNextMail')}}',{  id: id , type : type } , function(response)
+    $.get('{{URL::Route('getNextMail')}}',{  id: id , type : type , type_for : type_for} , function(response)
     {
       window.location.href = response.url;
     });
