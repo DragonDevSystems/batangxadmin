@@ -89,7 +89,7 @@
       Note:
       To pick up your product please bring valid I.D. and a copy of you invoice.Thank you.
       <br><br>
-      For "Cash Pick Up" trasaction, your invoice trasaction will be forfieted for next 24hrs.
+      For "Cash on Pick Up" trasaction, your invoice trasaction will be forfieted for next 24hrs.
       </p>
     </div>
     <!-- /.col -->
