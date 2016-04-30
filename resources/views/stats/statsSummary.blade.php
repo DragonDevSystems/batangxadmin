@@ -77,10 +77,10 @@
 					$('#dtUAList').DataTable().row.add(data.datInfo[i]).draw();
 				}
 				var table = $("#dtUAList").DataTable();
-				$('#dtUAList tbody').on('click', 'tr', function () {
+				/*$('#dtUAList tbody').on('click', 'tr', function () {
 			        var data = table.row( this ).data();
 			        adminInformation(data[0]);
-			    } );
+			    } );*/
 			}
 			else
 			{
