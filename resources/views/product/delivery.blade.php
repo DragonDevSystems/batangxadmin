@@ -81,7 +81,7 @@
 	});
 	function getReceiptList()
 	{
-		$.get('{{URL::Route('accountAccessChecker',0)}}',{ event: "add"}, function(data)
+		$.get('{{URL::Route('accountAccessChecker',["add","product"])}}', function(data)
 		{
 			if(data.length != 0)
 			{
