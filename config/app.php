@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Krasnoyarsk',
+    'timezone' => 'Asia/Kuala_Lumpur',
 
     /*
     |--------------------------------------------------------------------------

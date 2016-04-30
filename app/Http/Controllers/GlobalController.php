@@ -586,7 +586,7 @@ class GlobalController extends Controller {
 						foreach ($onCartProduct as $onCartProducti) {
 							$userInfo = $this->userInfoList($onCartProducti['cus_id']);
 							$prodInfo = ProductInformation::find($onCartProducti['prod_id']);
-							$current_price = ProductPrice::find($onCartProducti['prod_id']);
+							$current_price = ProductPrice::find($onCartProducti['price_id']);
 							$datInfo[] = array(
 									0 => $onCartProducti['prod_id'],
 									1 => $userInfo['fname'].' '.$userInfo['lname'],
