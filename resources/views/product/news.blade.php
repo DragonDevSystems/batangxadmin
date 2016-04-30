@@ -26,6 +26,15 @@
 		<!-- user admin list -->
 		<div class="box box-primary">
             <!-- /.box-header -->
+            <div class="box-header">
+            	<h3 class="box-title">News List</h3>
+            	<div class="box-tools pull-right">
+                  <button id="editProduct" class="btn btn-info btn-sm " type="button" disabled>
+                    <i class="fa fa-edit"></i>
+                    Edit
+                  </button>
+                </div>
+            </div>
             <div class="box-body">
               <table id="newsList" class="table table-bordered table-striped table-hover">
                 <thead>
@@ -55,6 +64,31 @@
 		defaultDisplay();
 	    //Initialize datatable Elements
 	    var table = $('#newsList').DataTable();
+	    $('#newsList tbody').on( 'click', 'tr', function () {
+	        if ( $(this).hasClass('active') ) {
+	            $(this).removeClass('active');
+	            $('#editProduct').prop("disabled", true);
+	        }
+	        else {
+	            table.$('tr.active').removeClass('active');
+	            $(this).addClass('active');
+	            $('#editProduct').prop("disabled", false);
+	        }
+	        if($('#editProduct').hasClass('continue_view'))
+	        {
+	        	var id = table.cell('.active', 0).data();
+	        	setNewEntry(id);
+	        }
+	        $(window).scrollTop($('#div-entry').offset().top);
+    	});
+    	$('#editProduct').on( 'click', function () {
+    		var id = table.cell('.active', 0).data();
+    		$('#editProduct').addClass('continue_view');
+    		$('#div-entry').append('<div class="overlay">\
+		        	<i class="fa fa-spinner fa-spin"></i>\
+		        </div>');
+    		setNewEntry(id);
+    	});
 	});
 
 	function newsList()
