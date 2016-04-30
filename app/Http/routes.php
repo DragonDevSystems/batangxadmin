@@ -160,4 +160,16 @@ Route::group(array('prefix' => '/admin'),function()
 			});
 		});
 	});
+
+	Route::group(array('prefix' => '/news'),function()
+	{
+		Route::group(array('before' => 'auth'), function()
+		{
+			Route::get('/', array('uses' => 'NewsController@getNewsView', 'as' => 'getNewsView','middleware' => 'auth'));
+			Route::group(array('before' => 'csrf'), function()
+			{
+				Route::post('/addNews', array('uses' => 'NewsController@addNews', 'as' => 'addNews','middleware' => 'auth'));});
+		});
+
+	});
 });

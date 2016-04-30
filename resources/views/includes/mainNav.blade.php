@@ -67,6 +67,11 @@
             <i class="fa fa-envelope-o"></i> <span>Contact Mail</span> <i class="fa pull-right"></i>
           </a>
         </li>
+        <li class="treeview {{ ($mt == "nw") ? "active" : ""}}">
+          <a href="{{ URL::Route('getNewsView') }}">
+            <i class="fa fa-newspaper-o"></i> <span>News</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
         <li class="treeview">
           <a href="{{ URL::Route('home') }}">
             <i class="fa fa-gears"></i> <span>Accounts Management</span> <i class="fa pull-right"></i>
