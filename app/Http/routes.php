@@ -166,6 +166,7 @@ Route::group(array('prefix' => '/admin'),function()
 		Route::group(array('before' => 'auth'), function()
 		{
 			Route::get('/', array('uses' => 'NewsController@getNewsView', 'as' => 'getNewsView','middleware' => 'auth'));
+			Route::get('/getNewsList', array('uses' => 'NewsController@getNewsList', 'as' => 'getNewsList','middleware' => 'auth'));
 			Route::group(array('before' => 'csrf'), function()
 			{
 				Route::post('/addNews', array('uses' => 'NewsController@addNews', 'as' => 'addNews','middleware' => 'auth'));});

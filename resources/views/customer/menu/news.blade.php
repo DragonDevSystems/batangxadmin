@@ -22,7 +22,7 @@
 				<div class="grid news_desc">
 					<h3>{{$new['title']}}</h3>
 					<h4>Posted on {{$time}} by <span><a href="#">Game Extreme</a></span></h4>
-					<p>{{str_limit($new['message'], $limit = 500, $end = '')}}<a title="more" href="#">[....]</a></p>
+					<p>{{str_limit($new['message'], $limit = 500, $end = '')}}<a title="more" href="javascript:void(0)">[....]</a></p>
 				</div>
 		    </div>	
 		@endforeach

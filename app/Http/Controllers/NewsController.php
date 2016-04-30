@@ -56,4 +56,23 @@ class NewsController extends Controller {
 			Return Redirect::route('getNewsView');
 		}
 	}
+
+	public function getNewsList()
+	{
+		$news =  News::all();
+		$data = array();
+		if(!empty($news)){
+			foreach ($news as $new) {
+				$message = str_limit($new['message'], $limit = 60, $end = '...');
+				$time = \Carbon\Carbon::createFromTimeStamp(strtotime($new['created_at']))->toDayDateTimeString();
+				$data[] = array(
+						"id" => $new['id'],
+						"title" => $new['title'],
+						"message" => $message,
+						"time" => $time,
+					);
+			}
+		}
+		return Response::json($data);
+	}
 }

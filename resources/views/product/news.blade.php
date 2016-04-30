@@ -27,22 +27,19 @@
 		<div class="box box-primary">
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="dtUAList" class="table table-bordered table-striped table-hover">
+              <table id="newsList" class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
-                  <th>User ID</th>
-                  <th>Username</th>
-                  <th>Firstname</th>
-                  <th>Lastname</th>
+                  <th>Id</th>
+                  <th>Title</th>
+                  <th>Message</th>
+                  <th>Date</th>
                 </tr>
                 </thead>
                 <tbody id="tbUAList">
                 </tbody>
               </table>
             </div>
-            <div class="overlay tbl-overlay">
-	        	<i class="fa fa-spinner fa-spin"></i>
-	        </div>
             <!-- /.box-body -->
           </div>
     </section>
@@ -53,7 +50,29 @@
   @include('includes.settingSidebar')
 </div>
 <script type="text/javascript">
-	defaultDisplay();
+	$(document).ready(function() {
+		newsList();
+		defaultDisplay();
+	    //Initialize datatable Elements
+	    var table = $('#newsList').DataTable();
+	});
+
+	function newsList()
+	{
+		$.get('{{URL::Route('getNewsList')}}', function(response)
+   		{
+			$('#newsList').DataTable().clear();
+			for (var i = 0; i < response.length; i++) 
+        	{
+				$('#newsList').DataTable().row.add([''+response[i].id+'', 
+                                                    ''+response[i].title+'', 
+                                                    ''+response[i].message+'',
+                                                    ''+response[i].time+'',
+                                                    ]).draw();
+			}
+		});
+	}
+
 	function setNewEntry()
 	{
 		$('#div-entry').append('<div class="overlay">\
