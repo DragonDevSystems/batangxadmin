@@ -200,8 +200,26 @@ class GlobalController extends Controller {
 								"Ionicons" => "ion-android-mail",
 								"link" => URL::Route('getContactMailView'),
 							),//un-read message from contact us
+						array(
+								"count"	=> count($this->onCartProduct()),
+								"bg_color" => "bg-purple",
+								"content_title" => "On Cart Product",
+								"Ionicons" => "ion-android-cart",
+								"link" => URL::Route('statsList','OCP'),
+							),//On cart product
 						]);
 
+	}
+
+	public function onCartProduct()
+	{
+		try
+		{
+			Online::updateCurrent();
+			return ProductOnCart::all();
+		}catch (\Exception $e){
+        	return 'Sorry something went worng. Please try again.';
+   		}
 	}
 
 	public function unReadMessage()
@@ -209,11 +227,12 @@ class GlobalController extends Controller {
 		try
 		{
 			Online::updateCurrent();
-			return ContactUs::where('read','=',1)->get();;
+			return ContactUs::where('read','=',1)->get();
 		}catch (\Exception $e){
         	return 'Sorry something went worng. Please try again.';
    		}
 	}
+
 	public function categoryInfo($cid)
 	{
 		$id = (!empty($cid)) ? $cid : Input::get("cid");
@@ -553,6 +572,28 @@ class GlobalController extends Controller {
 									1 => $userInfo['un'],
 									2 => $userInfo['fname'],
 									3 => $userInfo['lname'],
+								);
+						}
+					}
+				break;
+				case 'OCP':
+					$data = ['Prod_id','Customer','Product_Name','Unit_Price','Qty','Total_Price'];
+					$header = $data;
+					$onCartProduct = $this->onCartProduct();
+					$summaryTitle = "Unverified User";
+					if(!empty($onCartProduct))
+					{
+						foreach ($onCartProduct as $onCartProducti) {
+							$userInfo = $this->userInfoList($onCartProducti['cus_id']);
+							$prodInfo = ProductInformation::find($onCartProducti['prod_id']);
+							$current_price = ProductPrice::find($onCartProducti['prod_id']);
+							$datInfo[] = array(
+									0 => $onCartProducti['prod_id'],
+									1 => $userInfo['fname'].' '.$userInfo['lname'],
+									2 => $prodInfo['name'],
+									3 => '&#8369; '.number_format($current_price['price'], 2),
+									4 => $onCartProducti['qty'],
+									5 => '&#8369; '.number_format(($current_price['price'] * $onCartProducti['qty']), 2),
 								);
 						}
 					}

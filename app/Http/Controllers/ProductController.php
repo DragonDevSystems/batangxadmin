@@ -347,9 +347,11 @@ class ProductController extends Controller {
 			$update['qty'] = $update['qty'] - $qty;
 			if($update->save())
 			{
+				$current_price = ProductPrice::where('prod_id','=',$prod_id)->where('status','=',1)->first();
 				$addCart = new ProductOnCart();
 				$addCart['prod_id'] = $prod_id;
 				$addCart['cus_id'] = $cus_id;
+				$addCart['price_id'] = $current_price['id'];
 				$addCart['qty'] = $qty;
 				$addCart['ip_address'] = Request::ip();
 				$addCart->save();
