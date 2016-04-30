@@ -425,11 +425,11 @@ class GlobalController extends Controller {
 		return $response;
 	}
 
-	public function onReserveList($cus_id)
+	public function onReserveList($cus_id,$invoiceId)
 	{
 		$response = array();
 		$products = array();
-		$check = ProductReserve::where("cus_id","=",$cus_id)->get();
+		$check = ProductReserve::where("cus_id","=",$cus_id)->where("prod_invoice_id","=",$invoiceId)->get();
 		$totalP = 0;
 		$totalQty = 0;
 		if(!empty($check))
