@@ -198,6 +198,7 @@ class ProductController extends Controller {
 		$category = ProCategory::where('status','=',1)->get(array('id','name'));
 		$price = ProductPrice::where('prod_id','=',$id)->get();
 		$current_price = ProductPrice::where('prod_id','=',$id)->where('status','=',1)->first();
+		$remaining_inv = ProductInventory::where('prod_id','=',$id)->first();
 		return Response::json(array(
 				"status" => !empty($id) ? "Update product" : "Add product",
 				"id" => !empty($id) ? $id : "new",
@@ -209,6 +210,8 @@ class ProductController extends Controller {
 				"price" => !empty($price) ? $price : "",
 				"current_price" => !empty($current_price) ? $current_price['id'] : "",
 				"category" => $category,
+				"remaining_inv" => !empty($remaining_inv) ? $remaining_inv['qty'] : 0,
+				"current_price_value" => !empty($current_price) ? '&#8369; '.number_format($current_price['price'], 2) : "No Price Available",
 				));	
 	}
 

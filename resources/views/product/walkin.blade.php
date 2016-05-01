@@ -102,18 +102,18 @@
 									$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
 										$('<div />' , {'class' : 'form-group'}).append(
 											$('<label />' , { 'class' : 'control-label' , 'for' : 'customer' , 'text' : 'Customer Name:'}),
-											$('<select />' , { 'id':'customer' ,'class':'form-control select2' ,'name':'module'}))))),
+											$('<select />' , { 'id':'customer' ,'class':'form-control select2' ,'name':'customer'}))))),
 							$('<div />', { 'class' : 'row'}).append(
 								$('<div />', {'class' : 'col-md-3 col-sm-6'}).append(
 									$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
 										$('<div />' , {'class' : 'form-group'}).append(
 											$('<label />' , { 'class' : 'control-label' , 'for' : 'product' , 'text' : 'Product:'}),
-											$('<select />' , { 'id':'product' ,'class':'form-control select2' ,'type':'text','name':'name', 'placeholder':'Enter Name'})))),
+											$('<select />' , { 'id':'product' ,'class':'form-control select2' ,'type':'text','name':'product'})))),
 								$('<div />', {'class' : 'col-md-2 col-sm-3'}).append(
 									$('<div />', {'class' : 'col-md-12 col-sm-3'}).append(
 										$('<div />' , {'class' : 'form-group'}).append(
-											$('<label />' , { 'class' : 'control-label', 'text' : 'Remaining Item: 5'}),
-											$('<label />' , { 'class' : 'control-label', 'text' : 'Unit Price: P15436.00'})))),
+											$('<label />' , { 'class' : 'control-label item-remain', 'text' : 'Remaining Item: 0'}),
+											$('<label />' , { 'class' : 'control-label unit-price', 'text' : 'Unit Price: 0'})))),
 								$('<div />', {'class' : 'col-md-2 col-sm-6'}).append(
 									$('<div />', {'class' : 'col-md-6 col-sm-12'}).append(
 										$('<div />' , {'class' : 'form-group'}).append(
@@ -123,7 +123,7 @@
 									$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
 										$('<div />' , {'class' : 'form-group'}).append(
 											$('<label />' , { 'class' : 'control-label', 'text' : 'Click or press Enter key to add in the cart'}),
-											$('<button />' , { 'class' : 'btn btn-success btn-sm add-cart', 'type' : 'button', 'html' : '<i class="fa fa-shopping-cart"></i> Add to cart'})))))),
+											$('<button />' , { 'class' : 'btn btn-success btn-sm add-cart', 'id' : 'addCart', 'type' : 'button', 'html' : '<i class="fa fa-shopping-cart"></i> Add to cart','disabled' : true})))))),
 					'<div class="box-footer"></div>');
 					$(".select2").select2();
 					userInfoList();
@@ -168,38 +168,42 @@
 		});
     }
 
-     $(document).on("click","#product",function(){
-     	alert();
+     $(document).on("change","#product",function(){
+     	var prod_id = $(this).val();
+     	$('#div_user-entry').append('<div class="overlay">\
+		        	<i class="fa fa-spinner fa-spin"></i>\
+		        </div>');
+     	$.get('{{URL::Route('getProductInfo')}}',{ product: prod_id}, function(data)
+		{
+			if(data.length != 0)
+			{
+				$('.overlay').remove();
+				$('.item-remain').text("Remaining Item: "+data.remaining_inv);
+				$('.unit-price').html("Unit Price: "+data.current_price_value);
+				$('#qty').val("");
+				if(data.remaining_inv != 0 && data.current_price_value != "No Price Available")
+				{
+					$('button[id=addCart],input[type=text]').removeAttr('disabled');
+				}
+				else
+				{
+					$('button[id=addCart],input[type=text]').attr({'disabled': 'disabled'});
+				}
+			}
+		});
      });
      $(document).on("click",".add-cart",function(){
-     	alert();
-    	/*var id = $(this).data('id');
-    	var amount = $('#input_price').val();
-    	var _token = "{{ csrf_token() }}";
-    	var checkValue= $("#input_price").val().length;
-    	if(checkValue != 0){
-	    	$.post('{{URL::Route('addPrice')}}',{ _token: _token ,amount: amount, id : id} , function(response)
-			{
-				console.log(response);
-				if(response.price.length != 0){
-					$('#price').empty();
-					$('#input_price').val("");
-	            	for (var i = 0; i < response.price.length; i++) 
-					{
-						$('#price').append('<option  value="'+response.price[i].id+'">'+response.price[i].price+'</option>')
-					}
-					$('#price')
-	                  .val(response.current_price) //select option of select2
-	                  .trigger("change"); //apply to select2
-		          	if(response.status == "success"){
-						promptMsg(response.status,response.message);
-					}
+
+		var _token = "{{ csrf_token() }}";
+		var cus_id =  $('#customer').val();
+		var qty = $('#qty').val();
+		/*$.post('{{URL::Route('addToCart',0)}}',{ _token: _token ,  prod_id: pid ,  qty: qty , cus_id: cus_id},function(response)
+		 	{
+		 		if(response.length != 0)
+				{
+					promptMsg(response.status,response.message)
 				}
-			});
-		}
-		else{
-			$("#input_price").focus();
-		}*/
+		 	});*/
     });
 </script>
 @endsection
