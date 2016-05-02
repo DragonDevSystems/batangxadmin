@@ -53,7 +53,11 @@
                 <tr>
                   @foreach($headers as $header)
                     @if(in_array($header, $include))
-                       <th>{{$header}}</th>
+                    	@if($header == "id")
+                    		<th>Product Number</th>
+                    	@else
+                       		<th>{{$header}}</th>
+                       	@endif
                     @endif
                   @endforeach
                 </tr>

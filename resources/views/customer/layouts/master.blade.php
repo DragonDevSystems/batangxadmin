@@ -25,6 +25,12 @@
 		<script type="text/javascript" src="{{env('FILE_PATH_CUSTOM')}}js/move-top.js"></script>
 		<script type="text/javascript" src="{{env('FILE_PATH_CUSTOM')}}js/easing.js"></script>
 		<script type="text/javascript" src="{{env('FILE_PATH_CUSTOM')}}js/startstop-slider.js"></script>
+		<!-- bootstrap datepicker -->
+		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/datepicker/bootstrap-datepicker.js"></script>
+		<!-- InputMask -->
+		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/input-mask/jquery.inputmask.js"></script>
+		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/input-mask/jquery.inputmask.extensions.js"></script>
 	@yield('addHead')
 
 	

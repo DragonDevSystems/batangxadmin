@@ -26,29 +26,35 @@
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="row">
-          <div class="form-group col-xs-12">
-            <div class="col-md-6 col-sm-5 ">
-            <input type="text" class="form-control" placeholder="Firstname" name="fname" id="fname">
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Firstname" name="fname" id="fname">
+              </div>
+              <div class="form-group">
+                <select type="text" class="form-control select2" placeholder="Gender" name="gender" id="gender">
+                      <option value="1">Male</option>,
+                      <option value="2">Female</option>,
+                </select>
+              </div>
             </div>
-            <div class="col-md-6 col-sm-5">
-            <input type="text" class="form-control" placeholder="Lastname" name="lname" id="lname">
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Lastname" name="lname" id="lname">
+              </div>
+              <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Date of Birth" name="dob" id="dob">
+              </div>
             </div>
           </div>
-          <div class="form-group col-xs-12">
-            <div class="col-md-6 col-sm-12">
-              <select type="text" class="form-control select2" placeholder="Gender" name="gender" id="gender">
-                    <option value="1">Male</option>,
-                    <option value="2">Female</option>,
-              </select>
-            </div>
-            <div class="col-md-6 col-sm-12">
-              <input type="text" class="form-control" placeholder="Date of Birth" name="dob" id="dob">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-phone"></i>
+              </div>
+              <input type="text" class="form-control" placeholder="Mobile or Phone Number" name="mobile" id="mobile" data-inputmask='"mask": "(99) 9999-99999"' data-mask>
             </div>
           </div>
-          <div class="form-group col-xs-12">
-            <input type="text" class="form-control" placeholder="Mobile or Phone Number" name="mobile" id="mobile">
-          </div>
-          <div class="form-group col-xs-12">
+          <div class="form-group">
               <textarea style="resize: none;" class="form-control" rows="5" placeholder="Enter Address..." name="address" id="address"></textarea>
             </div>
           </div>
@@ -75,6 +81,7 @@
 <script type="text/javascript">
     $(function () {
       $('#dob').datepicker();
+      $("[data-mask]").inputmask();
       //$(".select2").select2();
     });
     function validateEmail(email)
