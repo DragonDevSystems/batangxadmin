@@ -47,21 +47,27 @@
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-                <li class="{{ $mt == "fm" ? (($cc == "pc") ? "active" : "") : ""}}"><a href="{{ URL::Route('getCategory') }}"><i class="fa fa-globe"></i> Product Category</a></li>
+            <li class="{{ $mt == "fm" ? (($cc == "pc") ? "active" : "") : ""}}">
+              <a href="{{ URL::Route('getCategory') }}">
+                <i class="fa fa-globe"></i> Product Category
+              </a>
+            </li>
+            <li class="{{ $mt == "fm" ? (($cc == "pt") ? "active" : "") : ""}}">
+              <a href="{{ URL::Route('getProductView') }}">
+                <i class="fa fa-gamepad"></i> <span>Products</span> <i class="fa pull-right"></i>
+              </a>
+            </li>  
+            <li class="{{ $mt == "fm" ? (($cc == "dl") ? "active" : "") : ""}}">
+              <a href="{{ URL::Route('getDeliveryView') }}">
+                <i class="fa fa-truck"></i> <span>Delivery</span> <i class="fa pull-right"></i>
+              </a>
+            </li>
           </ul>
         </li>
 
         <!--end filemaintenance part -->
-        <li class="treeview {{ ($mt == "pt") ? "active" : ""}}">
-          <a href="{{ URL::Route('getProductView') }}">
-            <i class="fa fa-gamepad"></i> <span>Products</span> <i class="fa pull-right"></i>
-          </a>
-        </li>
-        <li class="treeview {{ ($mt == "dl") ? "active" : ""}}">
-          <a href="{{ URL::Route('getDeliveryView') }}">
-            <i class="fa fa-truck"></i> <span>Delivery</span> <i class="fa pull-right"></i>
-          </a>
-        </li>
+        
+        
         <li class="treeview {{ ($mt == "ml") ? "active" : ""}}">
           <a href="{{ URL::Route('getContactMailView') }}">
             <i class="fa fa-envelope-o"></i> <span>Contact Mail</span> <i class="fa pull-right"></i>

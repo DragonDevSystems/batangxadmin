@@ -23,7 +23,8 @@ class DeliveryController extends Controller {
 	{
 		$allProduct = ProductInformation::all();
 		return View::make('product.delivery')->with("userInfo",$this->userInfo())
-									->with('mt',"dl")
+									->with('mt',"fm")
+										->with('cc',"dl")
 										->with('allProduct',$allProduct);
 	}
 
