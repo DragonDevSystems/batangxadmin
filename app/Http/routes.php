@@ -103,6 +103,7 @@ Route::group(array('prefix' => '/admin'),function()
 	{
 		Route::group(array('before' => 'auth'), function()
 		{
+			Route::get('/getTransactionHistory', array('uses' => 'UAMController@getTransactionHistory', 'as' => 'getTransactionHistory','middleware' => 'auth'));
 			Route::get('/getUAL', array('uses' => 'UAMController@getUAL', 'as' => 'getUAL','middleware' => 'auth'));
 			Route::get('/getRoles', array('uses' => 'UAMController@getRoles', 'as' => 'getRoles','middleware' => 'auth'));
 			Route::get('/getPermissions', array('uses' => 'UAMController@getPermissions', 'as' => 'getPermissions','middleware' => 'auth'));

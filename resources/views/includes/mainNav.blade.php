@@ -92,6 +92,11 @@
           </a>
         </li>
 
+        <li class="treeview {{ ($mt == "th") ? "active" : ""}}">
+          <a href="{{ URL::Route('getTransactionHistory') }}">
+            <i class="fa fa-file-text-o"></i> <span>Transaction History</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

@@ -57,7 +57,7 @@
 				$('#dtUAList').DataTable().clear().draw();
 				for (var i = 0; i < data.length; i++) 
 				{
-					$('#dtUAList').DataTable().row.add([''+data[i].inv_no+'', 
+					$('#dtUAList').DataTable().row.add(['<a href="'+data[i].invoice_link+'" target="_blank">'+data[i].inv_no+'</a>', 
                                                     ''+data[i].customer+'', 
                                                     ''+data[i].remarks+'', 
                                                     ''+data[i].status+'', 
@@ -65,10 +65,10 @@
 
 				}
 				var table = $("#dtUAList").DataTable();
-				$('#dtUAList tbody').on('click', 'tr', function () {
+				/*$('#dtUAList tbody').on('click', 'tr', function () {
 			        var data = table.row( this ).data();
 			        adminInformation(data[0]);
-			    } );
+			    } );*/
 			}
 			else
 			{
@@ -78,9 +78,9 @@
 		});
 	}
 	adminUserList();
-	function adminInformation(data)
+	/*function adminInformation(data)
 	{
 		alert(data);
-	}
+	}*/
 </script>
 @endsection

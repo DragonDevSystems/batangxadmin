@@ -648,7 +648,8 @@ class GlobalController extends Controller {
 						"inv_no" => str_pad($alli['id'], 6, '0', STR_PAD_LEFT),
 						"customer" => $userInfo['fname'].' '.$userInfo['lname'],
 						"remarks" => $alli['remarks'],
-						"status" => $status
+						"status" => $status,
+						"invoice_link" => URL::route('getCheckOutPrint', [$alli['vcode'] , $alli['id']]),
 					);
 			}
 		}

@@ -142,6 +142,7 @@ class CustomerController extends Controller {
 
 	function getInvoiceList($cus_id)
 	{
+		$cus_id = (!empty($cus_id)) ? $cus_id : Input::get('cus_id');
 		$response = array();
 		$invoiceList = ProductInvoice::where("cus_id","=",$cus_id)->get();
 		if(!empty($invoiceList))

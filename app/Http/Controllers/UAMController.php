@@ -21,6 +21,11 @@ class UAMController extends Controller {
 		return View::Make("uam.ual")->with("userInfo",$userInfo)->with('mt','uam')->with('cc','ual');
 	}
 
+	public function getTransactionHistory()
+	{
+		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
+		return View::Make("uam.transHis")->with("userInfo",$userInfo)->with('mt','th');
+	}
 	//userAdminAccessLvl
 	public function uaal() 
 	{

@@ -200,7 +200,6 @@
 				}
 		 	});
     });
-    onCartList()
     function onCartList()
 	{
 		var cus_id = $('#customer').val();
