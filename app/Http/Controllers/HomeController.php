@@ -39,7 +39,8 @@ class HomeController extends Controller {
 
 	public function getAbout()
 	{
-		$testimonial = Testimonials::orderBy('created_at', 'DESC')->first();
+		//$testimonial = Testimonials::orderBy('created_at', 'DESC')->first();orderByRaw("RAND()")->get();
+		$testimonial = Testimonials::orderByRaw("RAND()")->first();
 		$testiInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList($testimonial['user_id']);
 		return View::Make("customer.menu.about")->with('mt','about')->with('testimonial',$testimonial)->with('testiInfo',$testiInfo);
 	}

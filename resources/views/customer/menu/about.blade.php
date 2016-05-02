@@ -75,9 +75,10 @@
 				</div>
 			</div>
 		</div>	
+		@if(count($testimonial)!= 0)
 		<div id="block_body" style="background:url({{env('FILE_PATH_CUSTOM')}}img/bg.gif)">
 			<div id="block" style="background:url({{env('FILE_PATH_CUSTOM')}}img/bg.gif)">
-				<h3 stle="background:url({{env('FILE_PATH_CUSTOM')}}img/h3.png)">Latest testimonial</h3>
+				<h3 stle="background:url({{env('FILE_PATH_CUSTOM')}}img/h3.png)">Random Testimonial</h3>
 				<div class="photo" style="background:url({{env('FILE_PATH_CUSTOM')}}img/photo-bg.png)">
 					<img src="{{env('FILE_PATH_CUSTOM')}}img/photo-bg.png" alt="" class="photo-bg"/>
 					<img src="{{env('FILE_PATH_CUSTOM')}}img/photo.jpg" alt="" class="photo" />
@@ -92,6 +93,7 @@
 				</div>
 			</div>
 		</div>
+		@endif
     </div>
  </div>
 </div>
