@@ -33,6 +33,12 @@ class ProductController extends Controller {
 									->with('mt',"pt")->with('category',$category);
 	}
 
+	public function getInvoiceView()
+	{
+		return View::make('product.invoice')->with("userInfo",$this->userInfo())
+									->with('mt',"inv");
+	}
+
 	public function uploadProductImage()
 	{
 		$images = Input::file('file');

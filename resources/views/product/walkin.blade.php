@@ -203,7 +203,7 @@
     onCartList()
     function onCartList()
 	{
-		var cus_id =  19;//$('#customer').val();
+		var cus_id = $('#customer').val();
 		$.get('{{URL::Route('onCartList',[0,2])}}',{cus_id : cus_id}, function(data)
 		{
 			$('.tbl-overlay').remove();

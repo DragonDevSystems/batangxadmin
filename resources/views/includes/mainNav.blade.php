@@ -80,6 +80,12 @@
           </a>
         </li>
 
+        <li class="treeview {{ ($mt == "inv") ? "active" : ""}}">
+          <a href="{{ URL::Route('getInvoiceView') }}">
+            <i class="fa fa-file-text-o"></i> <span>Invoice</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
+
       </ul>
     </section>
     <!-- /.sidebar -->

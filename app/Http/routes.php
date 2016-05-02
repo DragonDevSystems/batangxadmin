@@ -123,6 +123,7 @@ Route::group(array('prefix' => '/admin'),function()
 			Route::get('/', array('uses' => 'ProductController@getProductView', 'as' => 'getProductView','middleware' => 'auth'));
 			Route::get('/getProductList', array('uses' => 'ProductController@getProductList', 'as' => 'getProductList','middleware' => 'auth'));
 			Route::get('/getProductInfo', array('uses' => 'ProductController@getProductInfo', 'as' => 'getProductInfo','middleware' => 'auth'));
+			Route::get('/getInvoiceView', array('uses' => 'ProductController@getInvoiceView', 'as' => 'getInvoiceView','middleware' => 'auth'));
 			Route::get('/getWalkIn', array('uses' => 'CustomerController@getWalkIn', 'as' => 'getWalkIn','middleware' => 'auth'));
 			Route::group(array('before' => 'csrf'), function()
 			{
