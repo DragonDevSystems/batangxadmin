@@ -89,7 +89,7 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::post('/updateAdmin', array('uses' => 'UAMController@updateAdmin', 'as' => 'updateAdmin','middleware' => 'auth'));
 				Route::post('/addToCart/{id}', array('uses' => 'ProductController@addToCart', 'as' => 'addToCart'));
 				Route::get('/admin/productOnCart', array('uses' => 'GlobalController@productOnCart', 'as' => 'productOnCart'));
-				Route::get('/admin/onCartList/{id}', array('uses' => 'GlobalController@onCartList', 'as' => 'onCartList'));
+				Route::get('/admin/onCartList/{id}/{type}', array('uses' => 'GlobalController@onCartList', 'as' => 'onCartList'));
 				Route::post('/admin/removeOnCart', array('uses' => 'GlobalController@removeOnCart', 'as' => 'removeOnCart','middleware' => 'auth'));
 				Route::get('/admin/stats/{entry}', array('uses' => 'GlobalController@statsList', 'as' => 'statsList','middleware' => 'auth'));
 				Route::get('/admin/statsSummary/{entry}', array('uses' => 'GlobalController@statsSummary', 'as' => 'statsSummary','middleware' => 'auth'));

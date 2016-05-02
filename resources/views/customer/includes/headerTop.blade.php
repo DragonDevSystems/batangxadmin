@@ -17,7 +17,7 @@
 			var obj = this;
 
 			obj.dd.on('click', function(event){
-				$.get('{{URL::Route('onCartList',Auth::User()['id'])}}', function(response)
+				$.get('{{URL::Route('onCartList',[Auth::User()['id'],1])}}', function(response)
 		   		{
 		   			$('.on-cart-list').empty();
 		   			if(response[0].productInfo.length != 0)
@@ -71,7 +71,7 @@
 	
 	function onCartproduct()
 	{
-		$.get('{{URL::Route('productOnCart')}}', function(response)
+		$.get('{{URL::Route('productOnCart')}}',{type : 1}, function(response)
    		{
    			if(response.length != 0)
 			{

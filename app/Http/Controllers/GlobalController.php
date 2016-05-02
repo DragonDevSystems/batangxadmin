@@ -372,9 +372,10 @@ class GlobalController extends Controller {
 
 	public function productOnCart()
 	{
+		$type = Input::get('type');
 		$response = array();
 		$products = array();
-		$check = ProductOnCart::where("cus_id","=",Auth::User()['id'])->get();
+		$check = ProductOnCart::where("cus_id","=",Auth::User()['id'])->where("type","=",$type)->get();
 		$totalP = 0;
 		$totalQty = 0;
 		if(!empty($check))
@@ -395,11 +396,12 @@ class GlobalController extends Controller {
 		return $response;
 	}
 
-	public function onCartList($cus_id)
+	public function onCartList($cus_id,$type)
 	{
 		$response = array();
 		$products = array();
-		$check = ProductOnCart::where("cus_id","=",$cus_id)->get();
+		$cus_id = (!empty($cus_id)) ? $cus_id : Input::get('cus_id');
+		$check = ProductOnCart::where("cus_id","=",$cus_id)->where("type","=",$type)->get();
 		$totalP = 0;
 		$totalQty = 0;
 		if(!empty($check))

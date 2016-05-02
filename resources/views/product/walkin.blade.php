@@ -33,15 +33,7 @@
                   <th>Sub-Total</th>
                 </tr>
                 </thead>
-                <tbody id="tbUAList">
-                	<tr>
-	                  <td>69</td>
-	                  <td>Red Horse</td>
-	                  <td>75</td>
-	                  <td>2</td>
-	                  <td>150</td>
-	                </tr>
-                </tbody>
+                <tbody id="tbUAList"></tbody>
               </table>
             </div>
           </div>
@@ -51,11 +43,11 @@
 		        <table class="table">
 		          <tr>
 		            <th>No. Items:</th>
-		            <td>2</td>
+		            <td id="tdQty">0</td>
 		          </tr>
 		          <tr>
 		            <th style="width:50%">Subtotal:</th>
-		            <td>150</td>
+		            <td id="tdTotal">0.00</td>
 		          </tr>
 		          <tr>
 		          </tr>
@@ -94,7 +86,7 @@
 							$('<h3 />',{'class':'box-title' , 'text' : 'Process Walk-in Client'}),
 							$('<div />', { 'class' : 'box-tools pull-right'}).append(
 								$('<button/>', {'class': 'btn btn-success btn-sm' , 'onClick' : 'getModalClient();', 'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Add Client' }),
-								$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Save' }),
+								$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Checkout' }),
 								$('<button/>', {'class': 'btn btn-danger btn-sm' ,'type' : 'button','html' : '<i class="fa fa-times-circle"></i>Cancel' }),
 								$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
 							$('<div />', { 'class' : 'row'}).append(
@@ -192,19 +184,53 @@
 			}
 		});
      });
+
      $(document).on("click",".add-cart",function(){
 
 		var _token = "{{ csrf_token() }}";
 		var cus_id =  $('#customer').val();
+		var pid = $('#product').val();
 		var qty = $('#qty').val();
-		/*$.post('{{URL::Route('addToCart',0)}}',{ _token: _token ,  prod_id: pid ,  qty: qty , cus_id: cus_id},function(response)
+		$.post('{{URL::Route('addToCart',0)}}',{ _token: _token ,  prod_id: pid ,  qty: qty , cus_id: cus_id, type: 2},function(response)
 		 	{
 		 		if(response.length != 0)
 				{
 					promptMsg(response.status,response.message)
+					onCartList();
 				}
-		 	});*/
+		 	});
     });
+    onCartList()
+    function onCartList()
+	{
+		var cus_id =  19;//$('#customer').val();
+		$.get('{{URL::Route('onCartList',[0,2])}}',{cus_id : cus_id}, function(data)
+		{
+			$('.tbl-overlay').remove();
+			if(data.length != 0)
+			{
+				$('#dtUAList').DataTable().clear().draw();
+				for($x=0 ; $x < data[0].productInfo.length ;$x++)
+		   		{
+					$('#dtUAList').DataTable().row.add([''+data[0].productInfo[$x].prod_id+'', 
+                                                    ''+data[0].productInfo[$x].name+'', 
+                                                    ''+data[0].productInfo[$x].unit_price+'', 
+                                                    ''+data[0].productInfo[$x].qty+'', 
+                                                    ''+data[0].productInfo[$x].price+'', 
+                                                    ]).draw();
+
+				}
+				$("#tdQty").text(data[0].totalQty);
+				$("#tdTotal").html(data[0].totalPrice);
+				var table = $("#dtUAList").DataTable();
+			}
+			else
+			{
+				promptMsg('fail',"No records yet.")
+			}
+
+		});
+	}
 </script>
 @endsection
 

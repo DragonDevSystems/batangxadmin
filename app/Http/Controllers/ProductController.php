@@ -329,7 +329,7 @@ class ProductController extends Controller {
 			$prod_id = Input::get('prod_id');
 			$qty = Input::get('qty');
 			$qtyCheck = App::make("App\Http\Controllers\GlobalController")->availabilityCheck($prod_id);
-
+			$type = Input::get('type');
 			if(empty($qtyCheck))
 			{
 				return Response::json(array(
@@ -356,6 +356,7 @@ class ProductController extends Controller {
 				$addCart['cus_id'] = $cus_id;
 				$addCart['price_id'] = $current_price['id'];
 				$addCart['qty'] = $qty;
+				$addCart['type'] = (!empty($type)) ? $type : 1;
 				$addCart['ip_address'] = Request::ip();
 				$addCart->save();
 			}
