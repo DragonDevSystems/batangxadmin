@@ -15,6 +15,7 @@ use App\Models\ProductOnCart;
 use App\Models\UserImage;
 use App\Models\ProductReserve;
 use App\Models\ContactUs;
+use App\Models\ProductInvoice;
 use Auth;
 use DB;
 use Input;
@@ -616,5 +617,41 @@ class GlobalController extends Controller {
 	            'datInfo' => $datInfo,
 	            'summaryTitle' => $summaryTitle,
 	        ));
+	}
+
+	public function invoiceList()
+	{
+		$response = array();
+		$all = ProductInvoice::all();
+		if(!empty($all))
+		{
+			foreach ($all as $alli) {
+				$userInfo = $this->userInfoList($alli['cus_id']);
+				switch ($alli['status']) {
+					case 1:
+						$status = "reserved";
+						break;
+					case 2:
+						$status = "paid";
+						break;
+					case 3:
+						$status = "Cancel by user";
+						break;
+					case 4:
+						$status = "Cancel by system";
+						break;
+					default:
+						$status = "Error/No status";
+						break;
+				}
+				$response[] = array(
+						"inv_no" => str_pad($alli['id'], 6, '0', STR_PAD_LEFT),
+						"customer" => $userInfo['fname'].' '.$userInfo['lname'],
+						"remarks" => $alli['remarks'],
+						"status" => $status
+					);
+			}
+		}
+		return $response;
 	}
 }

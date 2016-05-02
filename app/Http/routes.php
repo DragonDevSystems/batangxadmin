@@ -93,6 +93,7 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::post('/admin/removeOnCart', array('uses' => 'GlobalController@removeOnCart', 'as' => 'removeOnCart','middleware' => 'auth'));
 				Route::get('/admin/stats/{entry}', array('uses' => 'GlobalController@statsList', 'as' => 'statsList','middleware' => 'auth'));
 				Route::get('/admin/statsSummary/{entry}', array('uses' => 'GlobalController@statsSummary', 'as' => 'statsSummary','middleware' => 'auth'));
+				Route::get('/admin/invoiceList/', array('uses' => 'GlobalController@invoiceList', 'as' => 'invoiceList','middleware' => 'auth'));
 			});
 		});
 		Route::get('/topNewProduct/{take}', array('uses' => 'GlobalController@topNewProduct', 'as' => 'topNewProduct'));

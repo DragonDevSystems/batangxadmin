@@ -153,13 +153,13 @@ class CustomerController extends Controller {
 						$status = "reserved";
 						break;
 					case 2:
-						$status = "purchased";
+						$status = "paid";
 						break;
 					case 3:
 						$status = "Cancel by user";
 						break;
 					case 4:
-						$status = "Cancel by sytem";
+						$status = "Cancel by system";
 						break;
 					default:
 						$status = "Error/No status";

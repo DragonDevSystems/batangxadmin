@@ -82,7 +82,7 @@
 
         <li class="treeview {{ ($mt == "inv") ? "active" : ""}}">
           <a href="{{ URL::Route('getInvoiceView') }}">
-            <i class="fa fa-file-text-o"></i> <span>Invoice</span> <i class="fa pull-right"></i>
+            <i class="fa fa-file-text-o"></i> <span>Invoices</span> <i class="fa pull-right"></i>
           </a>
         </li>
 
