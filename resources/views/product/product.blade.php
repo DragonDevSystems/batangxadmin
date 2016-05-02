@@ -199,9 +199,9 @@
 																		<div class="price_list">\
 																			<div class="form-group ">\
 																			  	<div class="input-group">\
-																				    <input id="input_price" name="input_price" type="text" placeholder="add price" class="form-control" aria-label="..." disabled>\
+																				    <input id="input_price" name="input_price" type="text" placeholder="add price" class="form-control" aria-label="..." >\
 																					<div class="input-group-btn">\
-																					<button type="button" data-id="'+data.id+'" class="btn btn-default price_add" disabled>\
+																					<button type="button" data-id="'+data.id+'" class="btn btn-default price_add" >\
 																						<i class="fa fa-plus" aria-hidden="true"></i>\
 																					</button>\
 																					</div>\
@@ -209,7 +209,7 @@
 																			</div>\
 																			<div class="form-group">\
 															               		<label for="price">Choose price :</label>\
-																                <select id="price" name="price" class="form-control select2" style="width: 100%;" required disabled>\
+																                <select id="price" name="price" class="form-control select2" style="width: 100%;" required >\
 																                </select>\
 																            </div>\
 																		</div>\
