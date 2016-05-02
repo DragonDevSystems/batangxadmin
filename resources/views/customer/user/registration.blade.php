@@ -103,8 +103,6 @@
       $mobile = $("#mobile").val();
       $address = $("#address").val();
      
-      if(validateEmail($email))
-      {
         if($password == $repassword)
         {
           $("#btnSubmit").empty();
@@ -135,12 +133,5 @@
           $('.has-error').empty();
               $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i>Password does not match.'}));
         }
-
-      }
-      else
-      {
-          $('.has-error').empty();
-              $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i>Email is invalid.'}));
-      }
     }
 </script>

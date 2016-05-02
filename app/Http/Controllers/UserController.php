@@ -79,84 +79,105 @@ class UserController extends Controller {
 	                    'message'  => 'Fill out all fields.',
 	                ));
 		}
-		else
+		$validatorEmail = Validator::make(Input::all(), array(
+			'email' => 'email'
+		));
+		if ($validatorEmail -> fails())
 		{
-			$result1 = User::where('username','=',$username)->first();
-			$result2 = User::where('email','=',$email)->first();
+			return  Response::json(array(
+	                    'status'  => 'fail',
+	                    'message'  => 'Email is invalid.',
+	                ));
+		}
+		$validatorPass = Validator::make(Input::all(), array(
+			'password' => 'min:6'
+		));
+		if ($validatorPass -> fails())
+		{
+			return  Response::json(array(
+	                    'status'  => 'fail',
+	                    'message'  => 'Your password must be minimum of 6.',
+	                ));
+		}
+		$result1 = User::where('username','=',$username)->first();
+		$result2 = User::where('email','=',$email)->first();
 
-			if(empty($result1) && empty($result2))
+		if(empty($result1) && empty($result2))
+		{
+			/*$date = new DateTime();
+			$vCode = date_format($date, 'U').str_random(110);		
+			$user = new User();
+			$user -> username = Input::get('username');
+			$user -> password = Hash::make(Input::get('password'));
+			$user -> email = $email;
+			$user -> Vcode = $vCode;
+			
+			if ($user -> save())
 			{
-				$date = new DateTime();
-				$vCode = date_format($date, 'U').str_random(110);		
-				$user = new User();
-				$user -> username = Input::get('username');
-				$user -> password = Hash::make(Input::get('password'));
-				$user -> email = $email;
-				$user -> Vcode = $vCode;
-				
-				if ($user -> save())
+				$info = new Info();
+				$info -> user_id = $user -> id;
+				$info -> email 	= Input::get('email');
+				$info -> first_name 	= Input::get('fname');
+				$info -> last_name 	= Input::get('lname');
+				$info -> gender 	= Input::get('gender');
+				$info -> dob 	= Input::get('dob');
+				$info -> mobile 	= Input::get('mobile');
+				$info -> address 	= Input::get('address');
+				$request = Request::instance();
+			    $info-> ip_address = $request->getClientIp(true);
+
+				if ($info -> save())
 				{
-					$info = new Info();
-					$info -> user_id = $user -> id;
-					$info -> email 	= Input::get('email');
-					$info -> first_name 	= Input::get('fname');
-					$info -> last_name 	= Input::get('lname');
-					$info -> gender 	= Input::get('gender');
-					$info -> dob 	= Input::get('dob');
-					$info -> mobile 	= Input::get('mobile');
-					$info -> address 	= Input::get('address');
-					$request = Request::instance();
-				    $info-> ip_address = $request->getClientIp(true);
 
-					if ($info -> save())
-					{
+					$emailcontent = array (
+						'username' => $user -> username,
+					    'link' => URL::route('confirmation', [$vCode , $user -> id])
 
-						$emailcontent = array (
-							'username' => $user -> username,
-						    'link' => URL::route('confirmation', [$vCode , $user -> id])
+				    );
+	   				Mail::send('email.regConfirmation', $emailcontent, function($message)
+	    			{ 
+					    $message->to(Input::get('email'),'GameXtreme')->subject('GameXtreme Confirmation Email');
+					    
+	     			});
 
-					    );
-		   				Mail::send('email.regConfirmation', $emailcontent, function($message)
-		    			{ 
-						    $message->to(Input::get('email'),'GameXtreme')->subject('GameXtreme Confirmation Email');
-						    
-		     			});
-
-		   				$auth = Auth::attempt(array(
-							'username' => Input::get('username'),
-							'password' => Input::get('password')
-						));
-		   				if($auth)
-		   				{
-							return Response::json(array(
-			                    'status'  => 'success',
-			                    'message'  => 'Please check your email to verify your e-mail.Thank you.',
-			                ));
-						}
-					}
-					else
-					{
-						return  Response::json(array(
-			                    'status'  => 'fail',
-			                    'message'  => 'An error occured while creating the user. Please try again.',
-			                ));
+	   				$auth = Auth::attempt(array(
+						'username' => Input::get('username'),
+						'password' => Input::get('password')
+					));
+	   				if($auth)
+	   				{
+						return Response::json(array(
+		                    'status'  => 'success',
+		                    'message'  => 'Please check your email to verify your e-mail.Thank you.',
+		                ));
 					}
 				}
 				else
 				{
 					return  Response::json(array(
-			                    'status'  => 'fail',
-			                    'message'  => 'An error occured while creating the user. Please try again.',
-			                ));
+		                    'status'  => 'fail',
+		                    'message'  => 'An error occured while creating the user. Please try again.',
+		                ));
 				}
 			}
 			else
 			{
 				return  Response::json(array(
-			                    'status'  => 'fail',
-			                    'message'  => 'Your email/username has already taken. Please Try again',
-			                ));
-			}
+		                    'status'  => 'fail',
+		                    'message'  => 'An error occured while creating the user. Please try again.',
+		                ));
+			}*/
+			return  Response::json(array(
+		                    'status'  => 'fail',
+		                    'message'  => 'pass',
+		                ));
+		}
+		else
+		{
+			return  Response::json(array(
+		                    'status'  => 'fail',
+		                    'message'  => 'Your email/username has already taken. Please Try again',
+		                ));
 		}
 	}
 	
@@ -405,77 +426,84 @@ class UserController extends Controller {
 	                    'message'  => 'Fill out all fields.',
 	                ));
 		}
-		else
+		$validatorEmail = Validator::make(Input::all(), array(
+			'email' => 'email'
+		));
+		if ($validatorEmail -> fails())
 		{
-			$result1 = User::where('username','=',$username)->first();
-			$result2 = User::where('email','=',$email)->first();
+			return  Response::json(array(
+	                    'status'  => 'fail',
+	                    'message'  => 'Email is invalid.',
+	                ));
+		}
+		$result1 = User::where('username','=',$username)->first();
+		$result2 = User::where('email','=',$email)->first();
 
-			if(empty($result1) && empty($result2))
+		if(empty($result1) && empty($result2))
+		{
+			$date = new DateTime();
+			$vCode = date_format($date, 'U').str_random(110);	
+			$tempPass = str_random(8);	
+			$user = new User();
+			$user -> username = Input::get('username');
+			$user -> password = Hash::make($tempPass);
+			$user -> email = $email;
+			$user -> Vcode = $vCode;
+			
+			if ($user -> save())
 			{
-				$date = new DateTime();
-				$vCode = date_format($date, 'U').str_random(110);	
-				$tempPass = str_random(8);	
-				$user = new User();
-				$user -> username = Input::get('username');
-				$user -> password = Hash::make($tempPass);
-				$user -> email = $email;
-				$user -> Vcode = $vCode;
-				
-				if ($user -> save())
+				$info = new Info();
+				$info -> user_id = $user -> id;
+				$info -> email 	= Input::get('email');
+				$info -> first_name 	= Input::get('fname');
+				$info -> last_name 	= Input::get('lname');
+				$info -> gender 	= Input::get('gender');
+				$info -> dob 	= Input::get('dob');
+				$info -> mobile 	= Input::get('mobile');
+				$info -> address 	= Input::get('address');
+				$request = Request::instance();
+			    $info-> ip_address = $request->getClientIp(true);
+
+				if ($info -> save())
 				{
-					$info = new Info();
-					$info -> user_id = $user -> id;
-					$info -> email 	= Input::get('email');
-					$info -> first_name 	= Input::get('fname');
-					$info -> last_name 	= Input::get('lname');
-					$info -> gender 	= Input::get('gender');
-					$info -> dob 	= Input::get('dob');
-					$info -> mobile 	= Input::get('mobile');
-					$info -> address 	= Input::get('address');
-					$request = Request::instance();
-				    $info-> ip_address = $request->getClientIp(true);
 
-					if ($info -> save())
-					{
-
-						$emailcontent = array (
-							'username' => $user -> username,
-						    'link' => URL::route('confirmation', [$vCode , $user -> id]),
-						    'tempPass' => $tempPass
-					    );
-		   				Mail::send('email.walkinRegConfirmation', $emailcontent, function($message)
-		    			{ 
-						    $message->to(Input::get('email'),'GameXtreme')->subject('GameXtreme Confirmation Email');
-						    
-		     			});
-						return Response::json(array(
-		                    'status'  => 'success',
-		                    'message'  => 'Client successfully added. Advice the customer to check there email for confirmation. We send them a temporary password.',
-		                ));
-					}
-					else
-					{
-						return  Response::json(array(
-			                    'status'  => 'fail',
-			                    'message'  => 'An error occured while creating the user. Please try again.',
-			                ));
-					}
+					$emailcontent = array (
+						'username' => $user -> username,
+					    'link' => URL::route('confirmation', [$vCode , $user -> id]),
+					    'tempPass' => $tempPass
+				    );
+	   				Mail::send('email.walkinRegConfirmation', $emailcontent, function($message)
+	    			{ 
+					    $message->to(Input::get('email'),'GameXtreme')->subject('GameXtreme Confirmation Email');
+					    
+	     			});
+					return Response::json(array(
+	                    'status'  => 'success',
+	                    'message'  => 'Client successfully added. Advice the customer to check there email for confirmation. We send them a temporary password.',
+	                ));
 				}
 				else
 				{
 					return  Response::json(array(
-			                    'status'  => 'fail',
-			                    'message'  => 'An error occured while creating the user. Please try again.',
-			                ));
+		                    'status'  => 'fail',
+		                    'message'  => 'An error occured while creating the user. Please try again.',
+		                ));
 				}
 			}
 			else
 			{
 				return  Response::json(array(
-			                    'status'  => 'fail',
-			                    'message'  => 'Your email/username has already taken. Please Try again',
-			                ));
+		                    'status'  => 'fail',
+		                    'message'  => 'An error occured while creating the user. Please try again.',
+		                ));
 			}
+		}
+		else
+		{
+			return  Response::json(array(
+		                    'status'  => 'fail',
+		                    'message'  => 'Your email/username has already taken. Please Try again',
+		                ));
 		}
 	}
 

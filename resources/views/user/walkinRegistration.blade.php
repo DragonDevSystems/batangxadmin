@@ -91,36 +91,28 @@
       $mobile = $("#mobile").val();
       $address = $("#address").val();
      
-      if(validateEmail($email))
+      $("#btnSubmit").empty();
+      $("#btnSubmit").append('<div class="overlay tbl-overlay"><i class="fa fa-spinner fa-spin"></i></div>');
+      $('#btnSubmit').prop('disabled', true);
+      $.post('{{URL::Route('createClient')}}', { _token: $_token, email: $email , username: $username, fname: $fname, lname: $lname, gender: $gender, dob: $dob, mobile: $mobile, address: $address}, function(data)
       {
           $("#btnSubmit").empty();
-          $("#btnSubmit").append('<div class="overlay tbl-overlay"><i class="fa fa-spinner fa-spin"></i></div>');
-          $('#btnSubmit').prop('disabled', true);
-          $.post('{{URL::Route('createClient')}}', { _token: $_token, email: $email , username: $username, fname: $fname, lname: $lname, gender: $gender, dob: $dob, mobile: $mobile, address: $address}, function(data)
+          $("#btnSubmit").append("Submit");
+          $('#btnSubmit').prop('disabled', false);
+          if(data.status == "success")
           {
-              $("#btnSubmit").empty();
-              $("#btnSubmit").append("Submit");
-              $('#btnSubmit').prop('disabled', false);
-              if(data.status == "success")
-              {
 
-                $('.has-error').empty();
-                $('#mdl_registration').modal('hide');
-                userInfoList();
-                promptMsg(data.status,data.message)
-              }
-              else
-              {
-                $('.has-error').empty();
-                $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i> '+data.message+''}));
-              }
-              //console.log(data);
-          });
-      }
-      else
-      {
-          $('.has-error').empty();
-              $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i>Email is invalid.'}));
-      }
+            $('.has-error').empty();
+            $('#mdl_registration').modal('hide');
+            userInfoList();
+            promptMsg(data.status,data.message)
+          }
+          else
+          {
+            $('.has-error').empty();
+            $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i> '+data.message+''}));
+          }
+          //console.log(data);
+      });
     }
 </script>
