@@ -191,6 +191,7 @@ class ProductController extends Controller {
 				"id" 			=> $item['id'],
 				"name" 			=> $item['name'],
 				"description" 	=> $item['description'],
+				"featured" 	=> $item['isFeatured'] == 0 ? "fa fa-star-o text-yellow" : "fa fa-star text-yellow",
 				);
 		}
 		return Response::json($response);	
@@ -219,6 +220,7 @@ class ProductController extends Controller {
 				"category" => $category,
 				"remaining_inv" => !empty($remaining_inv) ? $remaining_inv['qty'] : 0,
 				"current_price_value" => !empty($current_price) ? '&#8369; '.number_format($current_price['price'], 2) : "No Price Available",
+				"featured" 	=> $information['isFeatured'] == 0 ? "No" : "Yes",
 				));	
 	}
 
@@ -380,5 +382,33 @@ class ProductController extends Controller {
 				"message" => "Please sign in or sign up to continue your shopping.Thank you.",
 			));
 		}
+	}
+	public function postFeatured()
+	{
+		$id = Input::get('id');
+		
+		//$update['isFeatured'] = $update['isFeatured'] == 0 ? 1 : 0;
+		/*if(!empty($update)){
+			if($update->save()){
+			return Response::json(array(
+					"status" => "success",
+					"message" => "Success to make it as a featured product.",
+					"featured" 	=> $update['isFeatured'] == 0 ? "No" : "Yes",
+				));
+			}
+		}*/
+		$update = ProductInformation::find($id);
+		$update = ProductInformation::where('id', $id)
+            							->update(array('isFeatured' => $update['isFeatured'] == 0 ? 1 : 0));
+        //$update = ProductInformation::find($id);
+        return Response::json(array(
+					"status" => "success",
+					"message" => "Update success.",
+					"featured" 	=> $update['isFeatured'] == 0 ? "No" : "Yes",
+				));
+		/*return Response::json(array(
+				"status" => "fail",
+				"message" => "Fail to make it as a featured product.",
+			));*/
 	}
 }

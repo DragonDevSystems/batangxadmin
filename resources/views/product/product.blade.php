@@ -38,6 +38,10 @@
                     <i class="fa fa-edit"></i>
                     Edit
                   </button>
+                  <button id="addFeatured" class="btn bg-navy btn-sm " type="button" disabled>
+                    <i class="fa fa-star text-yellow"></i>
+                    Make it Featured.
+                  </button>
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
                 </div>
@@ -60,6 +64,7 @@
                        	@endif
                     @endif
                   @endforeach
+                  <th>Featured</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -82,20 +87,35 @@
 	    //Initialize datatable Elements
 	    var table = $('#product_list').DataTable();
 	    $('#product_list tbody').on( 'click', 'tr', function () {
+	    	
 	        if ( $(this).hasClass('active') ) {
 	            $(this).removeClass('active');
-	            $('#editProduct').prop("disabled", true);
+	            $('#editProduct , #addFeatured').prop("disabled", true);
+	            $('#addFeatured').prop("disabled", true);
 	        }
 	        else {
 	            table.$('tr.active').removeClass('active');
 	            $(this).addClass('active');
-	            $('#editProduct').prop("disabled", false);
+	            $('#editProduct , #addFeatured').prop("disabled", false);
+	            $('#addFeatured').prop("disabled", false);
 	        }
 	        if($('#editProduct').hasClass('continue_view'))
 	        {
 	        	var id = table.cell('.active', 0).data();
 	        	setNewEntry(id);
 	        }
+	        var selected = $(this).find('td').html();
+	        $.get('{{URL::Route('getProductInfo')}}',{ product : selected}, function(response)
+   			{
+   				if(response.featured == "Yes"){
+   					$('#addFeatured').html('<i class="fa fa-star-o text-yellow"></i>\
+                    Unfeatured');
+   				}
+   				else{
+   					$('#addFeatured').html('<i class="fa fa-star text-yellow"></i>\
+                    Make it Featured');
+   				}
+   			});
 	        $(window).scrollTop($('#div-entry').offset().top);
     	});
     	$('#editProduct').on( 'click', function () {
@@ -105,6 +125,27 @@
 		        	<i class="fa fa-spinner fa-spin"></i>\
 		        </div>');
     		setNewEntry(id);
+    	});
+    	$('#addFeatured').on( 'click', function () {
+    		var id = table.cell('.active', 0).data();
+    		var _token = "{{ csrf_token() }}";
+    		$.post('{{URL::Route('postFeatured')}}',{ _token : _token , id : id }, function(response)
+   		 	{
+   		 		if (response.status == "success") {
+   		 			if(response.featured == "Yes"){
+	   					$('#addFeatured').html('<i class="fa fa-star-o text-yellow"></i>\
+	                    Unfeatured');
+
+	   				}
+	   				else{
+	   					$('#addFeatured').html('<i class="fa fa-star text-yellow"></i>\
+	                    Make it Featured');
+	   				}
+	   				$('#addFeatured').prop("disabled", true);
+   		 			productList();
+   		 			promptMsg(response.status,response.message);
+   		 		}
+   		 	});
     	});
 	    
 	});
@@ -120,6 +161,7 @@
 				$('#product_list').DataTable().row.add([''+response[i].id+'', 
                                                     ''+response[i].name+'', 
                                                     ''+response[i].description+'',
+                                                    '<i class="'+response[i].featured+'"></i>',
                                                     ]).draw();
 			}
 			
