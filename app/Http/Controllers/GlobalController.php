@@ -352,6 +352,22 @@ class GlobalController extends Controller {
 		return $response;
 	}
 
+	public function featuredProduct()
+	{
+		$response = array();
+		$featuredProduct = ProductInformation::where('isFeatured','=',1)->orderBy('updated_at','desc')->get();
+		foreach ($featuredProduct as $product) {
+			$images = ProductImage::where('prod_id','=',$product['id'])->orderByRaw("RAND()")->first();
+			$proPrice = ProductPrice::where('prod_id','=',$product['id'])->where('status','=',1)->first();
+			$response[] = array(
+				"productInfo" => $product,
+				"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
+				"pro_img" => $images
+			);
+		}
+		return $response;
+	}
+
 	public function auditTrail($action,$dataId,$details)
 	{
 		$ip = Request::ip();
