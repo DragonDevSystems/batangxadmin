@@ -148,7 +148,7 @@ class UserController extends Controller {
 	   				{
 						return Response::json(array(
 		                    'status'  => 'success',
-		                    'message'  => 'Please check your email to verify your e-mail.Thank you.',
+		                    'message'  => 'Please check your email to verify your e-mail address.Thank you.',
 		                ));
 					}
 				}
@@ -177,6 +177,55 @@ class UserController extends Controller {
 		}
 	}
 	
+	public function resendEmailverificationLink()
+	{
+		$user = User::find(Auth::User()['id']);
+		if(empty($user))
+		{
+			return  Response::json(array(
+		                    'status'  => 'fail',
+		                    'message'  => 'Account not found.',
+		                ));
+		}
+
+		if($user['isVerified'] != 0)
+		{
+			return  Response::json(array(
+		                    'status'  => 'success',
+		                    'message'  => 'your account is laready verify.',
+		                ));
+		}
+
+		if(!empty($user['vCode']))
+		{
+			$vcode = $user['vCode'];
+		}
+		else
+		{
+			$date = new DateTime();
+			$vCode = date_format($date, 'U').str_random(110);
+			$user['vCode'] = $vCode;
+			$user->save();
+		}
+
+		$emailcontent = array (
+			'username' => $user -> username,
+		    'link' => URL::route('confirmation', [$vCode , $user -> id])
+
+	    );
+		
+		Mail::send('email.regConfirmation', $emailcontent, function($message)
+		{ 
+		    $message->to(Input::get('email'),'GameXtreme')->subject('GameXtreme Re-send Confirmation Email');
+		    
+		});
+
+		return Response::json(array(
+		                    'status'  => 'success',
+		                    'message'  => 'Please check your email to verify your e-mail address.Thank you.',
+		                ));
+	}
+
 	public function postLogin()
 	{
 		$validator = Validator::make(Input::all(), array(

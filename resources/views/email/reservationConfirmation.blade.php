@@ -28,12 +28,17 @@ font-family: 'Titillium Web', sans-serif !important;
 		<div class="col-md-6 col-md-offset-3">
 			
 			<p>Hello {{$username}}</p>
+			<br>
 			<p>Thank you for shopping with us in GameXtreme. You may check the link below for your invoice.</p>
 			<br>
 			<br>
 			<br>
+			<p>Click link here for your <a href= "{{ $link }}">invoice</a>.</p>
 			<br>
-			<p>Click link here for your <a href= "{{ $link }}">invoice</a> . thank you.</p>
+			<br>
+			Thanks,
+			<br>
+			<p>GameXtreme Team</p>
 		</div>
 	</div>
 </div>

@@ -28,12 +28,18 @@ font-family: 'Titillium Web', sans-serif !important;
 		<div class="col-md-6 col-md-offset-3">
 			
 			<p>Hello {{$username}}</p>
+			<br>
+			<p>Welcome to GameXtreme.</p>
+			<br>
 			<p>Thank you for registering with us in GameXtreme, we are happy for your registration. You are one step closer to using our services. To finish your registration please click on the verification link below:</p>
 			<br>
 			<br>
-			<br>
-			<br>
 			<p>Verification code: <a href= "{{ $link }}">Verification Link</a></p>
+			<br>
+			<br>
+			Thanks,
+			<br>
+			<p>GameXtreme Team</p>
 		</div>
 	</div>
 </div>
