@@ -197,8 +197,8 @@ class UserController extends Controller {
 		}
 
 		if(!empty($user['vCode']))
-		{
-			$vcode = $user['vCode'];
+		
+			$vCode = $user['vCode'];
 		}
 		else
 		{
@@ -214,9 +214,9 @@ class UserController extends Controller {
 
 	    );
 		
-		Mail::send('email.regConfirmation', $emailcontent, function($message)
+		Mail::send('email.regConfirmation', $emailcontent, function($message) use ($user)
 		{ 
-		    $message->to(Input::get('email'),'GameXtreme')->subject('GameXtreme Re-send Confirmation Email');
+		    $message->to($user['email'],'GameXtreme')->subject('GameXtreme Re-send Confirmation Email');
 		    
 		});
 
