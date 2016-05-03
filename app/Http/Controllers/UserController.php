@@ -120,7 +120,7 @@ class UserController extends Controller {
 				$info -> first_name 	= Input::get('fname');
 				$info -> last_name 	= Input::get('lname');
 				$info -> gender 	= Input::get('gender');
-				$info -> dob 	= Input::get('dob');
+				$info -> dob 	= date("Y-m-d h:i:sa", strtotime($dob));
 				$info -> mobile 	= Input::get('mobile');
 				$info -> address 	= Input::get('address');
 				$request = Request::instance();
@@ -503,7 +503,7 @@ class UserController extends Controller {
 				$info -> first_name 	= Input::get('fname');
 				$info -> last_name 	= Input::get('lname');
 				$info -> gender 	= Input::get('gender');
-				$info -> dob 	= Input::get('dob');
+				$info -> dob 	= date("Y-m-d h:i:sa", strtotime($dob));
 				$info -> mobile 	= Input::get('mobile');
 				$info -> address 	= Input::get('address');
 				$request = Request::instance();
@@ -571,7 +571,7 @@ class UserController extends Controller {
 			$updateInfo['last_name'] = $lname;
 			$updateInfo['email'] = $email;
 			$updateInfo['mobile'] = $mobile;
-			$updateInfo['dob'] = $dob;
+			$updateInfo['dob'] =  date("Y-m-d h:i:sa", strtotime($dob));
 			$updateInfo['gender'] = $gender;
 			$updateInfo['address'] = $address;
 			if($updateInfo->save()){
