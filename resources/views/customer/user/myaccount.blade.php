@@ -148,7 +148,7 @@
 	                                                    ''+response.dataInfo[i].invoice_date+'', 
 	                                                    ''+response.dataInfo[i].cus_name+'',
 	                                                    ''+response.dataInfo[i].status+'',
-	                                                    '<button style="'+response.dataInfo[i].status_type+'" onclick="cancelReservation('+response.dataInfo[i].user_id+','+response.dataInfo[i].invoice_num+')" type="button" class="myButton">Cancel</button>',
+	                                                    '<button style="'+response.dataInfo[i].status_type+'" onclick="cancelReservation('+response.dataInfo[i].user_id+','+response.dataInfo[i].inv_id+')" type="button" class="myButton btn btn-danger btn-sm">Cancel Reservation</button>',
 	                                                    ]).draw();
 				}
 				

@@ -279,6 +279,7 @@ class CustomerController extends Controller {
 						"status" => App::make("App\Http\Controllers\GlobalController")->invoiceStatus($invoiceListi['status']),
 						"user_id" => $userInfo['user_id'],
 						"status_type" => $invoiceListi['status'] != 1 ? "Display:none" : "",
+						"inv_id" => $invoiceListi['id'],
 					);
 			}
 			return Response::json(array(
