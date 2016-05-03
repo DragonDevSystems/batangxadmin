@@ -326,7 +326,6 @@ class UserController extends Controller {
 
 				return Response::json(array(
 		                    'status'  => 'success',
-		                    'message'  => 'A mail was sent to your email address to process change of password. Thank you',
 		                ));
 			}
 
