@@ -38,7 +38,7 @@ class PaypalController extends Controller {
 	    $payer->setPaymentMethod('paypal');
 
 	    $amount = PayPal:: Amount();
-	    $amount->setCurrency('php');
+	    $amount->setCurrency('PHP');
 	    $amount->setTotal($total); // This is the simple way,
 	    // you can alternatively describe everything in the order separately;
 	    // Reference the PayPal PHP REST SDK for details.

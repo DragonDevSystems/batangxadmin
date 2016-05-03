@@ -197,7 +197,7 @@ class UserController extends Controller {
 		}
 
 		if(!empty($user['vCode']))
-		
+		{
 			$vCode = $user['vCode'];
 		}
 		else
