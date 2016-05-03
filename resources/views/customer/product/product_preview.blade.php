@@ -37,7 +37,7 @@
 		<div class="content">
 			    	<div class="content_top">
     		<div class="back-links">
-    		<p><a href="{{ URL::Route('cusIndex') }}">Home</a> >>>> <a href="#">Electronics</a></p>
+    		<p><a href="{{ URL::Route('cusIndex') }}">Home</a> >>>> <a href="{{ URL::Route('getProByCat',$response[0]['category']) }}">{{$response[0]['category']}}</a></p>
     	    </div>
     		<div class="clear"></div>
     	</div>
@@ -45,7 +45,6 @@
 			<div class="cont-desc span_1_of_2">
 				@include('customer.includes.productDetails')
 				@include('customer.includes.productDescription')
-						
 				@include('customer.includes.relatedProduct')
 			</div>
 			@include('customer.includes.categories2')

@@ -36,7 +36,7 @@
 													<td>{{$onCartList[0]['productInfo'][$x]['name']}}</td>
 													<td>{{$onCartList[0]['productInfo'][$x]['unit_price']}}</td>
 													<td>{{$onCartList[0]['productInfo'][$x]['price']}}</td>
-													<td><button type="button" class="btn btn-danger" data-widget="remove"><i class="fa fa-remove"></i></button></td>
+													<td><button type="button" class="btn btn-danger" data-widget="remove" onClick="removeItemCart('{{$onCartList[0]['productInfo'][$x]['cart_id']}}');"><i class="fa fa-remove"></i></button></td>
 												</tr>
 											@endfor
 										
@@ -108,6 +108,16 @@
 				setTimeout(function(){ window.location.reload(); }, 3000);
 			}
 	 	});
+	}
+
+	function removeItemCart(cid)
+	{
+		var _token = "{{ csrf_token() }}";
+		$.post('{{URL::Route('removeOnCart')}}', { _token: _token , cid : cid }, function(response)
+   		{
+   			promptMsg(response.status,response.message);
+   			setTimeout(function(){ window.location.reload(); }, 3000);
+   		});
 	}
 </script>
 @endsection
