@@ -1,4 +1,4 @@
-<?php $topNewProduct = App::make("App\Http\Controllers\GlobalController")->topNewProduct(4); ?>
+<?php $topNewProduct = App::make("App\Http\Controllers\GlobalController")->topNewProduct(6); ?>
 <div class="content_top">
 	<div class="heading">
 		<h3>New Products</h3>
@@ -22,7 +22,6 @@
 					     </div>
 					 <div class="clear"></div>
 			</div>
-			 
 		</div>
 	@endforeach
 </div>

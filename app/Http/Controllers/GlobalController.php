@@ -382,6 +382,22 @@ class GlobalController extends Controller {
 		return $response;
 	}
 
+	public function relatedProduct($take)
+	{
+		$response = array();
+		$topNewProduct = ProductInformation::take($take)->orderBy('created_at','desc')->get();
+		foreach ($topNewProduct as $topNewProducti) {
+			$images = ProductImage::where('prod_id','=',$topNewProducti['id'])->orderByRaw("RAND()")->first();
+			$proPrice = ProductPrice::where('prod_id','=',$topNewProducti['id'])->where('status','=',1)->first();
+			$response[] = array(
+				"productInfo" => $topNewProducti,
+				"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
+				"pro_img" => $images
+			);
+		}
+		return $response;
+	}
+
 	public function featuredProduct()
 	{
 		$response = array();
