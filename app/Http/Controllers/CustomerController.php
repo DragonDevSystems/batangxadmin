@@ -54,7 +54,7 @@ class CustomerController extends Controller {
 	
 	public function getCheckOut()
 	{
-		$onCartList = App::make("App\Http\Controllers\GlobalController")->onCartList(Auth::User()['id']);
+		$onCartList = App::make("App\Http\Controllers\GlobalController")->onCartList(Auth::User()['id'],1);
 		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
 		return View::Make("checkout.index")->with("userInfo",$userInfo)->with("onCartList",$onCartList)->with('mt','db');
 	}

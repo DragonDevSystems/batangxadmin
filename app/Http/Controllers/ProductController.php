@@ -334,6 +334,13 @@ class ProductController extends Controller {
 	{
 		if(Auth::check())
 		{
+			if(Auth::User()['isVerified'] != 1)
+			{
+				return Response::json(array(
+						"status" => "fail",
+						"message" => "Sorry you cannot proceed this trasaction, due to unverified email. Check you're email inbox or spam area to verify your email. You may ask another email for verification, just go to your my account section and click resend email verification.",
+					));
+			}
 			$cus_id = (!empty($cus_id)) ? $cus_id : Input::get('cus_id');
 			$prod_id = Input::get('prod_id');
 			$qty = Input::get('qty');

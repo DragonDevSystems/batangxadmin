@@ -104,7 +104,7 @@ class UserController extends Controller {
 
 		if(empty($result1) && empty($result2))
 		{
-			/*$date = new DateTime();
+			$date = new DateTime();
 			$vCode = date_format($date, 'U').str_random(110);		
 			$user = new User();
 			$user -> username = Input::get('username');
@@ -166,7 +166,7 @@ class UserController extends Controller {
 		                    'status'  => 'fail',
 		                    'message'  => 'An error occured while creating the user. Please try again.',
 		                ));
-			}*/
+			}
 			return  Response::json(array(
 		                    'status'  => 'fail',
 		                    'message'  => 'pass',
