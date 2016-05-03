@@ -251,7 +251,7 @@ class GlobalController extends Controller {
 
 	public function categoryList()
 	{
-		return ProCategory::all();
+		return ProCategory::where("status","!=",0)->get();
 	}
 	public function onlineUser()
 	{
