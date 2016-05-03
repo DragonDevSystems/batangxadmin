@@ -85,10 +85,7 @@
 						$('<div />',{ 'class' : 'box-header with-border'}).append(
 							$('<h3 />',{'class':'box-title' , 'text' : 'Process Walk-in Client'}),
 							$('<div />', { 'class' : 'box-tools pull-right'}).append(
-								$('<button/>', {'class': 'btn btn-success btn-sm' , 'onClick' : 'getModalClient();', 'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Add Client' }),
-								$('<button/>', {'class': 'btn btn-success btn-sm' ,'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Checkout' }),
-								$('<button/>', {'class': 'btn btn-danger btn-sm' ,'type' : 'button','html' : '<i class="fa fa-times-circle"></i>Cancel' }),
-								$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
+								$('<button/>', {'class': 'btn btn-success btn-sm' , 'onClick' : 'getModalClient();', 'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Add Client' })),
 							$('<div />', { 'class' : 'row'}).append(
 								$('<div />', {'class' : 'col-md-3 col-sm-6'}).append(
 									$('<div />', {'class' : 'col-md-12 col-sm-12'}).append(
@@ -185,6 +182,9 @@
 		});
      });
 
+     $(document).on("change","#customer",function(){
+      	onCartList();
+     });
      $(document).on("click",".add-cart",function(){
 
 		var _token = "{{ csrf_token() }}";
@@ -200,6 +200,23 @@
 				}
 		 	});
     });
+    $(document).on("click",".btn-checkout",function(){
+    	promptConfirmation("Are you sure you want to checkout this transaction?");
+    	$('#btnYes').click(function() {
+    		var _token = "{{ csrf_token() }}";
+			var cus_id =  $('#customer').val();
+    		$.post('{{URL::Route('walkinCheckOut')}}',{ _token: _token , cus_id: cus_id},function(response)
+		 	{
+		 		if(response.length != 0)
+				{
+					promptMsg(response.status,response.message)
+					onCartList();
+					window.open(response.invoicelink, '_blank');
+				}
+		 	});
+    	});
+    	return false;
+	});
     function onCartList()
 	{
 		var cus_id = $('#customer').val();
@@ -209,6 +226,17 @@
 			if(data.length != 0)
 			{
 				$('#dtUAList').DataTable().clear().draw();
+				if(data[0].productInfo.length > 0)
+				{
+					$('.box-tools').append(
+								$('<button/>', {'class': 'btn btn-success btn-sm btn-checkout' ,'type' : 'submit', 'html' : '<i class="fa fa-times-circle"></i>Checkout' }),
+								$('<button/>', {'class': 'btn btn-danger btn-sm btn-cancel' ,'type' : 'button','html' : '<i class="fa fa-times-circle"></i>Cancel' }));
+				}
+				else
+				{
+					$('.btn-cancel').remove();
+					$('.btn-checkout').remove();
+				}
 				for($x=0 ; $x < data[0].productInfo.length ;$x++)
 		   		{
 					$('#dtUAList').DataTable().row.add([''+data[0].productInfo[$x].prod_id+'', 

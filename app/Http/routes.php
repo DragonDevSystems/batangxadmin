@@ -135,6 +135,7 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::post('/deleteSpecs', array('uses' => 'ProductController@deleteSpecs', 'as' => 'deleteSpecs','middleware' => 'auth'));
 				Route::post('/addPrice', array('uses' => 'ProductController@addPrice', 'as' => 'addPrice','middleware' => 'auth'));
 				Route::post('/postFeatured', array('uses' => 'ProductController@postFeatured', 'as' => 'postFeatured','middleware' => 'auth'));
+				Route::post('/walkinCheckOut', array('uses' => 'CustomerController@walkinCheckOut', 'as' => 'walkinCheckOut','middleware' => 'auth'));
 			});
 		});
 	});

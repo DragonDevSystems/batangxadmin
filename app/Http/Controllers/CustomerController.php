@@ -11,6 +11,7 @@ use App\Models\ProductInventory;
 use App\Models\ProductOnCart;
 use App\Models\ProductReserve;
 use App\Models\ProductInvoice;
+use App\Models\ProductSold;
 use App\Models\UserImage;
 use App\Models\User;
 use App;
@@ -80,7 +81,7 @@ class CustomerController extends Controller {
 
 	public function cashOnDelivery()
 	{
-		$check = ProductOnCart::where("cus_id","=",Auth::User()['id'])->get();
+		$check = ProductOnCart::where("cus_id","=",Auth::User()['id'])->where("type","=",1)->get();
 		if(!empty($check))
 		{
 			$date = new DateTime();
@@ -97,7 +98,7 @@ class CustomerController extends Controller {
 				));
 			}
 			foreach ($check as $checki) {
-				$productPrice = ProductPrice::where("prod_id","=",$checki['prod_id'])->where("status","=",1)->first();
+				$productPrice = ProductPrice::find($checki['price_id']);
 				$proreserve = new ProductReserve();
 				$proreserve['prod_id'] = $checki['prod_id'];
 				$proreserve['cus_id'] = $checki['cus_id'];
@@ -134,6 +135,51 @@ class CustomerController extends Controller {
 		}
 	}
 
+	public function walkinCheckOut()
+	{
+		$cus_id = Input::get("cus_id");
+		$check = ProductOnCart::where("cus_id","=",$cus_id )->where("type","=",2)->get();
+		if(empty($check))
+		{
+			return Response::json(array(
+						"status" => "fail",
+						"message" => "No product to be check out.",
+					));
+		}
+		$date = new DateTime();
+		$vCode = date_format($date, 'U').str_random(110);
+		$productInovice = new ProductInvoice();
+		$productInovice['cus_id'] = $cus_id;
+		$productInovice['remarks'] = "reserved/ Cash on delivery";
+		$productInovice['status'] = 2;
+		$productInovice['vcode'] = $vCode;
+		if(!$productInovice->save())
+		{
+			return Response::json(array(
+				"status" => "fail",
+				"message" => "Sorry, system encounter a problem regarding your request. Please try again. Thank you",
+			));
+		}
+		foreach ($check as $checki) {
+			$productPrice = ProductPrice::find($checki['price_id']);
+			$proreserve = new ProductSold();
+			$proreserve['prod_id'] = $checki['prod_id'];
+			$proreserve['cus_id'] = $checki['cus_id'];
+			$proreserve['price_id'] = $productPrice['id'];
+			$proreserve['prod_invoice_id'] = $productInovice['id'];
+			$proreserve['qty'] = $checki['qty'];
+			$proreserve['payment_type'] = 2;
+			$proreserve['ip_address'] = Request::ip();
+			$proreserve->save();
+			$remove = ProductOnCart::find($checki['id']);
+			$remove->delete();
+		}
+		return Response::json(array(
+					"status" => "success",
+					"message" => "Transaction Successfully process.Thank you for shoping with us.",
+					"invoicelink" => URL::route('getCheckOutPrint', [$vCode , $productInovice ->id])
+				));
+	}
 	function getMyaccount()
 	{
 		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
