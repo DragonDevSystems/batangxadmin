@@ -37,9 +37,11 @@ class HomeController extends Controller {
 		return View::Make("customer.home.index")->with('mt','home');
 	}
 
+	public function termsandcondition()
 	{
 		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
 		return View::Make("user.termsandcondition")->with('mt','home')->with("userInfo",$userInfo);
+	}
 
 	public function getAbout()
 	{
