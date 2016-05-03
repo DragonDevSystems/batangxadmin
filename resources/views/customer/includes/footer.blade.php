@@ -48,13 +48,13 @@
 							   		<li><input type="hidden" value="{{ csrf_token() }}" name="_token"></li>
 								</ul>
 								<div class="social-icons">
-									<span><input type="submit"  class="myButton"></span>
+									<span><input type="submit" value="Submit" class="myButton"></span>
 								</div>
 							</form>
 						</div>
 					@else
 						<ul>
-							<li><span>Please Log in to be able to create you're testimonial.</span></li>
+							<li><span>You must be logged in to submit a testimonial.</span></li>
 						</ul>
 					@endif
 				</div>

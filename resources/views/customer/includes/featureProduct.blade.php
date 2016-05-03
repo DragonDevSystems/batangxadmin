@@ -2,7 +2,7 @@
 @if(count($featuredProducts) != 0)
 <div class="content_bottom">
 	<div class="heading">
-		<h3>Feature Products</h3>
+		<h3>Featured Products</h3>
 	</div>
 	<div class="see">
 		<p><a href="{{URL::Route('getAllFeaturedProduct')}}">See all Products</a></p>

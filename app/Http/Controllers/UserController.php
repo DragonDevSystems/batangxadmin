@@ -326,7 +326,6 @@ class UserController extends Controller {
 
 				return Response::json(array(
 		                    'status'  => 'success',
-		                    'message'  => 'Password reset recovery successfully process, please check you email to continue your request.Thank you',
 		                ));
 			}
 
