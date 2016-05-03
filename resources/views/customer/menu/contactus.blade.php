@@ -58,7 +58,7 @@
 						   		<p>Alabang-Zapote Road,</p>
 						   		<p>Muntinlupa City, Metro Manila</p>
 				   		<p>Phone:(02) 842-2782</p>
-				 	 	<p>Email: <span>allenjamesxxiv@gmail.com</span></p>
+				 	 	<p>Email: <span>gxtremephtestpp@gmail.com</span></p>
 				   		<p>Follow on: <a href="https://www.facebook.com/GamextremePhilippines" target="_blank"><span>Facebook</span></a>, <a href="http://www.ebay.ph/usr/gamextremephils" target="_blank"><span>e-Bay</span></a>
 				   </div>
 				 </div>
