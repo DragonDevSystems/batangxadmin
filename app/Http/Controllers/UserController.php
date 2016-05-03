@@ -167,10 +167,6 @@ class UserController extends Controller {
 		                    'message'  => 'An error occured while creating the user. Please try again.',
 		                ));
 			}
-			return  Response::json(array(
-		                    'status'  => 'fail',
-		                    'message'  => 'pass',
-		                ));
 		}
 		else
 		{
