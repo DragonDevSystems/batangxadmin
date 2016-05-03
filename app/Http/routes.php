@@ -61,7 +61,7 @@ Route::group(array('prefix' => '/admin'),function()
 			Route::get('/user/getPassReset/{code}/{id}',array('uses' => 'UserController@getPassReset', 'as' => 'getPassReset'));
 			Route::post('/user/processResetPass',array('uses' => 'UserController@processResetPass', 'as' => 'processResetPass'));
 			Route::post('/user/uploadProfilePicture',array('uses' => 'UserController@uploadProfilePicture', 'as' => 'uploadProfilePicture'));
-			
+			Route::post('/user/resendEmailverificationLink',array('uses' => 'UserController@resendEmailverificationLink', 'as' => 'resendEmailverificationLink'));
 		});
 	});
 

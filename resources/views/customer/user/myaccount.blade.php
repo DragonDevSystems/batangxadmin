@@ -15,7 +15,7 @@
 			<form method="post" action="{{URL::Route('updateUserInfo')}}">
 				<div class="login-box-body" style="width:50%;margin: auto;">
 				@if($userInfo['isVerified'] == 0)
-				<h3> Your email is not yet verified. To verify click here..<a href="javascript:void(0)">Resend email.</a></h3>
+				<h3> Your email is not yet verified. To verify click here..<a href="javascript:void(0)" onClick="resendEmailverificationLink();">Resend email.</a></h3>
 				@endif	
 		          <div class="form-group has-feedback has-error"></div>
 		          <label>Username:</label>
@@ -152,6 +152,18 @@
 	                                                    ]).draw();
 				}
 				
+			}
+	 	});
+	}
+
+	function resendEmailverificationLink()
+	{
+		$_token = "{{ csrf_token() }}";
+		$.post('{{URL::Route('resendEmailverificationLink')}}',{ _token: $_token},function(response)
+	 	{
+	 		if(response.length != 0)
+			{
+				promptMsg(response.status,response.message);				
 			}
 	 	});
 	}
