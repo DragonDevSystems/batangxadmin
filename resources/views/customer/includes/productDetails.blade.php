@@ -62,7 +62,7 @@
 		}
 		else
 		{
-			promptMsg("fail","Out of stocks.")
+			promptMsg("fail","Out of stock.")
 		}
 	}
 </script>

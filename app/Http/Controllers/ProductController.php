@@ -361,7 +361,7 @@ class ProductController extends Controller {
 			{
 				return Response::json(array(
 						"status" => "fail",
-						"message" => "Sorry you cannot proceed this trasaction, due to unverified email. Check you're email inbox or spam area to verify your email. You may ask another email for verification, just go to your my account section and click resend email verification.",
+						"message" => "Sorry you cannot proceed with this trasaction due to unverified email. Go to your mail and check your inbox or spam folder to verify your email. You may use another email for verification, just go to My Account section and click resend email verification.",
 					));
 			}
 			$cus_id = (!empty($cus_id)) ? $cus_id : Input::get('cus_id');
@@ -381,7 +381,7 @@ class ProductController extends Controller {
 			{
 				return Response::json(array(
 					"status" => "fail",
-					"message" => "Sorry, the number of item of the product that you are trying to add in your cart is already not enought in your order.",
+					"message" => "Sorry, not enough items remaining to complete your request.",
 				));
 			}
 
@@ -402,7 +402,7 @@ class ProductController extends Controller {
 
 			return Response::json(array(
 				"status" => "success",
-				"message" => "The product is succesfully added in your cart.",
+				"message" => "The product is succesfully added to your cart.",
 			));
 		}
 		else
