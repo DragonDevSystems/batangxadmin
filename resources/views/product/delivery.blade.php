@@ -205,31 +205,36 @@
 		        }
 		    } );
 			$(document).on("click",".add_delivery",function(){
+				var checkReceipt = $('#receipt_num').closest('.has-warning').length;
 				var receipt = $('#receipt_num').val();
 				var _token = "{{ csrf_token() }}";
 				var check = $("#qty_list").dataTable().fnSettings().aoData.length;
 				$this = $(this);
-				 
-				if(receipt && check != 0){
-					promptConfirmation("Are ou sure you want to add this receipt ?");
-		     		$("#btnYes").click(function(){
-		     			$.post('{{URL::Route('addReceipt')}}',{ _token: _token ,receipt: receipt} , function(response)
-						{
-							if(response.status == "success"){
-								defaultDisplay();
-								getReceiptList();
-							}
-						});
-		     		});
-				}
-				else if(!receipt){
-					$('#receipt_num').closest('.form-group').find('label').html('<i class="fa fa-exclamation-triangle"></i>Delivery Receipt No. - Required');
-		          	$('#receipt_num').closest('.form-group').addClass('has-warning');
+				if(checkReceipt !=1){
+					if(receipt && check != 0){
+						promptConfirmation("Are ou sure you want to add this receipt ?");
+			     		$("#btnYes").click(function(){
+			     			$.post('{{URL::Route('addReceipt')}}',{ _token: _token ,receipt: receipt} , function(response)
+							{
+								if(response.status == "success"){
+									defaultDisplay();
+									getReceiptList();
+								}
+							});
+			     		});
+					}
+					else if(!receipt){
+						$('#receipt_num').closest('.form-group').find('label').html('<i class="fa fa-exclamation-triangle"></i>Delivery Receipt No. - Required');
+			          	$('#receipt_num').closest('.form-group').addClass('has-warning');
+					}
+					else{
+						promptMsg("fail","Please add product.");
+					}
 				}
 				else{
-					promptMsg("fail","Please add product.");
+					$('#receipt_num').focus().blur();
 				}
-
+					
 			});
 		    $(document).on("click","#remove_product",function(){
 		     	promptConfirmation("Are ou sure you want to remove this record ?");
@@ -259,7 +264,7 @@
 		});
 	}
 
-	$(document).on("keydown","#qty",function(e){
+	$(document).on("keydown","#qty,#receipt_num",function(e){
 	        // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
              // Allow: Ctrl+A, Command+A
@@ -355,6 +360,25 @@
 									'Click on the below list for preview'))))),
 				$('<div />' , { 'class' : 'box-footer'}));
 	}
+
+	$(document).on("keyup","#receipt_num",function(){
+		var receipt = $(this).val();
+		$.get('{{URL::Route('checkReceiptDelivery')}}',{ receipt : receipt} , function(response)
+		{
+			console.log(response);
+			if(response.status == "fail"){
+				$('#receipt_num').closest('.form-group').find('label').html('<i class="fa fa-exclamation-triangle"></i> '+response.message+'');
+          		$('#receipt_num').closest('.form-group').addClass('has-warning').removeClass('has-success');
+			}else if(response.status == "success"){
+				$('#receipt_num').closest('.form-group').find('label').html('<i class="fa fa-check"></i> '+response.message+'');
+          		$('#receipt_num').closest('.form-group').addClass('has-success').removeClass('has-warning');
+			}
+			else{
+				$('#receipt_num').closest('.form-group').find('label').html(''+response.message+'');
+				$('#receipt_num').closest('.form-group').removeClass('has-success').removeClass('has-warning');
+			}
+		});
+	});
 </script>
 @endsection
 

@@ -128,5 +128,33 @@ class DeliveryController extends Controller {
 	{
 		return ProductDeliveryReceipt::all();
 	}
+
+	public function checkReceiptDelivery()
+	{
+		$receipt = Input::get('receipt');
+		if(!empty($receipt)){
+			$checkReceipt = ProductDeliveryReceipt::where('receipt_num','=',$receipt)->first();
+			if(!empty($checkReceipt)){
+				return Response::json(array(
+								"status" => "fail",
+								"message" => "Receipt No. is already taken.",
+							));
+			}
+			else{
+				return Response::json(array(
+								"status" => "success",
+								"message" => "Receipt No. is available.",
+							));
+			}
+		}
+		else{
+			return Response::json(array(
+								"status" => "empty",
+								"message" => "Delivery Receipt No.",
+							));
+		}
+		
+		
+	}
 	
 }
