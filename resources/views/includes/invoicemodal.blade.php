@@ -75,7 +75,7 @@ function cancelReservation(cus_id,inv_id)
         {
           $('#mdl_invoice').modal('hide');
           promptMsg(response.status,response.message)
-          window.location.reload();
+          setTimeout(function(){ window.location.reload(); }, 3000);
         }
       });
     });
@@ -93,7 +93,7 @@ function checkOut(cus_id,inv_id)
         {
           $('#mdl_invoice').modal('hide');
           promptMsg(response.status,response.message)
-          window.location.reload();
+          setTimeout(function(){ window.location.reload(); }, 3000);
         }
       });
       });

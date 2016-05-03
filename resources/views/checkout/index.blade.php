@@ -105,7 +105,7 @@
 	 		if(response.length != 0)
 			{
 				promptMsg(response.status,response.message);
-				window.location.reload();
+				setTimeout(function(){ window.location.reload(); }, 3000);
 			}
 	 	});
 	}
