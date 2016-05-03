@@ -13,6 +13,7 @@
 
 Route::get('/', array('uses' =>'HomeController@cusIndex', 'as' => 'cusIndex'));
 Route::get('/about-us', array('uses' =>'HomeController@getAbout', 'as' => 'getAbout'));
+Route::get('/termsandcondition', array('uses' =>'HomeController@termsandcondition', 'as' => 'termsandcondition'));
 Route::get('/new', array('uses' =>'HomeController@getNews', 'as' => 'getNews'));
 Route::get('/category/{category}', array('uses' =>'ProductController@getProByCat', 'as' => 'getProByCat'));
 Route::get('/product/{pro_id}/{pro_name}', array('uses' =>'ProductController@productPreview', 'as' => 'productPreview'));

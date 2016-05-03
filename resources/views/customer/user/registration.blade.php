@@ -58,6 +58,16 @@
               <textarea style="resize: none;" class="form-control" rows="5" placeholder="Enter Address..." name="address" id="address"></textarea>
             </div>
           </div>
+         <div class="row">
+            <div class="col-md-6">
+              <div class="checkbox icheck">
+                <label>
+                  <input type="checkbox" id="chk_terms" checked> 
+                </label>
+                <a href="{{URL::Route('termsandcondition')}}" target="_blank">Terms and condition</a>
+              </div>
+            </div>
+          </div>
           <div class="row">
             <div class="col-xs-8">
               <a href="javascript:void(0);" class="btn_reset">I forgot my password</a><br>
@@ -98,47 +108,57 @@
     
     function regUser()
     {
-      $_token = "{{ csrf_token() }}";
-      $username = $("#regusername").val();
-      $email = $("#regemail").val();
-      $password = $("#regPassword").val();
-      $repassword = $("#re-password").val();
-      $fname = $("#fname").val();
-      $lname = $("#lname").val();
-      $gender = $("#gender").val();
-      $dob = $("#dob").val();
-      $mobile = $("#mobile").val();
-      $address = $("#address").val();
-     
-        if($password == $repassword)
-        {
-          $("#btnSubmit").empty();
-          $("#btnSubmit").append('<div class="overlay tbl-overlay"><i class="fa fa-spinner fa-spin"></i></div>');
-          $('#btnSubmit').prop('disabled', true);
-          $.post('{{URL::Route('postCreate')}}', { _token: $_token, email: $email , username: $username, password: $password, fname: $fname, lname: $lname, gender: $gender, dob: $dob, mobile: $mobile, address: $address}, function(data)
+      $remember = $("#chk_terms").is(":checked")
+      if($remember)
+      {
+        $_token = "{{ csrf_token() }}";
+        $username = $("#regusername").val();
+        $email = $("#regemail").val();
+        $password = $("#regPassword").val();
+        $repassword = $("#re-password").val();
+        $fname = $("#fname").val();
+        $lname = $("#lname").val();
+        $gender = $("#gender").val();
+        $dob = $("#dob").val();
+        $mobile = $("#mobile").val();
+        $address = $("#address").val();
+       
+          if($password == $repassword)
           {
-              $("#btnSubmit").empty();
-              $("#btnSubmit").append("Submit");
-              $('#btnSubmit').prop('disabled', false);
-              if(data.status == "success")
-              {
+            $("#btnSubmit").empty();
+            $("#btnSubmit").append('<div class="overlay tbl-overlay"><i class="fa fa-spinner fa-spin"></i></div>');
+            $('#btnSubmit').prop('disabled', true);
+            $.post('{{URL::Route('postCreate')}}', { _token: $_token, email: $email , username: $username, password: $password, fname: $fname, lname: $lname, gender: $gender, dob: $dob, mobile: $mobile, address: $address}, function(data)
+            {
+                $("#btnSubmit").empty();
+                $("#btnSubmit").append("Submit");
+                $('#btnSubmit').prop('disabled', false);
+                if(data.status == "success")
+                {
 
-                $('.has-error').empty();
-                $('#mdl_registration').modal('hide');
-                promptMsg(data.status,data.message)
-              }
-              else
-              {
-                $('.has-error').empty();
-                $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i> '+data.message+''}));
-              }
-              //console.log(data);
-          });
-        }
-        else
-        {
-          $('.has-error').empty();
-              $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i>Password does not match.'}));
-        }
+                  $('.has-error').empty();
+                  $('#mdl_registration').modal('hide');
+                  promptMsg(data.status,data.message)
+                }
+                else
+                {
+                  $('.has-error').empty();
+                  $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i> '+data.message+''}));
+                }
+                //console.log(data);
+            });
+          }
+          else
+          {
+            $('.has-error').empty();
+                $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i>Password does not match.'}));
+          }
+      }
+      else
+      {
+        $('.has-error').empty();
+        $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i>To continue, you maust read and accept the terms and condition.'}));
+      }
+
     }
 </script>

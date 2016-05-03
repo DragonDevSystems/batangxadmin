@@ -37,6 +37,10 @@ class HomeController extends Controller {
 		return View::Make("customer.home.index")->with('mt','home');
 	}
 
+	{
+		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
+		return View::Make("user.termsandcondition")->with('mt','home')->with("userInfo",$userInfo);
+
 	public function getAbout()
 	{
 		//$testimonial = Testimonials::orderBy('created_at', 'DESC')->first();orderByRaw("RAND()")->get();
