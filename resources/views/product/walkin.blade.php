@@ -129,7 +129,7 @@
 
     function userInfoList()
     {
-    	$.get('{{URL::Route('userlist')}}', function(data)
+    	$.get('{{URL::Route('cuslist')}}', function(data)
 		{
 			$('#customer').empty();
 			if(data.length != 0)
@@ -205,7 +205,7 @@
     	$('#btnYes').click(function() {
     		var _token = "{{ csrf_token() }}";
 			var cus_id =  $('#customer').val();
-    		$.post('{{URL::Route('walkinCheckOut')}}',{ _token: _token , cus_id: cus_id},function(response)
+    		$.post('{{URL::Route('walkinCheckOut')}}',{ _token: _token , cus_id: cus_id, type: 2},function(response)
 		 	{
 		 		if(response.length != 0)
 				{

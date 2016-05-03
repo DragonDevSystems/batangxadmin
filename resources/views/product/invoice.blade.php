@@ -47,7 +47,7 @@
   @include('includes.invoicemodal')
 </div>
 <script type="text/javascript">
-	function adminUserList()
+	function infoList()
 	{
 		$.get('{{URL::Route('invoiceList')}}', function(data)
 		{
@@ -77,35 +77,39 @@
 
 		});
 	}
-	adminUserList();
+	infoList();
 	function invoiceModal(inv_id)
     {
     	$.get('{{URL::Route('invoiceInfoAjax')}}',{ inv_id: inv_id}, function(data)
 		{
-			if(data.response.length != 0)
+			if(data.status == "success")
 			{
-				if(data.status == "success")
+				$('.cust-info').html('To<address><strong>'+data.response.userInfo.fname+' '+data.response.userInfo.lname+'</strong><br>Phone: '+data.response.userInfo.mobile+'<br>Email: '+data.response.userInfo.email+'</address>');
+				$('.inv-info').html('<b>Invoice # '+data.response.invoiceNum+'</b><br><b>Status :</b> '+data.response.invoiceStatus+'<br><b>Account No.:</b> '+data.response.accountNum+'');
+				for(var i=0; i<data.response.onList[0].productInfo.length ; i++)
 				{
-					$('.cust-info').html('To<address><strong>'+data.response.userInfo.fname+' '+data.response.userInfo.lname+'</strong><br>Phone: '+data.response.userInfo.mobile+'<br>Email: '+data.response.userInfo.email+'</address>');
-					$('.inv-info').html('<b>Invoice # '+data.response.invoiceNum+'</b><br><b>Status :</b> '+data.response.invoiceStatus+'<br><b>Account No.:</b> '+data.response.accountNum+'');
-					for(var i=0; i<data.response.onList.length ; i++)
-					{
-						$('#tbodyList').empty();
-						$('#tbodyList').append('<tr>\
-							                        <td>'+data.response.onList[0].productInfo[i].qty+'</td>\
-							                        <td>'+data.response.onList[0].productInfo[i].name+'</td>\
-							                        <td>'+data.response.onList[0].productInfo[i].unit_price+'</td>\
-							                        <td>'+data.response.onList[0].productInfo[i].price+'</td>\
-							                      </tr>');
-					}
-					$('#tdQty').html(data.response.onList[0].totalQty);
-					$('#tdPrice').html(data.response.onList[0].totalPrice);
-					$('.action-btn').empty();
-					$('.action-btn').append('<a href="'+data.response.invoicelink+'" target="_blank" class="btn btn-sm btn-success">Print</a>');
-					$('.action-btn').append('<button type="button" class="btn btn-sm btn-success">Check-out</button>');
-					$('.action-btn').append('<button type="button" class="btn btn-sm btn-danger">Cancel Reservation</button>');
-					$('#mdl_invoice').modal('show');
+					$('#tbodyList').empty();
+					$('#tbodyList').append('<tr>\
+						                        <td>'+data.response.onList[0].productInfo[i].qty+'</td>\
+						                        <td>'+data.response.onList[0].productInfo[i].name+'</td>\
+						                        <td>'+data.response.onList[0].productInfo[i].unit_price+'</td>\
+						                        <td>'+data.response.onList[0].productInfo[i].price+'</td>\
+						                      </tr>');
 				}
+				$('#tdQty').html(data.response.onList[0].totalQty);
+				$('#tdPrice').html(data.response.onList[0].totalPrice);
+				$('.action-btn').empty();
+				$('.action-btn').append('<a href="'+data.response.invoicelink+'" target="_blank" class="btn btn-sm btn-success">Print</a>');
+				if(data.response.invoiceStatus == "Reserved")
+				{
+					$('.action-btn').append('<button type="button" class="btn btn-sm btn-success" onclick="checkOut('+data.response.userInfo.user_id+','+data.response.invoiceNum+');">Check-out</button>');
+					$('.action-btn').append('<button type="button" class="btn btn-sm btn-danger" onclick="cancelReservation('+data.response.userInfo.user_id+','+data.response.invoiceNum+');">Cancel Reservation</button>');
+				}
+				$('#mdl_invoice').modal('show');
+			}
+			else
+			{
+				promptMsg(data.status,data.message);
 			}
 		});
     }

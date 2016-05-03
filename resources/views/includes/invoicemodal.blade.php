@@ -68,4 +68,36 @@
 </div>
 
 <script type="text/javascript">
+function cancelReservation(cus_id,inv_id)
+{
+  var type = 3;
+   promptConfirmation("Are you sure you want to cancel this invoice?");
+      $('#btnYes').click(function() {
+        var _token = "{{ csrf_token() }}";
+        $.post('{{URL::Route('cancelledReservation',[0,0,0])}}',{ _token: _token , cus_id: cus_id, inv_id: inv_id , type: type},function(response)
+      {
+        if(response.length != 0)
+        {
+          promptMsg(response.status,response.message)
+        }
+      });
+    });
+    return false;
+}
+
+function checkOut(cus_id,inv_id)
+{
+  promptConfirmation("Are you sure you want to checkout this invoice?");
+      $('#btnYes').click(function() {
+        var _token = "{{ csrf_token() }}";
+        $.post('{{URL::Route('checkoutReservation')}}',{ _token: _token , cus_id: cus_id, inv_id: inv_id},function(response)
+      {
+        if(response.length != 0)
+        {
+          promptMsg(response.status,response.message)
+        }
+      });
+      });
+      return false;
+}
 </script>

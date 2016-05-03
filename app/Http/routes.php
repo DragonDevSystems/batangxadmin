@@ -98,6 +98,8 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::get('/admin/statsSummary/{entry}', array('uses' => 'GlobalController@statsSummary', 'as' => 'statsSummary','middleware' => 'auth'));
 				Route::get('/admin/invoiceList/', array('uses' => 'GlobalController@invoiceList', 'as' => 'invoiceList','middleware' => 'auth'));
 				Route::get('/admin/invoiceInfoAjax/', array('uses' => 'CustomerController@invoiceInfoAjax', 'as' => 'invoiceInfoAjax','middleware' => 'auth'));
+				Route::post('/admin/checkoutReservation/', array('uses' => 'CustomerController@checkoutReservation', 'as' => 'checkoutReservation','middleware' => 'auth'));
+				Route::post('/admin/cancelledReservation/{cus_id}/{inv_id}/{type}', array('uses' => 'CustomerController@cancelledReservation', 'as' => 'cancelledReservation','middleware' => 'auth'));
 			});
 		});
 		Route::get('/topNewProduct/{take}', array('uses' => 'GlobalController@topNewProduct', 'as' => 'topNewProduct'));

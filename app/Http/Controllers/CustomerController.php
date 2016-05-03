@@ -121,19 +121,27 @@ class CustomerController extends Controller {
 						break;
 				}
 				$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList($invoiceCheck['cus_id']);
-			$response = array(
-				'userInfo' => $userInfo,
-				'accountNum' => str_pad($userInfo['user_id'], 8, '0', STR_PAD_LEFT), //8digit
-				'invoiceNum' => str_pad($invoiceCheck['id'], 6, '0', STR_PAD_LEFT), //6digit
-				'invoiceDate' => $invoiceCheck['created_at'],
-				'invoiceStatus' => App::make("App\Http\Controllers\GlobalController")->invoiceStatus($invoiceCheck['status']),
-				'onList' => $onCartList,
-				"invoicelink" => URL::route('getCheckOutPrint', [$invoiceCheck['vcode'] , $invoiceCheck['id']])
-			);
-			return Response::json(array(
-					"status" => "success",
-					"response" => $response,
-				));
+
+				if(empty($onCartList[0]['totalQty'])){
+					return Response::json(array(
+						"status" => "fail",
+						"message" => "No item found for this invoice.",
+					));
+				}
+
+				$response = array(
+					'userInfo' => $userInfo,
+					'accountNum' => str_pad($userInfo['user_id'], 8, '0', STR_PAD_LEFT), //8digit
+					'invoiceNum' => str_pad($invoiceCheck['id'], 6, '0', STR_PAD_LEFT), //6digit
+					'invoiceDate' => $invoiceCheck['created_at'],
+					'invoiceStatus' => App::make("App\Http\Controllers\GlobalController")->invoiceStatus($invoiceCheck['status']),
+					'onList' => $onCartList,
+					"invoicelink" => URL::route('getCheckOutPrint', [$invoiceCheck['vcode'] , $invoiceCheck['id']])
+				);
+				return Response::json(array(
+						"status" => "success",
+						"response" => $response,
+					));
 		}
 		else
 		{
@@ -203,7 +211,8 @@ class CustomerController extends Controller {
 	public function walkinCheckOut()
 	{
 		$cus_id = Input::get("cus_id");
-		$check = ProductOnCart::where("cus_id","=",$cus_id )->where("type","=",2)->get();
+		$type = Input::get("type");
+		$check = ProductOnCart::where("cus_id","=",$cus_id )->where("type","=",$type)->get();
 		if(empty($check))
 		{
 			return Response::json(array(
@@ -225,15 +234,16 @@ class CustomerController extends Controller {
 				"message" => "Sorry, system encounter a problem regarding your request. Please try again. Thank you",
 			));
 		}
+		$inv_id = $productInovice['id'];
 		foreach ($check as $checki) {
 			$productPrice = ProductPrice::find($checki['price_id']);
 			$proreserve = new ProductSold();
 			$proreserve['prod_id'] = $checki['prod_id'];
 			$proreserve['cus_id'] = $checki['cus_id'];
 			$proreserve['price_id'] = $productPrice['id'];
-			$proreserve['prod_invoice_id'] = $productInovice['id'];
+			$proreserve['prod_invoice_id'] = $inv_id;
 			$proreserve['qty'] = $checki['qty'];
-			$proreserve['payment_type'] = 2;
+			$proreserve['payment_type'] = 2;// 1: paypall 2: cash
 			$proreserve['ip_address'] = Request::ip();
 			$proreserve->save();
 			$remove = ProductOnCart::find($checki['id']);
@@ -242,7 +252,7 @@ class CustomerController extends Controller {
 		return Response::json(array(
 					"status" => "success",
 					"message" => "Transaction Successfully process.Thank you for shoping with us.",
-					"invoicelink" => URL::route('getCheckOutPrint', [$vCode , $productInovice ->id])
+					"invoicelink" => URL::route('getCheckOutPrint', [$vCode , $inv_id])
 				));
 	}
 	function getMyaccount()
@@ -292,6 +302,7 @@ class CustomerController extends Controller {
 	{
 		$cus_id = (!empty($cus_id)) ? $cus_id : Input::get("cus_id");
 		$inv_id = (!empty($inv_id)) ? $inv_id : Input::get("inv_id");
+		$type = (!empty($type)) ? $type : Input::get("type");
 		$check = ProductReserve::where("cus_id","=",$cus_id )->where("id","=",$inv_id)->get();
 
 		if(empty($check))
@@ -326,6 +337,52 @@ class CustomerController extends Controller {
 		return Response::json(array(
 					"status" => "success",
 					"message" => "Transaction Successfully cancelled.",
+					"invoicelink" => URL::route('getCheckOutPrint', [$productInovice['vCode'] , $inv_id])
+				));
+	}
+
+	function checkoutReservation()
+	{
+		$cus_id = (!empty($cus_id)) ? $cus_id : Input::get("cus_id");
+		$inv_id = (!empty($inv_id)) ? $inv_id : Input::get("inv_id");
+		$check = ProductReserve::where("cus_id","=",$cus_id )->where("id","=",$inv_id)->get();
+
+		if(empty($check))
+		{
+			return Response::json(array(
+						"status" => "fail",
+						"message" => "No product to be cancel in reservation.",
+					));
+		}
+
+		foreach ($check as $checki) {
+			$productPrice = ProductPrice::find($checki['price_id']);
+			$proreserve = new ProductSold();
+			$proreserve['prod_id'] = $checki['prod_id'];
+			$proreserve['cus_id'] = $checki['cus_id'];
+			$proreserve['price_id'] = $productPrice['id'];
+			$proreserve['prod_invoice_id'] = $checki['prod_invoice_id'];
+			$proreserve['qty'] = $checki['qty'];
+			$proreserve['payment_type'] = 2;// 1: paypall 2: cash
+			$proreserve['ip_address'] = Request::ip();
+			$proreserve->save();
+
+			$updateRes = ProductReserve::find($checki['id']);
+			$updateRes->delete();
+		}
+
+		$productInovice = ProductInvoice::find($inv_id);
+		$productInovice['status'] = 2;
+		if(!$productInovice->save())
+		{
+			return Response::json(array(
+				"status" => "fail",
+				"message" => "Sorry, system encounter a problem regarding your request. Please try again. Thank you",
+			));
+		}
+		return Response::json(array(
+					"status" => "success",
+					"message" => "Transaction Successfully checkout.",
 					"invoicelink" => URL::route('getCheckOutPrint', [$productInovice['vCode'] , $inv_id])
 				));
 	}

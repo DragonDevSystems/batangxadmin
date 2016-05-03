@@ -730,7 +730,7 @@ class GlobalController extends Controller {
 						$status = "Paid";
 						break;
 					case 3:
-						$status = "Cancel by user";
+						$status = "Cancelled by user";
 						break;
 					case 4:
 						$status = "Expired Invoice";
