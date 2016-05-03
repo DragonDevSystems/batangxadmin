@@ -78,6 +78,8 @@ Route::group(array('prefix' => '/admin'),function()
 					middleware' => 'auth'));
 				Route::get('/admin/userlist', array('uses' => 'GlobalController@userlist', 'as' => 'userlist','
 					middleware' => 'auth'));
+				Route::get('/admin/cuslist', array('uses' => 'GlobalController@cuslist', 'as' => 'cuslist','
+					middleware' => 'auth'));
 				Route::get('/admin/allProduct', array('uses' => 'GlobalController@allProduct', 'as' => 'allProduct','
 					middleware' => 'auth'));
 				Route::get('/admin/accountAccessChecker/{event}/{module}', array('uses' => 'GlobalController@accountAccessChecker', 'as' => 'accountAccessChecker','
@@ -95,6 +97,7 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::get('/admin/stats/{entry}', array('uses' => 'GlobalController@statsList', 'as' => 'statsList','middleware' => 'auth'));
 				Route::get('/admin/statsSummary/{entry}', array('uses' => 'GlobalController@statsSummary', 'as' => 'statsSummary','middleware' => 'auth'));
 				Route::get('/admin/invoiceList/', array('uses' => 'GlobalController@invoiceList', 'as' => 'invoiceList','middleware' => 'auth'));
+				Route::get('/admin/invoiceInfoAjax/', array('uses' => 'CustomerController@invoiceInfoAjax', 'as' => 'invoiceInfoAjax','middleware' => 'auth'));
 			});
 		});
 		Route::get('/topNewProduct/{take}', array('uses' => 'GlobalController@topNewProduct', 'as' => 'topNewProduct'));

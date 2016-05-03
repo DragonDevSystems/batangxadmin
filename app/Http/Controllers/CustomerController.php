@@ -65,18 +65,83 @@ class CustomerController extends Controller {
 		$invoiceCheck = ProductInvoice::where('id','=',$id)->where('vcode','=',$vcode)->first();
 		if(!empty($invoiceCheck))
 		{
-			$onCartList = App::make("App\Http\Controllers\GlobalController")->onReserveList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+			switch ($invoiceCheck['status']) {
+					case 1:
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onReserveList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						break;
+					case 2:
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						break;
+					case 3:
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						break;
+					case 4:
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						break;
+					default:
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						break;
+				}
 			$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList($invoiceCheck['cus_id']);
 			$accountNum = str_pad($userInfo['user_id'], 8, '0', STR_PAD_LEFT); //8digit
 			$invoiceNum = str_pad($invoiceCheck['id'], 6, '0', STR_PAD_LEFT); //6digit
 			$invoiceDate = $invoiceCheck['created_at'];
-			return View::Make("checkout.invoiceprint")->with("userInfo",$userInfo)->with("onCartList",$onCartList)->with('mt','db')->with("accountNum",$accountNum)->with("invoiceNum",$invoiceNum)->with("invoiceDate",$invoiceDate);
+			$invoiceStatus = App::make("App\Http\Controllers\GlobalController")->invoiceStatus($invoiceCheck['status']);
+			return View::Make("checkout.invoiceprint")->with("userInfo",$userInfo)->with("onCartList",$onCartList)->with('mt','db')->with("accountNum",$accountNum)->with("invoiceNum",$invoiceNum)->with("invoiceDate",$invoiceDate)->with("invoiceStatus",$invoiceStatus);
 		}
 		else
 		{
 			return "URL is broken or link is already expire.";
 		}
 
+	}
+
+	public function invoiceInfoAjax()
+	{
+		$response = array();
+		$inv_id = Input::get('inv_id');
+		$invoiceCheck = ProductInvoice::find($inv_id);
+		if(!empty($invoiceCheck))
+		{
+			switch ($invoiceCheck['status']) {
+					case 1:
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onReserveList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						break;
+					case 2:
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						break;
+					case 3:
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						break;
+					case 4:
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						break;
+					default:
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						break;
+				}
+				$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList($invoiceCheck['cus_id']);
+			$response = array(
+				'userInfo' => $userInfo,
+				'accountNum' => str_pad($userInfo['user_id'], 8, '0', STR_PAD_LEFT), //8digit
+				'invoiceNum' => str_pad($invoiceCheck['id'], 6, '0', STR_PAD_LEFT), //6digit
+				'invoiceDate' => $invoiceCheck['created_at'],
+				'invoiceStatus' => App::make("App\Http\Controllers\GlobalController")->invoiceStatus($invoiceCheck['status']),
+				'onList' => $onCartList,
+				"invoicelink" => URL::route('getCheckOutPrint', [$invoiceCheck['vcode'] , $invoiceCheck['id']])
+			);
+			return Response::json(array(
+					"status" => "success",
+					"response" => $response,
+				));
+		}
+		else
+		{
+			return Response::json(array(
+					"status" => "fail",
+					"message" => "Sorry, system encounter a problem regarding your request. Please try again. Thank you",
+				));
+		}
 	}
 
 	public function cashOnDelivery()
@@ -195,29 +260,12 @@ class CustomerController extends Controller {
 		{
 			foreach ($invoiceList as $invoiceListi) {
 				$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList($invoiceListi['cus_id']);
-				switch ($invoiceListi['status']) {
-					case 1:
-						$status = "reserved";
-						break;
-					case 2:
-						$status = "paid";
-						break;
-					case 3:
-						$status = "Cancel by user";
-						break;
-					case 4:
-						$status = "Cancel by system";
-						break;
-					default:
-						$status = "Error/No status";
-						break;
-				}
 				$response[] = array(
 						"invoice_num" => str_pad($invoiceListi['id'], 6, '0', STR_PAD_LEFT),
 						"invoice_date" => \Carbon\Carbon::createFromTimeStamp(strtotime($invoiceListi['created_at']))->toDayDateTimeString(),
 						"cus_name" => $userInfo['fname'].' '.$userInfo['lname'],
 						"invoice_link" => URL::route('getCheckOutPrint', [$invoiceListi['vcode'] , $invoiceListi['id']]),
-						"status" => $status,
+						"status" => App::make("App\Http\Controllers\GlobalController")->invoiceStatus($invoiceListi['status']),
 					);
 			}
 			return Response::json(array(
@@ -238,5 +286,47 @@ class CustomerController extends Controller {
 	{
 		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
 		return View::Make("product.walkin")->with("userInfo",$userInfo)->with('mt','wi');
+	}
+
+	function cancelledReservation($cus_id,$inv_id,$type)
+	{
+		$cus_id = (!empty($cus_id)) ? $cus_id : Input::get("cus_id");
+		$inv_id = (!empty($inv_id)) ? $inv_id : Input::get("inv_id");
+		$check = ProductReserve::where("cus_id","=",$cus_id )->where("id","=",$inv_id)->get();
+
+		if(empty($check))
+		{
+			return Response::json(array(
+						"status" => "fail",
+						"message" => "No product to be cancel in reservation.",
+					));
+		}
+
+		foreach ($check as $checki) {
+			$update = ProductInventory::where("prod_id","=",$checki['prod_id'])->first();
+			if(!empty($update))
+			{
+				$update['qty'] = $update['qty'] + $checki['qty'];
+				$update->save();
+			}
+			$updateRes = ProductReserve::find($checki['id']);
+			$updateRes['status'] = $type;
+			$updateRes->save();
+		}
+
+		$productInovice = ProductInvoice::find($inv_id);
+		$productInovice['status'] = $type;
+		if(!$productInovice->save())
+		{
+			return Response::json(array(
+				"status" => "fail",
+				"message" => "Sorry, system encounter a problem regarding your request. Please try again. Thank you",
+			));
+		}
+		return Response::json(array(
+					"status" => "success",
+					"message" => "Transaction Successfully cancelled.",
+					"invoicelink" => URL::route('getCheckOutPrint', [$productInovice['vCode'] , $inv_id])
+				));
 	}
 }

@@ -16,6 +16,7 @@ use App\Models\UserImage;
 use App\Models\ProductReserve;
 use App\Models\ContactUs;
 use App\Models\ProductInvoice;
+use App\Models\ProductSold;
 use Auth;
 use DB;
 use Input;
@@ -339,6 +340,31 @@ class GlobalController extends Controller {
 		}
 	}
 
+	public function cuslist()
+	{
+		$response = array();
+		$userList = User::all();//where('id','!=',Auth::User()['id'])->where('isAdmin','=',0)->get();
+		//return $userList;
+		if(!empty($userList))
+		{
+			foreach ($userList as $userListi) {
+				$response[] = $this->userInfoList($userListi['id']);
+			}
+
+			return Response::json(array(
+	            'status'  => 'success',
+	            'userInfoList'  => $response,
+	        ));
+		}
+		else
+		{
+			return Response::json(array(
+	            'status'  => 'fail',
+	            'message'  => 'The user record is empty or all user has been listed in the admin account.',
+	        ));
+		}
+	}
+
 	public function topNewProduct($take)
 	{
 		$response = array();
@@ -457,6 +483,41 @@ class GlobalController extends Controller {
 		$response = array();
 		$products = array();
 		$check = ProductReserve::where("cus_id","=",$cus_id)->where("prod_invoice_id","=",$invoiceId)->get();
+		$totalP = 0;
+		$totalQty = 0;
+		if(!empty($check))
+		{
+			foreach ($check as $checki) {
+				$productPrice = ProductPrice::where("prod_id","=",$checki['prod_id'])->where("status","=",1)->first();
+				$prodInfo = ProductInformation::find($checki['prod_id']);
+				if(!empty($prodInfo))
+				{
+					$products[] = array(
+							"cart_id" => $checki['id'],
+							"prod_id" => $prodInfo['id'],
+							"name" => $prodInfo['name'],
+							"qty" => $checki['qty'],
+							"unit_price" =>'&#8369; '.number_format($productPrice['price'], 2),
+							"price" => '&#8369; '.number_format(($productPrice['price'] * $checki['qty']), 2),
+						);
+					$totalQty += $checki['qty'];
+					$totalP += ($productPrice['price'] * $checki['qty']);
+				}
+			}
+			$response[] = array(
+				"productInfo" => $products,
+				"totalPrice" => '&#8369; '.number_format($totalP, 2),
+				"totalQty" => $totalQty,
+			);
+		}
+		return $response;
+	}
+
+	public function onSoldList($cus_id,$invoiceId)
+	{
+		$response = array();
+		$products = array();
+		$check = ProductSold::where("cus_id","=",$cus_id)->where("prod_invoice_id","=",$invoiceId)->get();
 		$totalP = 0;
 		$totalQty = 0;
 		if(!empty($check))
@@ -646,32 +707,40 @@ class GlobalController extends Controller {
 		{
 			foreach ($all as $alli) {
 				$userInfo = $this->userInfoList($alli['cus_id']);
-				switch ($alli['status']) {
-					case 1:
-						$status = "reserved";
-						break;
-					case 2:
-						$status = "paid";
-						break;
-					case 3:
-						$status = "Cancel by user";
-						break;
-					case 4:
-						$status = "Cancel by system";
-						break;
-					default:
-						$status = "Error/No status";
-						break;
-				}
+				
 				$response[] = array(
 						"inv_no" => str_pad($alli['id'], 6, '0', STR_PAD_LEFT),
 						"customer" => $userInfo['fname'].' '.$userInfo['lname'],
 						"remarks" => $alli['remarks'],
-						"status" => $status,
+						"status" => $this->invoiceStatus($alli['status']),
 						"invoice_link" => URL::route('getCheckOutPrint', [$alli['vcode'] , $alli['id']]),
 					);
 			}
 		}
 		return $response;
 	}
+
+	public function invoiceStatus($statusval)
+	{
+		switch ($statusval) {
+					case 1:
+						$status = "Reserved";
+						break;
+					case 2:
+						$status = "Paid";
+						break;
+					case 3:
+						$status = "Cancel by user";
+						break;
+					case 4:
+						$status = "Expired Invoice";
+						break;
+					default:
+						$status = "Error/No status";
+						break;
+				}
+		return $status;
+	}
+
+
 }

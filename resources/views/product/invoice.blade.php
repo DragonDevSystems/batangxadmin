@@ -44,7 +44,7 @@
   <!-- /.content-wrapper -->
   @include('includes.footer')
   @include('includes.settingSidebar')
-  @include('user.walkinRegistration')
+  @include('includes.invoicemodal')
 </div>
 <script type="text/javascript">
 	function adminUserList()
@@ -57,7 +57,7 @@
 				$('#dtUAList').DataTable().clear().draw();
 				for (var i = 0; i < data.length; i++) 
 				{
-					$('#dtUAList').DataTable().row.add(['<a href="'+data[i].invoice_link+'" target="_blank">'+data[i].inv_no+'</a>', 
+					$('#dtUAList').DataTable().row.add([''+data[i].inv_no+'', 
                                                     ''+data[i].customer+'', 
                                                     ''+data[i].remarks+'', 
                                                     ''+data[i].status+'', 
@@ -65,10 +65,10 @@
 
 				}
 				var table = $("#dtUAList").DataTable();
-				/*$('#dtUAList tbody').on('click', 'tr', function () {
+				$('#dtUAList tbody').on('click', 'tr', function () {
 			        var data = table.row( this ).data();
-			        adminInformation(data[0]);
-			    } );*/
+			        invoiceModal(data[0]);
+			    } );
 			}
 			else
 			{
@@ -78,9 +78,36 @@
 		});
 	}
 	adminUserList();
-	/*function adminInformation(data)
-	{
-		alert(data);
-	}*/
+	function invoiceModal(inv_id)
+    {
+    	$.get('{{URL::Route('invoiceInfoAjax')}}',{ inv_id: inv_id}, function(data)
+		{
+			if(data.response.length != 0)
+			{
+				if(data.status == "success")
+				{
+					$('.cust-info').html('To<address><strong>'+data.response.userInfo.fname+' '+data.response.userInfo.lname+'</strong><br>Phone: '+data.response.userInfo.mobile+'<br>Email: '+data.response.userInfo.email+'</address>');
+					$('.inv-info').html('<b>Invoice # '+data.response.invoiceNum+'</b><br><b>Status :</b> '+data.response.invoiceStatus+'<br><b>Account No.:</b> '+data.response.accountNum+'');
+					for(var i=0; i<data.response.onList.length ; i++)
+					{
+						$('#tbodyList').empty();
+						$('#tbodyList').append('<tr>\
+							                        <td>'+data.response.onList[0].productInfo[i].qty+'</td>\
+							                        <td>'+data.response.onList[0].productInfo[i].name+'</td>\
+							                        <td>'+data.response.onList[0].productInfo[i].unit_price+'</td>\
+							                        <td>'+data.response.onList[0].productInfo[i].price+'</td>\
+							                      </tr>');
+					}
+					$('#tdQty').html(data.response.onList[0].totalQty);
+					$('#tdPrice').html(data.response.onList[0].totalPrice);
+					$('.action-btn').empty();
+					$('.action-btn').append('<a href="'+data.response.invoicelink+'" target="_blank" class="btn btn-sm btn-success">Print</a>');
+					$('.action-btn').append('<button type="button" class="btn btn-sm btn-success">Check-out</button>');
+					$('.action-btn').append('<button type="button" class="btn btn-sm btn-danger">Cancel Reservation</button>');
+					$('#mdl_invoice').modal('show');
+				}
+			}
+		});
+    }
 </script>
 @endsection

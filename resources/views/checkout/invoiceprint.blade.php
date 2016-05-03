@@ -55,7 +55,7 @@
   <!-- /.col -->
   <div class="col-sm-4 invoice-col">
     <b>Invoice # {{$invoiceNum}}</b><br>
-    <br>
+    <b>Status :</b> {{$invoiceStatus}}<br>
     <b>Account No.:</b> {{$accountNum}}
   </div>
   <!-- /.col -->
