@@ -304,7 +304,7 @@ class CustomerController extends Controller {
 		$cus_id = (!empty($cus_id)) ? $cus_id : Input::get("cus_id");
 		$inv_id = (!empty($inv_id)) ? $inv_id : Input::get("inv_id");
 		$type = (!empty($type)) ? $type : Input::get("type");
-		$check = ProductReserve::where("cus_id","=",$cus_id )->where("id","=",$inv_id)->get();
+		$check = ProductReserve::where("cus_id","=",$cus_id )->where("prod_invoice_id","=",$inv_id)->get();
 
 		if(empty($check))
 		{
@@ -346,7 +346,7 @@ class CustomerController extends Controller {
 	{
 		$cus_id = (!empty($cus_id)) ? $cus_id : Input::get("cus_id");
 		$inv_id = (!empty($inv_id)) ? $inv_id : Input::get("inv_id");
-		$check = ProductReserve::where("cus_id","=",$cus_id )->where("id","=",$inv_id)->get();
+		$check = ProductReserve::where("cus_id","=",$cus_id )->where("prod_invoice_id","=",$inv_id)->get();
 
 		if(empty($check))
 		{
@@ -355,7 +355,6 @@ class CustomerController extends Controller {
 						"message" => "No product to be cancel in reservation.",
 					));
 		}
-
 		foreach ($check as $checki) {
 			$productPrice = ProductPrice::find($checki['price_id']);
 			$proreserve = new ProductSold();

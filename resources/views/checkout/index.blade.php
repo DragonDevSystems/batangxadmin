@@ -104,7 +104,8 @@
 	 	{
 	 		if(response.length != 0)
 			{
-				promptMsg(response.status,response.message)
+				promptMsg(response.status,response.message);
+				window.location.reload();
 			}
 	 	});
 	}
