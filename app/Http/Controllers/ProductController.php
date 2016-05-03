@@ -297,6 +297,7 @@ class ProductController extends Controller {
 			$proPrice = ProductPrice::where('prod_id','=',$paramCheck['id'])->where('status','=',1)->first();
 			$qty = App::make("App\Http\Controllers\GlobalController")->availabilityCheck($paramCheck['id']);
 			$category = ProCategory::find($paramCheck['pro_cat_id']);
+			$remainItem = ProductInventory::where("prod_id","=",$paramCheck['id'])->first();
 			$response[] = array(
 				"productInfo" => $paramCheck,
 				"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Not specified" ,
@@ -305,6 +306,7 @@ class ProductController extends Controller {
 				"pro_specs" => $proSpecs,
 				"category" => $category['name'],
 				"cat_id" => $category['id'],
+				"item_remain" => (!empty($remainItem)) ? $remainItem['qty'] : 0,
 			);
 			return View::Make("customer.product.product_preview")->with('mt','home')->with('response',$response);
 		}
