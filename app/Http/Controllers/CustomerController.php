@@ -73,13 +73,13 @@ class CustomerController extends Controller {
 						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
 						break;
 					case 3:
-						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onReserveList($invoiceCheck['cus_id'],$invoiceCheck['id']);
 						break;
 					case 4:
-						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onReserveList($invoiceCheck['cus_id'],$invoiceCheck['id']);
 						break;
 					default:
-						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onReserveList($invoiceCheck['cus_id'],$invoiceCheck['id']);
 						break;
 				}
 			$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList($invoiceCheck['cus_id']);
@@ -111,13 +111,13 @@ class CustomerController extends Controller {
 						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
 						break;
 					case 3:
-						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onReserveList($invoiceCheck['cus_id'],$invoiceCheck['id']);
 						break;
 					case 4:
-						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onReserveList($invoiceCheck['cus_id'],$invoiceCheck['id']);
 						break;
 					default:
-						$onCartList = App::make("App\Http\Controllers\GlobalController")->onSoldList($invoiceCheck['cus_id'],$invoiceCheck['id']);
+						$onCartList = App::make("App\Http\Controllers\GlobalController")->onReserveList($invoiceCheck['cus_id'],$invoiceCheck['id']);
 						break;
 				}
 				$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList($invoiceCheck['cus_id']);
@@ -133,6 +133,7 @@ class CustomerController extends Controller {
 					'userInfo' => $userInfo,
 					'accountNum' => str_pad($userInfo['user_id'], 8, '0', STR_PAD_LEFT), //8digit
 					'invoiceNum' => str_pad($invoiceCheck['id'], 6, '0', STR_PAD_LEFT), //6digit
+					'inv_id' => $invoiceCheck['id'],
 					'invoiceDate' => $invoiceCheck['created_at'],
 					'invoiceStatus' => App::make("App\Http\Controllers\GlobalController")->invoiceStatus($invoiceCheck['status']),
 					'onList' => $onCartList,

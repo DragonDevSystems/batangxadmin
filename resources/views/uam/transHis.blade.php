@@ -161,8 +161,8 @@
 				$('.action-btn').append('<a href="'+data.response.invoicelink+'" target="_blank" class="btn btn-sm btn-success">Print</a>');
 				if(data.response.invoiceStatus == "Reserved")
 				{
-					$('.action-btn').append('<button type="button" class="btn btn-sm btn-success" onclick="checkOut('+data.response.userInfo.user_id+','+data.response.invoiceNum+');">Check-out</button>');
-					$('.action-btn').append('<button type="button" class="btn btn-sm btn-danger" onclick="cancelReservation('+data.response.userInfo.user_id+','+data.response.invoiceNum+');">Cancel Reservation</button>');
+					$('.action-btn').append('<button type="button" class="btn btn-sm btn-success" onclick="checkOut('+data.response.userInfo.user_id+','+data.response.inv_id+');">Check-out</button>');
+					$('.action-btn').append('<button type="button" class="btn btn-sm btn-danger" onclick="cancelReservation('+data.response.userInfo.user_id+','+data.response.inv_id+');">Cancel Reservation</button>');
 				}
 				$('#mdl_invoice').modal('show');
 			}

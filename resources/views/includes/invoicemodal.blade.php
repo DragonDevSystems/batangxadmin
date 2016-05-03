@@ -7,8 +7,6 @@
         <h4 class="modal-title">Invoice Information</h4>
       </div>
       <div class="modal-body">
-
-
            <div class="row invoice-info">
             <div class="col-sm-8  invoice-col cust-info"></div>
             <!-- /.col -->
@@ -59,13 +57,10 @@
 
         </div>
       </div>
-       
     </div>
-
     <!-- /.modal-content -->
   </div>
   <!-- /.modal-dialog -->
-</div>
 
 <script type="text/javascript">
 function cancelReservation(cus_id,inv_id)
