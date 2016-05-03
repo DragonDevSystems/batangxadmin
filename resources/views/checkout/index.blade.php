@@ -81,7 +81,7 @@
 							<div class="col-xs-12">
 								<a href="javascript:void(0);" onClick="cashOnDelivery();" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Cash on Pick-up
 								</a>
-								<a href="{{URL::Route('getCheckout')}}" class="btn pull-right btn-success"><!--<img height="49" width="200" src="{{env('FILE_PATH_CUSTOM')}}img/checkoutpaypal.png" alt="Paypal">--><i class="fa fa-cc-paypal"></i>Check out with paypal</a>
+								<a href="{{URL::Route('paypalgetCheckout',$onCartList[0]['price_figure'])}}" class="btn pull-right btn-success"><!--<img height="49" width="200" src="{{env('FILE_PATH_CUSTOM')}}img/checkoutpaypal.png" alt="Paypal">--><i class="fa fa-cc-paypal"></i>Check out with paypal</a>
 							</div>
 						</div>
 					</div>

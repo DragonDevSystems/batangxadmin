@@ -32,14 +32,14 @@ class PaypalController extends Controller {
 
     }
 
-	public function getCheckout()
+	public function getCheckout($total)
 	{
 	    $payer = PayPal::Payer();
 	    $payer->setPaymentMethod('paypal');
 
 	    $amount = PayPal:: Amount();
-	    $amount->setCurrency('EUR');
-	    $amount->setTotal(42); // This is the simple way,
+	    $amount->setCurrency('php');
+	    $amount->setTotal($total); // This is the simple way,
 	    // you can alternatively describe everything in the order separately;
 	    // Reference the PayPal PHP REST SDK for details.
 

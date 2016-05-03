@@ -20,11 +20,11 @@ Route::get('/automation/checkExpireReservation', array('uses' =>'CronController@
 
 Route::group(array('before' => 'auth'), function()
 {
-	Route::get('/customer/checkout', array('uses' => 'CustomerController@getCheckOut', 'as' => 'getCheckOut'));
+	Route::get('/customer/checkout/', array('uses' => 'CustomerController@getCheckOut', 'as' => 'getCheckOut'));
 	Route::get('/customer/myaccount', array('uses' => 'CustomerController@getMyaccount', 'as' => 'getMyaccount'));
 	Route::get('/customer/getInvoiceList/{id}', array('uses' => 'CustomerController@getInvoiceList', 'as' => 'getInvoiceList'));
 	Route::get('/customer/checkout/print/{vcode}/{id}', array('uses' => 'CustomerController@getCheckOutPrint', 'as' => 'getCheckOutPrint'));
-	Route::get('/customer/checkout/paypal', array('uses' => 'PaypalController@getCheckout', 'as' => 'getCheckout'));
+	Route::get('/customer/checkout/paypal/{total}', array('uses' => 'PaypalController@getCheckout', 'as' => 'paypalgetCheckout'));
 	Route::post('/customer/getDone/paypal', array('uses' => 'PaypalController@getDone', 'as' => 'getDone'));
 	Route::get('/customer/getCancel/paypal', array('uses' => 'PaypalController@getCancel', 'as' => 'getCancel'));
 	Route::post('/customer/checkout/cop', array('uses' => 'CustomerController@cashOnDelivery', 'as' => 'cashOnDelivery'));

@@ -474,6 +474,7 @@ class GlobalController extends Controller {
 				"productInfo" => $products,
 				"totalPrice" => '&#8369; '.number_format($totalP, 2),
 				"totalQty" => $totalQty,
+				"price_figure" => $totalP
 			);
 		}
 		return $response;
