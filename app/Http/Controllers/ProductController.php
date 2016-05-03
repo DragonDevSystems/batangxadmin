@@ -300,7 +300,7 @@ class ProductController extends Controller {
 			$response[] = array(
 				"productInfo" => $paramCheck,
 				"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Not specified" ,
-				"pro_qty" => (!empty($qty)) ? "Available" : "Out of Stocks" ,
+				"pro_qty" => (!empty($qty)) ? "Available" : "Out of Stock" ,
 				"pro_img" => $images,
 				"pro_specs" => $proSpecs,
 				"category" => $category['name'],
