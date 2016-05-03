@@ -373,27 +373,33 @@ class GlobalController extends Controller {
 		foreach ($topNewProduct as $topNewProducti) {
 			$images = ProductImage::where('prod_id','=',$topNewProducti['id'])->orderByRaw("RAND()")->first();
 			$proPrice = ProductPrice::where('prod_id','=',$topNewProducti['id'])->where('status','=',1)->first();
-			$response[] = array(
-				"productInfo" => $topNewProducti,
-				"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
-				"pro_img" => $images
-			);
+			if(!empty($proPrice))
+			{
+				$response[] = array(
+					"productInfo" => $topNewProducti,
+					"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
+					"pro_img" => $images
+				);
+			}
 		}
 		return $response;
 	}
 
-	public function relatedProduct($take)
+	public function relatedProduct($take,$cat_id)
 	{
 		$response = array();
-		$topNewProduct = ProductInformation::take($take)->orderBy('created_at','desc')->get();
+		$topNewProduct = ProductInformation::take($take)->orderBy('created_at','desc')->where('pro_cat_id','=',$cat_id)->get();
 		foreach ($topNewProduct as $topNewProducti) {
 			$images = ProductImage::where('prod_id','=',$topNewProducti['id'])->orderByRaw("RAND()")->first();
 			$proPrice = ProductPrice::where('prod_id','=',$topNewProducti['id'])->where('status','=',1)->first();
-			$response[] = array(
-				"productInfo" => $topNewProducti,
-				"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
-				"pro_img" => $images
-			);
+			if(!empty($proPrice))
+			{
+				$response[] = array(
+					"productInfo" => $topNewProducti,
+					"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
+					"pro_img" => $images
+				);
+			}
 		}
 		return $response;
 	}
@@ -405,11 +411,14 @@ class GlobalController extends Controller {
 		foreach ($featuredProduct as $product) {
 			$images = ProductImage::where('prod_id','=',$product['id'])->orderByRaw("RAND()")->first();
 			$proPrice = ProductPrice::where('prod_id','=',$product['id'])->where('status','=',1)->first();
-			$response[] = array(
-				"productInfo" => $product,
-				"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
-				"pro_img" => $images
-			);
+			if(!empty($proPrice))
+			{
+				$response[] = array(
+					"productInfo" => $product,
+					"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
+					"pro_img" => $images
+				);
+			}
 		}
 		return $response;
 	}

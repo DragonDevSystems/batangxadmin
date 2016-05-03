@@ -1,10 +1,7 @@
-   <?php $topNewProduct = App::make("App\Http\Controllers\GlobalController")->relatedProduct(6); ?>
+   <?php $topNewProduct = App::make("App\Http\Controllers\GlobalController")->relatedProduct(6,$response[0]['cat_id']); ?>
    <div class="content_bottom">
     		<div class="heading">
     		<h3>Related Products</h3>
-    		</div>
-    		<div class="see">
-    			<p><a href="#">See all Products</a></p>
     		</div>
     		<div class="clear"></div>
     	</div>
