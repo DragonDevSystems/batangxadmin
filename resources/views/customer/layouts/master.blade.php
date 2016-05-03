@@ -50,17 +50,20 @@
 	@include('customer.user.resetPass')
 	<script type="text/javascript">
 		$('.btn_login').click(function()
-		{
-			$('#mdl_login').modal('show');
-		}
+			{
+				$('.has-error').empty();
+				$('#mdl_login').modal('show');
+			}
 		);
 		$('.btn_registration').click(function()
 			{
+				$('.has-error').empty();
 				$('#mdl_registration').modal('show');
 			}
 		);
 		$('.btn_reset').click(function()
 			{
+				$('.has-error').empty();
 				$('#mdl_login').modal('hide');
 				$('#mdl_registration').modal('hide');
 				$('#mdl_reset').modal('show');
