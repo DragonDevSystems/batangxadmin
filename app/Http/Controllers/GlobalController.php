@@ -41,6 +41,7 @@ class GlobalController extends Controller {
 		{
 			return array(
 						"user_id" 		=> $userInfo['user_id'],
+						"acct_no" 		=> str_pad($userInfo['user_id'], 6, '0', STR_PAD_LEFT),
 						"mobile" 		=> $userInfo['mobile'],
 						"email" 		=> $userInfo['email'],
 						"un"			=> $username['username'],

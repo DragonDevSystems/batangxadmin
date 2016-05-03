@@ -30,7 +30,7 @@
               <table id="dtUAList" class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
-                  <th>User ID</th>
+                  <th>Account No.</th>
                   <th>Username</th>
                   <th>Firstname</th>
                   <th>Lastname</th>
@@ -71,7 +71,7 @@
 							                  <td>'+data[i].fname+'</td>\
 							                  <td>'+data[i].lname+'</td>\
 							                </tr>');*/
-					$('#dtUAList').DataTable().row.add([''+data[i].user_id+'', 
+					$('#dtUAList').DataTable().row.add([''+data[i].acct_no+'', 
                                                     '<img src="{{env('FILE_PATH_CUSTOM')}}'+data[i].userDp+'" style="margin:0px auto;width:30px;height:30px;" class="img-circle" alt="User Image">'+data[i].un+'', 
                                                     ''+data[i].fname+'', 
                                                     ''+data[i].lname+'', 
