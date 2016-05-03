@@ -78,6 +78,7 @@ function cancelReservation(cus_id,inv_id)
       {
         if(response.length != 0)
         {
+          $('#mdl_invoice').modal('hide');
           promptMsg(response.status,response.message)
         }
       });
@@ -94,6 +95,7 @@ function checkOut(cus_id,inv_id)
       {
         if(response.length != 0)
         {
+          $('#mdl_invoice').modal('hide');
           promptMsg(response.status,response.message)
         }
       });
