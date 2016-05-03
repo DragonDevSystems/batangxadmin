@@ -265,11 +265,14 @@ class ProductController extends Controller {
 				foreach ($productList as $productListi) {
 					$images = ProductImage::where('prod_id','=',$productListi['id'])->first();
 					$proPrice = ProductPrice::where('prod_id','=',$productListi['id'])->where('status','=',1)->first();
-					$response[] = array(
-						"productInfo" => $productListi,
-						"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
-						"pro_img" => $images['thumbnail_img']
-					);
+					if(!empty($proPrice))
+					{
+						$response[] = array(
+							"productInfo" => $productListi,
+							"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
+							"pro_img" => $images['thumbnail_img']
+						);
+					}
 				}
 			}
 		}
