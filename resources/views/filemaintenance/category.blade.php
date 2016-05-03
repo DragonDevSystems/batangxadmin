@@ -65,13 +65,16 @@
 			$('.tbl-overlay').remove();
 			if(data.length != 0)
 			{
-				$('#tbUAList').empty();
+				$('#dtUAList').DataTable().clear().draw();
 				for (var i = 0; i < data.length; i++) 
 				{
-					$('#tbUAList').append('<tr style="cursor:pointer">\
+					/*$('#tbUAList').append('<tr style="cursor:pointer">\
 							                  <td>'+data[i].id+'</td>\
 							                  <td>'+data[i].name+'</td>\
-							                </tr>');
+							                </tr>');*/
+					$('#dtUAList').DataTable().row.add([''+data[i].id+'',
+                                                    ''+data[i].name+'', 
+                                                    ]).draw();
 				}
 				var table = $("#dtUAList").DataTable();
 				$('#dtUAList tbody').on('click', 'tr', function () {

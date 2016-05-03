@@ -109,7 +109,7 @@
 		{
 			if(data.length != 0)
 			{
-				if(data.status = "success")
+				if(data.status == "success")
 				{
 					$('.overlay').remove();
 					$('#dtTHList').DataTable().clear();

@@ -267,7 +267,7 @@ class CustomerController extends Controller {
 		$cus_id = (!empty($cus_id)) ? $cus_id : Input::get('cus_id');
 		$response = array();
 		$invoiceList = ProductInvoice::where("cus_id","=",$cus_id)->get();
-		if(!empty($invoiceList))
+		if(count($invoiceList) != 0)
 		{
 			foreach ($invoiceList as $invoiceListi) {
 				$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList($invoiceListi['cus_id']);
@@ -286,9 +286,9 @@ class CustomerController extends Controller {
 		}
 		else
 		{
-			Response::json(array(
+			return Response::json(array(
 	            'status'  => 'fail',
-	            'message' => 'No invoice available in your account.',
+	            'message' => 'No invoice available in this account.',
 	        ));
 		}
 	}
