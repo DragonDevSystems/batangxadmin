@@ -21,12 +21,12 @@
 		          <label>Username:</label>
 		          <div class="form-group has-feedback">
 		            <input type="text" value="{{$userInfo['un']}}" class="form-control" id="myUsername" name="myUsername" placeholder="Username" required>
-		            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+		            <!--<span class="glyphicon glyphicon-star form-control-feedback"></span>-->
 		          </div>
 		          <label>Email:</label>
 		          <div class="form-group has-feedback">
 		            <input type="text" value="{{$userInfo['email']}}" class="form-control" id="myEmail" name="myEmail" placeholder="Email" required>
-		            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+		            <!--<span class="glyphicon glyphicon-envelope form-control-feedback"></span>-->
 		          </div>
 		          <div class="row">
 		            <div class="col-md-6">
@@ -59,7 +59,7 @@
 		              <div class="input-group-addon">
 		                <i class="fa fa-phone"></i>
 		              </div>
-		              <input type="text" value="{{$userInfo['mobile']}}"class="form-control" placeholder="Mobile or Phone Number" name="myMobile" id="myMobile" data-inputmask='"mask": "(99) 9999-99999"' data-mask required>
+		              <input type="text" value="{{$userInfo['mobile']}}"class="form-control" placeholder="Mobile or Phone Number" name="myMobile" id="myMobile" data-inputmask='"mask": "(999) 999-9999"' data-mask required>
 		            </div>
 		          </div>
 		          <div class="form-group">
@@ -218,14 +218,14 @@
 							                	<label>Enter New Password</label>\
 							                  <div class="form-group has-feedback">\
 									            <input type="password"  class="form-control" placeholder="Enter new password" name="myPassword" id="myPassword" required>\
-									            <span class="glyphicon glyphicon-lock form-control-feedback"></span>\
+									            <!--<span class="glyphicon glyphicon-lock form-control-feedback"></span>-->\
 									          </div>\
 								         	</div>\
 								         	<div class="form-group">\
 								          		<label>Enter Re-type Password</label>\
 												<div class="form-group has-feedback">\
 												<input type="password"  class="form-control" placeholder="Re-type Password" name="my_repassword" id="my_repassword" required>\
-												<span class="glyphicon glyphicon-lock form-control-feedback"></span>\
+												<!--<span class="glyphicon glyphicon-lock form-control-feedback"></span>-->\
 												</div>\
 											</div>\
 											<div class="form-group for_error">\

@@ -590,7 +590,7 @@ class GlobalController extends Controller {
 				{
 					return Response::json(array(
 			            'status'  => 'success',
-			            'message'  => 'Successfully remove from your cart.',
+			            'message'  => 'Successfully removed from your cart.',
 			        ));
 				}
 			}

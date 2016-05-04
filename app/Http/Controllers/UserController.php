@@ -273,7 +273,7 @@ class UserController extends Controller {
 			}
 			return  Response::json(array(
                     'status'  => 'fail',
-                    'message'  => 'You input invalid credentials. Please Try again.',
+                    'message'  => 'Invalid credentials. Please Try again.',
                 ));
 		}
 	}
