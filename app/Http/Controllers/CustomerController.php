@@ -277,6 +277,7 @@ class CustomerController extends Controller {
 						"cus_name" => $userInfo['fname'].' '.$userInfo['lname'],
 						"invoice_link" => URL::route('getCheckOutPrint', [$invoiceListi['vcode'] , $invoiceListi['id']]),
 						"status" => App::make("App\Http\Controllers\GlobalController")->invoiceStatus($invoiceListi['status']),
+						"user_id" => $userInfo['user_id'],
 					);
 			}
 			return Response::json(array(

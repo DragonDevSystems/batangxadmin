@@ -148,7 +148,7 @@
 	                                                    ''+response.dataInfo[i].invoice_date+'', 
 	                                                    ''+response.dataInfo[i].cus_name+'',
 	                                                    ''+response.dataInfo[i].status+'',
-	                                                    '<button>Cancel Reservation</button>',
+	                                                    '<span style="margin:auto;padding:10px"><input onclick="cancelReservation('+response.dataInfo[i].user_id+','+response.dataInfo[i].invoice_num+')" type="submit" value="Cancel Reservation"  class="myButton"></span>',
 	                                                    ]).draw();
 				}
 				
@@ -301,6 +301,27 @@
 	    	$('body').addClass('remove_body_padding');
 			$(this).remove();
 	});
-	
+	function cancelReservation(cus_id,inv_id)
+	{
+	  var type = 3;
+	  // promptConfirmation("Are you sure you want to cancel this invoice?");
+	     // $('#btnYes').click(function() {
+	        var _token = "{{ csrf_token() }}";
+	        var status = confirm('Are you sure?');
+	        if(status == true){
+	        	 $.post('{{URL::Route('cancelledReservation',[0,0,0])}}',{ _token: _token , cus_id: cus_id, inv_id: inv_id , type: type},function(response)
+		      	{
+			        if(response.length != 0)
+			        {
+			          //$('#mdl_invoice').modal('hide');
+			          promptMsg(response.status,response.message)
+			          setTimeout(function(){ window.location.reload(); }, 3000);
+			        }
+			    });
+	        }
+	       
+	    //});
+	    return false;
+	}
 </script>
 @endsection
