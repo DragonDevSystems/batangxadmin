@@ -145,7 +145,7 @@
 					                </div>\
 					                <div class="modal-body">\
 					                	<div class="input-group" style="margin:auto;width:250px">\
-									      <input type="password" maxlength="6" class="form-control" placeholder="Enter password...">\
+									      <input type="password" class="form-control" placeholder="Enter password...">\
 									      <span class="input-group-btn">\
 									        <button class="btn btn-default" type="button">Confirm</button>\
 									      </span>\
