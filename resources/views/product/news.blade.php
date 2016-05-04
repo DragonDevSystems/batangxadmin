@@ -33,6 +33,10 @@
                     <i class="fa fa-edit"></i>
                     Edit
                   </button>
+                  <button id="deleteProduct" class="btn btn-danger btn-sm " type="button" disabled>
+                    <i class="fa fa-trash"></i>
+                    Delete
+                  </button>
                 </div>
             </div>
             <div class="box-body">
@@ -68,11 +72,13 @@
 	        if ( $(this).hasClass('active') ) {
 	            $(this).removeClass('active');
 	            $('#editProduct').prop("disabled", true);
+	            $('#deleteProduct').prop("disabled", true);
 	        }
 	        else {
 	            table.$('tr.active').removeClass('active');
 	            $(this).addClass('active');
 	            $('#editProduct').prop("disabled", false);
+	            $('#deleteProduct').prop("disabled", false);
 	        }
 	        if($('#editProduct').hasClass('continue_view'))
 	        {
@@ -88,6 +94,20 @@
 		        	<i class="fa fa-spinner fa-spin"></i>\
 		        </div>');
     		setNewEntry(id);
+    	});
+    	$('#deleteProduct').on( 'click', function () {
+    		var id = table.cell('.active', 0).data();
+    		promptConfirmation('Are you sure?');
+    		$("#btnYes").click(function(){
+    			 var _token = "{{ csrf_token() }}";
+    			$.post('{{URL::Route('deleteNews')}}',{ _token: _token ,id: id} , function(response)
+				{
+					if(response.status == "success"){
+						promptMsg(response.status,response.message);
+						newsList();
+					}
+				});
+    		});
     	});
 	});
 
@@ -107,7 +127,7 @@
 		});
 	}
 
-	function setNewEntry()
+	function setNewEntry(id)
 	{
 		$('#div-entry').append('<div class="overlay">\
 		        	<i class="fa fa-spinner fa-spin"></i>\
@@ -118,41 +138,64 @@
 			{
 				if(data.status == "success")
 				{
-					$('#div-entry').empty();
-					$('#div-entry').append('<div class="box-header with-border">\
-				          <h3 class="box-title">Add News</h3>\
-				          <div class="box-tools pull-right">\
-				            <button type="button" class="btn btn-danger btn-sm"  onClick="defaultDisplay()"><i class="fa fa-undo" aria-hidden="true"></i></button>\
-				          </div>\
-				        </div>');
+					$.get('{{URL::Route('getNewsInfo')}}',{news : id}, function(data)
+					{
+						$('#div-entry').empty();
+						$('#div-entry').append('<div class="box-header with-border">\
+					          <h3 class="box-title">Add News</h3>\
+					          <div class="box-tools pull-right">\
+					            <button type="button" class="btn btn-danger btn-sm"  onClick="defaultDisplay()"><i class="fa fa-undo" aria-hidden="true"></i></button>\
+					          </div>\
+					        </div>');
 
-					$('#div-entry').append('<div class="box-body formAddNews">\
-												<form id="formAddNews" method="post" action="{{URL::Route('addNews')}}" role="form" enctype ="multipart/form-data">\
-													<div class="row">\
-														<div class="col-md-7">\
-															<div class="form-group">\
-															  <label for="title">Title :</label>\
-															  <input type="text" class="form-control" id="title" name="title" value="" placeholder="Enter news tile" required>\
+						$('#div-entry').append('<div class="box-body formAddNews">\
+													<form id="formAddNews" method="post" action="{{URL::Route('addNews')}}" role="form" enctype ="multipart/form-data">\
+														<div class="row">\
+															<div class="col-md-7">\
+																<div class="form-group">\
+																  <label for="title">Title :</label>\
+																  <input type="hidden" class="form-control" id="news_id" name="news_id" value="'+data.id+'">\
+																  <input type="text" class="form-control" id="title" name="title" value="'+data.title+'" placeholder="Enter news tile" required>\
+																</div>\
+																<div class="form-group">\
+																  <label>Message :</label>\
+																  <textarea style="resize: none;" class="form-control" rows="11"  placeholder="Enter news message..." name="message" id="message" required>'+data.message+'</textarea>\
+																</div>\
+																<input type="hidden" value="{{ csrf_token() }}" name="_token">\
 															</div>\
+															<div class="col-md-5">\
 															<div class="form-group">\
-															  <label>Message :</label>\
-															  <textarea style="resize: none;" class="form-control" rows="11"  placeholder="Enter news message..." name="message" id="message" required></textarea>\
+																<label for="title">Browse here :</label>\
+																<input type="file" id="file" name="file" '+data.required+'>\
 															</div>\
-															<input type="hidden" value="{{ csrf_token() }}" name="_token">\
+															<div class="browse">\
+															</div>\
+															</div>\
 														</div>\
-														<div class="col-md-5 browse">\
-														<div class="form-group">\
-															<label for="title">Browse here :</label>\
-															<input type="file" id="file" name="file" required>\
+														<div class="box-footer">\
+															<button  type="submit" class="btn btn-primary addNews">'+data.btn_text+'</button>\
 														</div>\
-														</div>\
-													</div>\
-													<div class="box-footer">\
-														<button  type="submit" class="btn btn-primary addNews">Save News</button>\
-													</div>\
-												</form>\
-						           			</div>\
-											');
+													</form>\
+							           			</div>\
+												');
+						if(data.image.length !=0){
+							var template = 
+					        '<div>'+
+						        '<div style="width:100%;height:280px;padding:10px;padding-bottom:0px;padding-top:0px;border:1px solid #e7e7e7;margin-bottom:10px;overflow:hidden;">'+
+						          '<div class="pull-right">'+
+						            '<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-box-tool removeImage" data-id=""><i class="fa fa-trash-o"></i></button>'+
+						          '</div>'+
+						          '<img src="{{env('FILE_PATH_CUSTOM')}}productThumbnail/'+data.image+'" style=" width:100%;height:230px;margin-bottom:5px;">'+
+						        '</div>'+
+					        '</div>';
+					        
+					        $('.browse').append(template);
+						}
+						$('.addImage').click( function () {
+							$('#file').click();
+						});
+					});
+					
 
 					/*$('.addNews').click( function () {
 						$('#formAddNews').find(':submit').click();
@@ -162,10 +205,9 @@
 						{
 						});
 					});*/
-					$('.addImage').click( function () {
-						$('#file').click();
-					});
+					
 					$(document).on("change","#file",function(e){
+						$('.browse').empty();
 						var fileCollection = new Array();
 					    var  files = e.target.files;
 					    $x = 0;

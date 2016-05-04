@@ -33,29 +33,43 @@ class NewsController extends Controller {
 
 	public function addNews()
 	{
+		$news_id = Input::get('news_id');
 		$title = Input::get('title');
 		$message = Input::get('message');
 		$image = Input::file('file');
 		$date = new DateTime();
-		$tn_name = date_format($date, 'U').str_random(110).'.'.$image->getClientOriginalExtension();
-		$iname = date_format($date, 'U').str_random(110).'.'.$image->getClientOriginalExtension();
-		$data = getimagesize($image->getRealPath());
-		$newResizing = App::make('App\Http\Controllers\GlobalController')->imageResized($data[0],$data[1],750);
-		$move = Image::make($image->getRealPath())->resize($newResizing['width'],$newResizing['height'])->save(env("FILE_PATH_INTERVENTION").'productImage/'.$iname);
-		$newResizingTN = App::make('App\Http\Controllers\GlobalController')->imageResized($data[0],$data[1],260);
-		$move_tn = Image::make($image->getRealPath())->resize($newResizingTN['width'],$newResizingTN['height'])->save(env("FILE_PATH_INTERVENTION").'productThumbnail/'.$tn_name);
-		if($move && $move_tn){
-
-			$addNews = new News();
+		if(!empty($image)){
+			$tn_name = date_format($date, 'U').str_random(110).'.'.$image->getClientOriginalExtension();
+			$iname = date_format($date, 'U').str_random(110).'.'.$image->getClientOriginalExtension();
+			$data = getimagesize($image->getRealPath());
+			$newResizing = App::make('App\Http\Controllers\GlobalController')->imageResized($data[0],$data[1],750);
+			$move = Image::make($image->getRealPath())->resize($newResizing['width'],$newResizing['height'])->save(env("FILE_PATH_INTERVENTION").'productImage/'.$iname);
+			$newResizingTN = App::make('App\Http\Controllers\GlobalController')->imageResized($data[0],$data[1],260);
+			$move_tn = Image::make($image->getRealPath())->resize($newResizingTN['width'],$newResizingTN['height'])->save(env("FILE_PATH_INTERVENTION").'productThumbnail/'.$tn_name);
+		}
+		
+		//if($move && $move_tn){
+			if(!empty($news_id)){
+				$addNews = News::find($news_id);
+				$text = " to update news.";
+			}
+			else{
+				$addNews = new News();
+				$text = " to add news.";
+			}
+			
 			$addNews['title'] = $title;
 			$addNews['message'] = $message;
-			$addNews['img_filename'] = $iname;
-			$addNews['img_thumbnail'] = $tn_name;
-			if(!$addNews->save()){
-
+			if(!empty($image)){
+				$addNews['img_filename'] = $iname;
+				$addNews['img_thumbnail'] = $tn_name;
 			}
-			Return Redirect::route('getNewsView');
-		}
+			if(!$addNews->save()){
+				//return Redirect::Route('getNewsView')->with('fail','Fail');
+				return Redirect::Route('getNewsView')->with('fail','fail');
+			}
+			return Redirect::Route('getNewsView')->with('success','Success');
+		//}
 	}
 
 	public function getNewsList()
@@ -87,5 +101,35 @@ class NewsController extends Controller {
 			Return Redirect::route('cusIndex')->with('success','Success to create testimonial.');
 		}
 		Return Redirect::route('cusIndex')->with('fail','Fail to create testimonial.');
+	}
+
+	public function getNewsInfo()
+	{
+		$news = Input::get('news');
+		$checkNews = News::find($news);
+		return Response::json(array(
+						"id" => !empty($checkNews) ? $checkNews['id'] : "",
+						"title" => !empty($checkNews) ? $checkNews['title'] : "",
+						"image" => !empty($checkNews) ? $checkNews['img_thumbnail'] : "",
+						"message" => !empty($checkNews) ? $checkNews['message'] : "",
+						"btn_text" => !empty($checkNews) ? "Update News" : "Save News",
+						"required" => !empty($checkNews) ? "" : "required",
+					));
+	}
+
+	public function deleteNews()
+	{
+		$news = Input::get('id');
+		$deleteNews = News::find($news);
+		if($deleteNews->delete()){
+			return Response::json(array(
+					"status" => "success",
+					"message" => "Success to delete news.",
+					));
+		}
+		return Response::json(array(
+					"status" => "fail",
+					"message" => "Fail to delete news.",
+					));
 	}
 }

@@ -190,10 +190,12 @@ Route::group(array('prefix' => '/admin'),function()
 		{
 			Route::get('/', array('uses' => 'NewsController@getNewsView', 'as' => 'getNewsView','middleware' => 'auth'));
 			Route::get('/getNewsList', array('uses' => 'NewsController@getNewsList', 'as' => 'getNewsList','middleware' => 'auth'));
+			Route::get('/getNewsInfo', array('uses' => 'NewsController@getNewsInfo', 'as' => 'getNewsInfo','middleware' => 'auth'));
 			Route::group(array('before' => 'csrf'), function()
 			{
 				Route::post('/addNews', array('uses' => 'NewsController@addNews', 'as' => 'addNews','middleware' => 'auth'));
 				Route::post('/create_testimonial', array('uses' => 'NewsController@postTestimonial', 'as' => 'postTestimonial','middleware' => 'auth'));
+				Route::post('/deleteNews', array('uses' => 'NewsController@deleteNews', 'as' => 'deleteNews','middleware' => 'auth'));
 			});
 		});
 
