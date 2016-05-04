@@ -182,14 +182,14 @@
 						                	<div class="form-group">\
 							                	<label>Enter New Password</label>\
 							                  <div class="form-group has-feedback">\
-									            <input type="password" maxlength="6" class="form-control" placeholder="Enter new password" name="myPassword" id="myPassword" required>\
+									            <input type="password"  class="form-control" placeholder="Enter new password" name="myPassword" id="myPassword" required>\
 									            <span class="glyphicon glyphicon-lock form-control-feedback"></span>\
 									          </div>\
 								         	</div>\
 								         	<div class="form-group">\
 								          		<label>Enter Re-type Password</label>\
 												<div class="form-group has-feedback">\
-												<input type="password" maxlength="6" class="form-control" placeholder="Re-type Password" name="my_repassword" id="my_repassword" required>\
+												<input type="password"  class="form-control" placeholder="Re-type Password" name="my_repassword" id="my_repassword" required>\
 												<span class="glyphicon glyphicon-lock form-control-feedback"></span>\
 												</div>\
 											</div>\
