@@ -394,4 +394,9 @@ class CustomerController extends Controller {
 	{
 		return View::make('customer.product.allNewProduct')->with('mt','an');
 	}
+
+	public function getAllFeaturedProduct()
+	{
+		return View::make('customer.product.allFeaturedProducts')->with('mt','af');
+	}
 }
