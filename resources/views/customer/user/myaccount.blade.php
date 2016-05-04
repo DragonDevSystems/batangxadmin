@@ -14,6 +14,9 @@
 		<div class="content">
 			<form method="post" action="{{URL::Route('updateUserInfo')}}">
 				<div class="login-box-body" style="width:50%;margin: auto;">
+				@if($userInfo['isVerified'] == 0)
+				<h3> Your email is not yet verified. To verify click here..<a href="javascript:void(0)">Resend email.</a></h3>
+				@endif	
 		          <div class="form-group has-feedback has-error"></div>
 		          <label>Username:</label>
 		          <div class="form-group has-feedback">
@@ -76,20 +79,22 @@
 		        </div>
 		        <input type="hidden" value="{{ csrf_token() }}" name="_token">
 		    </form>
+
 			<div class="row" style="padding-top: 50px">
 				<div class="section group">
 					<div class="">
-						<div class="contact-form">
+						<div class="contact-form" style="width: 50px:display:block">
 							<h2>Invoice List</h2>
 							<div class="row">
-								<div class="col-xs-12 table-responsive">
-									<table class="table table-striped invoice-list">
+								<div class="">
+									<table  id="invoice_list" class="table table-striped invoice-list">
 										<thead>
 											<tr>
 												<th>Invoice No.</th>
 												<th>Date</th>
 												<th>Customer Name</th>
 												<th>Status</th>
+												<th>Action</th>
 											</tr>
 										</thead>
 										<tbody></tbody>
@@ -106,6 +111,12 @@
 @include('customer.includes.footer')
 <script type="text/javascript">
 	$(function () {
+	//var table = $('#invoice_list').DataTable();
+	$('#invoice_list').dataTable( {
+	  "columnDefs": [
+	    { "width": "10%", "targets": 0 }
+	  ]
+	} );
       $('#myDob').datepicker();
       $("[data-mask]").inputmask();
       //$(".select2").select2();
@@ -120,14 +131,25 @@
 	 	{
 	 		if(response.length != 0)
 			{
-				for(var i = 0; i < response.dataInfo.length ; i++)
+				/*for(var i = 0; i < response.dataInfo.length ; i++)
 				{
+					
 					$('.invoice-list tbody').append('<tr>\
 														<td><a href="'+response.dataInfo[i].invoice_link+'" target="_blank">'+response.dataInfo[i].invoice_num+'</a></td>\
 														<td>'+response.dataInfo[i].invoice_date+'</td>\
 														<td>'+response.dataInfo[i].cus_name+'</td>\
 														<td>'+response.dataInfo[i].status+'</td>\
 													</tr>');
+				}*/
+				$('#invoice_list').DataTable().clear();
+				for (var i = 0; i < response.dataInfo.length ; i++) 
+	        	{
+					$('#invoice_list').DataTable().row.add(['<a href="'+response.dataInfo[i].invoice_link+'" target="_blank">'+response.dataInfo[i].invoice_num+'</a>', 
+	                                                    ''+response.dataInfo[i].invoice_date+'', 
+	                                                    ''+response.dataInfo[i].cus_name+'',
+	                                                    ''+response.dataInfo[i].status+'',
+	                                                    '<button>Cancel Reservation</button>',
+	                                                    ]).draw();
 				}
 				
 			}

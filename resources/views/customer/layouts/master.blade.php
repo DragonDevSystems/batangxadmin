@@ -31,6 +31,11 @@
 		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/input-mask/jquery.inputmask.js"></script>
 		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
 		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/input-mask/jquery.inputmask.extensions.js"></script>
+		<!-- DataTables -->
+  		<link rel="stylesheet" href="{{env('FILE_PATH_CUSTOM')}}plugins/datatables/dataTables.bootstrap.css">
+		<!-- DataTables -->
+		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/datatables/jquery.dataTables.min.js"></script>
+		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/datatables/dataTables.bootstrap.min.js"></script>
 	@yield('addHead')
 
 	

@@ -52,6 +52,7 @@ class GlobalController extends Controller {
 						"dob"			=> date("m/d/Y", strtotime($userInfo['dob'])),
 						"gender"		=> $userInfo['gender'],
 						"address"		=> $userInfo['address'],
+						"isVerified"	=> $username['isVerified'],
 					);
 		}
 	}
