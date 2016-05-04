@@ -547,9 +547,15 @@ class UserController extends Controller {
 	{
 		$pass = Input::get('pass');
 		$checkPass = User::find(Auth::User()['id']);
-
+		/*if($pass == $checkPass['password']){
+			return 1;
+		}
+		else{
+			return 2;
+		}*/
 		$auth = Auth::attempt(array(
-				'password' => $pass,
+				'username' => $checkPass['username'],
+				'password' => Input::get('pass'),
 			));
 		if($auth)
 		{
