@@ -191,11 +191,14 @@ class ProductController extends Controller {
 		$lists = ProductInformation::all();
 		$response = array();
 		foreach ($lists as $item) {
+			$qty = ProductInventory::where('prod_id','=',$item['id'])->first();
+
 			$response[] = array(
 				"id" 			=> $item['id'],
 				"name" 			=> $item['name'],
 				"description" 	=> $item['description'],
-				"featured" 	=> $item['isFeatured'] == 0 ? "fa fa-star-o text-yellow" : "fa fa-star text-yellow",
+				"featured" 		=> $item['isFeatured'] == 0 ? "fa fa-star-o text-yellow" : "fa fa-star text-yellow",
+				"qty" 			=> !empty($qty) ? $qty['qty'] : "No stock.",
 				);
 		}
 		return Response::json($response);	
