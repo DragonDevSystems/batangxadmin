@@ -30,7 +30,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('/customer/checkout/cop', array('uses' => 'CustomerController@cashOnDelivery', 'as' => 'cashOnDelivery'));
 	Route::post('/customer/updateUserInfo', array('uses' => 'UserController@updateUserInfo', 'as' => 'updateUserInfo'));
 	Route::post('/customer/changeUserPass', array('uses' => 'UserController@changeUserPass', 'as' => 'changeUserPass'));
-	Route::get('/customer/checkUserPass', array('uses' => 'UserController@checkUserPass', 'as' => 'checkUserPass'));
+	Route::post('/customer/checkUserPass', array('uses' => 'UserController@checkUserPass', 'as' => 'checkUserPass'));
 
 });
 Route::group(array('prefix' => '/confirmation'),function()

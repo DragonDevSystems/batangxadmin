@@ -163,7 +163,8 @@
 		$(".proceed_pass_modal").modal("show");
 		$(document).on("click",".proceed_pass_modal .modal-body button",function(){
 			var pass = $('.proceed_pass_modal').find('input').val();
-			$.get('{{URL::Route('checkUserPass')}}',{ pass : pass },function(response)
+			var _token = "{{ csrf_token() }}";
+			$.post('{{URL::Route('checkUserPass')}}',{ _token : _token , pass : pass },function(response)
 	 		{
 	 			if(response.status == "success"){
 	 				$(".proceed_pass_modal").modal("hide");
