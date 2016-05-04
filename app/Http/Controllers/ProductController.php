@@ -146,10 +146,14 @@ class ProductController extends Controller {
 									));
 			if(!empty($price))
 			{
-				$cleanPrice = ProductPrice::where('prod_id', $id)
+				/*$cleanPrice = ProductPrice::where('prod_id', $id)
 											->where('status', 1)
 	            							->update(array('status' => 0));
 	            $update = ProductPrice::where('id', $price)
+            							->update(array('status' => 1));*/
+            	$clean = ProductPrice::where('prod_id','=',0)
+            								->update(array('prod_id' => $addProductInfo['id']));
+            	$update = ProductPrice::where('id','=',$price)
             							->update(array('status' => 1));
 			}
 
@@ -309,7 +313,15 @@ class ProductController extends Controller {
 	{
 		$price = Input::get('amount');
 		$id = Input::get('id');
-		
+		$checkNew = Input::get('checkNew');
+		if($checkNew == "old"){
+			$nProducts = ProductPrice::where('prod_id','=',0)->get();
+			if(!empty($nProducts)){
+				foreach ($nProducts as $product) {
+					$product->delete();
+				}
+			}
+		}
 		$add = new ProductPrice();
 		$add['prod_id'] = $id;
 		$add['price'] = $price;

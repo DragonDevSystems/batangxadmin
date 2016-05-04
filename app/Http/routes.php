@@ -26,6 +26,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('/customer/getDone/paypal', array('uses' => 'PaypalController@getDone', 'as' => 'getDone'));
 	Route::get('/customer/getCancel/paypal', array('uses' => 'PaypalController@getCancel', 'as' => 'getCancel'));
 	Route::post('/customer/checkout/cop', array('uses' => 'CustomerController@cashOnDelivery', 'as' => 'cashOnDelivery'));
+	Route::post('/customer/updateUserInfo', array('uses' => 'UserController@updateUserInfo', 'as' => 'updateUserInfo'));
 });
 Route::group(array('prefix' => '/confirmation'),function()
 {

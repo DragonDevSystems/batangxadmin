@@ -247,7 +247,7 @@
 																			  	<div class="input-group">\
 																				    <input id="input_price" name="input_price" type="text" placeholder="add price" class="form-control" aria-label="..." >\
 																					<div class="input-group-btn">\
-																					<button type="button" data-id="'+data.id+'" class="btn btn-default price_add" >\
+																					<button type="button" data-id="'+data.id+'" class="btn btn-default price_add NewPrice" >\
 																						<i class="fa fa-plus" aria-hidden="true"></i>\
 																					</button>\
 																					</div>\
@@ -472,8 +472,9 @@
     	var amount = $('#input_price').val();
     	var _token = "{{ csrf_token() }}";
     	var checkValue= $("#input_price").val().length;
+    	var checkNew = $('.price_add').hasClass('NewPrice') ? "old" : "new";
     	if(checkValue != 0){
-	    	$.post('{{URL::Route('addPrice')}}',{ _token: _token ,amount: amount, id : id} , function(response)
+	    	$.post('{{URL::Route('addPrice')}}',{ _token: _token ,amount: amount, id : id , checkNew : checkNew} , function(response)
 			{
 				console.log(response);
 				if(response.price.length != 0){
@@ -488,6 +489,7 @@
 	                  .trigger("change"); //apply to select2
 		          	if(response.status == "success"){
 						promptMsg(response.status,response.message);
+						$('.price_add').removeClass('NewPrice').addClass('oldPrice');
 					}
 				}
 			});

@@ -48,6 +48,9 @@ class GlobalController extends Controller {
 						"lname"			=> $userInfo['last_name'],
 						"dm"			=> $userInfo['created_at'],
 						"lvl"			=> $username['isAdmin'],
+						"dob"			=> date("m/d/Y", strtotime($userInfo['dob'])),
+						"gender"		=> $userInfo['gender'],
+						"address"		=> $userInfo['address'],
 					);
 		}
 	}

@@ -503,4 +503,34 @@ class UserController extends Controller {
 		}
 	}
 
+	public function updateUserInfo()
+	{
+
+		$username = Input::get('myUsername');
+		$fname = Input::get('myFirstname');
+		$lname = Input::get('myLastname');
+		$gender = Input::get('myGender');
+		$dob = Input::get('myDob');
+		$email = Input::get('myEmail');
+		$mobile = Input::get('myMobile');
+		$address = Input::get('myAddress');
+		$updateUsername = User::find(Auth::User()['id']);
+		$updateUsername['username'] = $username;
+		if($updateUsername->save()){
+			$updateInfo = Info::where('user_id','=',Auth::User()['id'])->first();
+			$updateInfo['first_name'] = $fname;
+			$updateInfo['last_name'] = $lname;
+			$updateInfo['email'] = $email;
+			$updateInfo['mobile'] = $mobile;
+			$updateInfo['dob'] = $dob;
+			$updateInfo['gender'] = $gender;
+			$updateInfo['address'] = $address;
+			if($updateInfo->save()){
+				return Redirect::Route('getMyaccount')->with('success','Update success.');
+			}else{
+				return Redirect::Route('getMyaccount')->with('fail','Update fail.');
+			}
+		}
+	}
+
 }
