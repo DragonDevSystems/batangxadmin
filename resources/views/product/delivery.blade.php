@@ -34,10 +34,6 @@
                     <i class="fa fa-plus"></i>
                     Add Delivery
                   </button>
-                  <button id="editProduct" class="btn btn-info btn-sm " type="button" disabled>
-                    <i class="fa fa-edit"></i>
-                    Edit
-                  </button>
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
                 </div>
@@ -76,9 +72,78 @@
 	$(document).ready(function() {
 		defaultDisplay();
 		var table = $('#delivery_list').DataTable();
+		$('#delivery_list tbody').on( 'click', 'tr', function () {
+			if ( $(this).hasClass('active') ) {
+	            $(this).removeClass('active');
+	        }
+	        else {
+	            table.$('tr.active').removeClass('active');
+	            $(this).addClass('active');
+	        }
+	        var data = table.row( this ).data();
+	        getReceiptProduct(data[0]);
+		});
 		getReceiptList();
 
 	});
+	function getReceiptProduct(id)
+	{
+			
+		$('#div-entry').append('<div class="overlay">\
+		        	<i class="fa fa-spinner fa-spin"></i>\
+		        </div>');
+		$.get('{{URL::Route('getDeliveryProduct')}}',{id : id}, function(data)
+		{
+			console.log(data)
+			if(data.length != 0)
+	      	{
+	      		$('#div-entry').empty();
+				$('#div-entry').append('<div class="box-header with-border">\
+			          <h3 class="box-title">Receipt Information</h3>\
+			          <div class="box-tools pull-right">\
+			            <button type="button" class="btn btn-danger btn-sm"  onClick="defaultDisplay()"><i class="fa fa-undo" aria-hidden="true"></i></button>\
+			          </div>\
+			        </div>');
+
+				$('#div-entry').append('<div class="box-body formAddProduct">\
+															<div class="form-group">\
+															  <label for="receipt_num">Delivery Receipt No.</label>\
+															  <input style="width:50%" type="text" class="form-control" id="receipt_num" name="receipt_num" value="" placeholder="" disabled>\
+															</div>\
+														<div class="box box-default">\
+															<div class="box-header">\
+															<h3 class="box-title">Product List</h3>\
+													        </div>\
+															<div class="box-body">\
+												              	<table id="qty_list" class="table table-bordered table-hover">\
+												                <thead>\
+												                <tr>\
+												                  <th>Product Id</th>\
+												                  <th>Product Name</th>\
+												                  <th>QTY</th>\
+												                </tr>\
+												                </thead>\
+												                <tbody>\
+												                </tbody>\
+												              </table>\
+												            </div>\
+												        </div>\
+							           				</div>\
+												');
+		        $('#qty_list').DataTable().clear().draw();
+		        for (var i = 0; i < data.length; i++) 
+		        {
+		        	if(i == 0){
+		        		$('#receipt_num').val(data[i].receipt);
+		        	}
+		        	$('#qty_list').DataTable().row.add([''+data[i].id+'', 
+                                        ''+data[i].name+'', 
+                                        ''+data[i].qty+'', 
+                                        ]).draw();
+		        }
+		    }
+		});
+	}
 	function getReceiptList()
 	{
 		$.get('{{URL::Route('accountAccessChecker',["add","product"])}}', function(data)

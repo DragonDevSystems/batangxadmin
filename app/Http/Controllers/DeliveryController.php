@@ -156,5 +156,26 @@ class DeliveryController extends Controller {
 		
 		
 	}
+
+	public function getDeliveryProduct()
+	{
+		$receipt = Input::get('id');
+		$response = array();
+		$receiptInfo = ProductDeliveryReceipt::find($receipt);
+		$getProducts = ProductDelivery::where('receipt_num','=',$receipt)->get();
+		if(!empty($getProducts))
+		{
+			foreach ($getProducts as $product) {
+				$product_info = ProductInformation::find($product['prod_id']);
+				$response[]= array(
+						"receipt" => $receiptInfo['receipt_num'],
+						"id" => $product_info['id'],
+						"name" => $product_info['name'],
+						"qty" => $product['qty'],
+					);
+			}
+			return Response::json($response);
+		}
+	}
 	
 }

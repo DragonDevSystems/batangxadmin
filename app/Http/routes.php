@@ -159,6 +159,8 @@ Route::group(array('prefix' => '/admin'),function()
 			Route::get('/', array('uses' => 'DeliveryController@getDeliveryView', 'as' => 'getDeliveryView','middleware' => 'auth'));
 			Route::get('/getReceiptList', array('uses' => 'DeliveryController@getReceiptList', 'as' => 'getReceiptList','middleware' => 'auth'));
 			Route::get('/checkReceiptDelivery', array('uses' => 'DeliveryController@checkReceiptDelivery', 'as' => 'checkReceiptDelivery','middleware' => 'auth'));
+			Route::get('/getDeliveryProduct', array('uses' => 'DeliveryController@getDeliveryProduct', 'as' => 'getDeliveryProduct','middleware' => 'auth'));
+			
 			Route::group(array('before' => 'csrf'), function()
 			{
 				Route::post('/addDelivery', array('uses' => 'DeliveryController@addDelivery', 'as' => 'addDelivery','middleware' => 'auth'));
