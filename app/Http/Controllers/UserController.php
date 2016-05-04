@@ -532,5 +532,37 @@ class UserController extends Controller {
 			}
 		}
 	}
+	public function changeUserPass()
+	{
+		$new_pass = Input::get('myPassword');
+		$checkUser = User::find(Auth::User()['id']);
+		$checkUser['password'] = Hash::make($new_pass);
+		if($checkUser->save()){
+			return Redirect::Route('getMyaccount')->with('success','Change password success.');
+		}
+		return Redirect::Route('getMyaccount')->with('fail','Change password fail.');
+	}
 
+	public function checkUserPass()
+	{
+		$pass = Input::get('pass');
+		$checkPass = User::find(Auth::User()['id']);
+
+		$auth = Auth::attempt(array(
+				'password' => $pass,
+			));
+		if($auth)
+		{
+			return Response::json(array(
+            	'status'  => 'success',
+            	'message'  => 'Credential is correct. ',
+        	));
+        }
+        else{	
+        	return Response::json(array(
+            	'status'  => 'fail',
+            	'message'  => 'Wrong credential. Please try again.',
+        	));
+		}
+    }
 }

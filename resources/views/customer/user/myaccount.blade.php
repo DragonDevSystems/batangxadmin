@@ -65,7 +65,7 @@
 		          </div>
 		          <div class="row">
 		            <div class="col-md-6">
-		              <a href="javascript:void(0);" class="btn_reset">Change password</a><br>
+		              <a href="javascript:void(0);" id="changePass" class="changePass">Change password</a><br>
 		            </div>
 		            <!-- /.col -->
 		            <div class="col-md-6">
@@ -133,5 +133,139 @@
 			}
 	 	});
 	}
+
+	$(document).on("click","#changePass",function(){
+		$('body').append('<div class="modal proceed_pass_modal" data-keyboard="false" data-backdrop="static">\
+					            <div class="modal-dialog">\
+					              <div class="modal-content">\
+					                <div class="modal-header">\
+					                  <h4 class="modal-title">\
+						                    </span>Enter your password to proceed.\
+						                 </h4>\
+					                </div>\
+					                <div class="modal-body">\
+					                	<div class="input-group" style="margin:auto;width:250px">\
+									      <input type="password" maxlength="6" class="form-control" placeholder="Enter password...">\
+									      <span class="input-group-btn">\
+									        <button class="btn btn-default" type="button">Confirm</button>\
+									      </span>\
+									    </div>\
+									    <div class="form-group for_error" style="margin:auto;width:250px">\
+											<label></label>\
+										</div>\
+					                </div>\
+					                 <div class="modal-footer">\
+								        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\
+								      </div>\
+					              </div>\
+					            </div>\
+					          </div>');
+		$(".proceed_pass_modal").modal("show");
+		$(document).on("click",".proceed_pass_modal .modal-body button",function(){
+			var pass = $('.proceed_pass_modal').find('input').val();
+			$.get('{{URL::Route('checkUserPass')}}',{ pass : pass },function(response)
+	 		{
+	 			if(response.status == "success"){
+	 				$(".proceed_pass_modal").modal("hide");
+	 				$('.for_error').find('label').html('<i class="fa fa-check"></i> Correct password. You may proceed.');
+	 				$('body').append('<div class="modal change_pass_modal" data-keyboard="false" data-backdrop="static">\
+					            <div class="modal-dialog">\
+					              <div class="modal-content">\
+					                <div class="modal-header">\
+					                  <h4 class="modal-title">\
+						                    <span class="fa fa-lock">\
+						                    </span>Change Password\
+						                 </h4>\
+					                </div>\
+					                <div class="modal-body">\
+					                	<form method="post" action="{{URL::Route('changeUserPass')}}">\
+						                	<div class="form-group">\
+							                	<label>Enter New Password</label>\
+							                  <div class="form-group has-feedback">\
+									            <input type="password" maxlength="6" class="form-control" placeholder="Enter new password" name="myPassword" id="myPassword" required>\
+									            <span class="glyphicon glyphicon-lock form-control-feedback"></span>\
+									          </div>\
+								         	</div>\
+								         	<div class="form-group">\
+								          		<label>Enter Re-type Password</label>\
+												<div class="form-group has-feedback">\
+												<input type="password" maxlength="6" class="form-control" placeholder="Re-type Password" name="my_repassword" id="my_repassword" required>\
+												<span class="glyphicon glyphicon-lock form-control-feedback"></span>\
+												</div>\
+											</div>\
+											<div class="form-group for_error">\
+											<label></label>\
+											</div>\
+											<input type="hidden" value="{{ csrf_token() }}" name="_token">\
+					    					<button type="submit" id="submitChangePass" style="display:none"></button>\
+					    				</form>\
+					                </div>\
+					                 <div class="modal-footer">\
+								        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\
+								        <button type="button" class="btn btn-primary saveChangePassword">Save</button>\
+								      </div>\
+					              </div>\
+					            </div>\
+					          </div>');
+					$(".change_pass_modal").modal("show");
+					$(document).on("keyup","#myPassword",function(){
+			if($('#my_repassword').hasClass('notEmpty')){
+				$enPass = $(this).val();
+				$rePass = $('#my_repassword').val();
+				if($rePass != $enPass){
+					$('.for_error').find('label').html('<i class="fa fa-times"></i> Password did not match.');
+      				$('.for_error').removeClass('has-success').addClass('has-warning');
+				}
+				else{
+					$('.for_error').find('label').html('<i class="fa fa-check"></i> Password match.');
+      				$('.for_error').addClass('has-success').removeClass('has-warning');
+				}
+			}
+		});
+		$(document).on("keyup","#my_repassword",function(){
+			if($(this).length == 0){
+				$(this).removeClass('notEmpty');
+			}
+			$(this).addClass('notEmpty');
+			$rePass = $(this).val();
+			$enPass = $('#myPassword').val();
+			if($rePass != $enPass){
+				$('.for_error').find('label').html('<i class="fa fa-times"></i> Password did not match.');
+      			$('.for_error').removeClass('has-success').addClass('has-warning');
+			}
+			else{
+				$('.for_error').find('label').html('<i class="fa fa-check"></i> Password match.');
+      			$('.for_error').addClass('has-success').removeClass('has-warning');
+			}
+		});
+		$(document).on("click",".saveChangePassword",function(){
+			if(!$('.for_error').hasClass('has-warning')){
+				var status = confirm('Are you sure?');
+				if(status == true){
+
+					$('.change_pass_modal').find('#submitChangePass').click();
+				}
+				
+			}
+			else{
+				alert('password does not match.')
+			}
+		});
+	 			}
+	 			else{
+	 				$('.for_error').find('label').html('<i class="fa fa-times"></i>You input wrong password. Please try again.');
+	 			}
+	 		});
+		});
+	});
+	$(document).on("hidden.bs.modal",".change_pass_modal",function(){
+	    	$('body').addClass('remove_body_padding');
+			$(this).remove();
+	});
+	$(document).on("hidden.bs.modal",".proceed_pass_modal",function(){
+	    	$('body').addClass('remove_body_padding');
+			$(this).remove();
+	});
+	
 </script>
 @endsection
