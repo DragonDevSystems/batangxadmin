@@ -17,7 +17,7 @@
 				@foreach($featuredProducts as $featuredProduct)
 					<div class="grid_1_of_4 images_1_of_4">
 						 <a href="{{ URL::Route('productPreview',[$featuredProduct['productInfo']['id'],$featuredProduct['productInfo']['name']]) }}"><img width="212" height="212" style="display:block; margin:auto;" src="{{env('FILE_PATH_CUSTOM')}}productThumbnail/{{$featuredProduct['pro_img']['thumbnail_img']}}" alt="" /></a>
-						 <h2>{{$featuredProduct['productInfo']['name']}}</h2>
+						 <h2>{{str_limit($featuredProduct['productInfo']['name'], $limit = 15, $end = '...')}}</h2>
 						<div class="price-details">
 					       <div class="price-number">
 								<p><span class="rupees">{{$featuredProduct['productPrice']}}</span></p>
