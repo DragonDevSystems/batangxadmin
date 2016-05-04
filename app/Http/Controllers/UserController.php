@@ -346,7 +346,7 @@ class UserController extends Controller {
 		}
 		else
 		{
-			return Redirect::Route("cusIndex")->with("fail","You cannot continue this process, maybe your request link is already expired or invalid link. You ask another request to reset your account password.")->with('mt', "db");
+			return Redirect::Route("cusIndex")->with("fail","You cannot continue this process, maybe your request link is already expired or invalid. Please process a new request to change password.")->with('mt', "db");
 		}
 
 	}
@@ -369,14 +369,14 @@ class UserController extends Controller {
 					{
 						return Response::json(array(
 		                    'status'  => 'success',
-		                    'message'  => 'Your password is successfully change. You may log in now.Thank you.',
+		                    'message'  => 'Your password has been changed successfully. You may now log in. Thank you.',
 		                ));
 					}
 					else
 					{
 						return Response::json(array(
 		                    'status'  => 'fail',
-		                    'message'  => 'An error occured while reseting your password. Please try again.',
+		                    'message'  => 'An error occured while resetting your password. Please try again.',
 		                ));
 					}
 				}
@@ -384,7 +384,7 @@ class UserController extends Controller {
 				{
 					return Response::json(array(
 		                    'status'  => 'fail',
-		                    'message'  => 'An error occured while reseting your password. Please try again.',
+		                    'message'  => 'An error occured while resetting your password. Please try again.',
 		                ));
 				}
 			}
@@ -393,7 +393,7 @@ class UserController extends Controller {
 		{
 			return Response::json(array(
 		                    'status'  => 'fail',
-		                    'message'  => 'You cannot continue this process, maybe your request link is already expired or invalid link. You ask another request to reset your account password.',
+		                    'message'  => 'You cannot continue this process, maybe your request link is already expired or invalid. Please process a new request to change password.',
 		                ));
 		}
 	}
@@ -426,19 +426,19 @@ class UserController extends Controller {
 				{
 					return Response::json(array(
 		                    'status'  => 'success',
-		                    'message'  => 'Succes to upload image',
+		                    'message'  => 'Upload image successful.',
 		                    "image" => 'userImage/'.$tn_name,
 		                ));
 				}
 				return Response::json(array(
 		                    'status'  => 'fail',
-		                    'message'  => 'Fail to upload image',
+		                    'message'  => 'Failed to upload image.',
 		                ));
 			}
 		}
 		return Response::json(array(
 		                    'status'  => 'fail',
-		                    'message'  => 'Fail to upload image',
+		                    'message'  => 'Failed to upload image.',
 		                ));
 	}
 
@@ -478,7 +478,7 @@ class UserController extends Controller {
 		{
 			return  Response::json(array(
 	                    'status'  => 'fail',
-	                    'message'  => 'Email is invalid.',
+	                    'message'  => 'Email Address is invalid.',
 	                ));
 		}
 		$result1 = User::where('username','=',$username)->first();
@@ -524,14 +524,14 @@ class UserController extends Controller {
 	     			});
 					return Response::json(array(
 	                    'status'  => 'success',
-	                    'message'  => 'Client successfully added. Advice the customer to check there email for confirmation. We send them a temporary password.',
+	                    'message'  => 'Client successfully added. Advice the customer to check their email for confirmation. We sent them a temporary password.',
 	                ));
 				}
 				else
 				{
 					return  Response::json(array(
 		                    'status'  => 'fail',
-		                    'message'  => 'An error occured while creating the user. Please try again.',
+		                    'message'  => 'An error occurred while creating the user. Please try again.',
 		                ));
 				}
 			}
@@ -539,7 +539,7 @@ class UserController extends Controller {
 			{
 				return  Response::json(array(
 		                    'status'  => 'fail',
-		                    'message'  => 'An error occured while creating the user. Please try again.',
+		                    'message'  => 'An error occurred while creating the user. Please try again.',
 		                ));
 			}
 		}
@@ -547,7 +547,7 @@ class UserController extends Controller {
 		{
 			return  Response::json(array(
 		                    'status'  => 'fail',
-		                    'message'  => 'Your email/username has already taken. Please Try again',
+		                    'message'  => 'The email address/username has already been taken. Please Try again',
 		                ));
 		}
 	}
@@ -577,7 +577,7 @@ class UserController extends Controller {
 			if($updateInfo->save()){
 				return Redirect::Route('getMyaccount')->with('success','Update success.');
 			}else{
-				return Redirect::Route('getMyaccount')->with('fail','Update fail.');
+				return Redirect::Route('getMyaccount')->with('fail','Update failed.');
 			}
 		}
 	}
@@ -589,7 +589,7 @@ class UserController extends Controller {
 		if($checkUser->save()){
 			return Redirect::Route('getMyaccount')->with('success','Change password success.');
 		}
-		return Redirect::Route('getMyaccount')->with('fail','Change password fail.');
+		return Redirect::Route('getMyaccount')->with('fail','Change password failed.');
 	}
 
 	public function checkUserPass()
@@ -616,7 +616,7 @@ class UserController extends Controller {
         else{	
         	return Response::json(array(
             	'status'  => 'fail',
-            	'message'  => 'Wrong credential. Please try again.',
+            	'message'  => 'Wrong credentials. Please try again.',
         	));
 		}
     }
