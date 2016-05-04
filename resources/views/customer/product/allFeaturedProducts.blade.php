@@ -12,7 +12,7 @@
 		<div class="header_slide">
 			@include('customer.includes.categories')
 			<div class="header_bottom_right">
-			<h2 style="text-align: center">All New Products</h2>
+			<h2 style="text-align: center">All Featured Products</h2>
 			<?php $featuredProducts = App::make("App\Http\Controllers\GlobalController")->featuredProduct(); ?>
 				@foreach($featuredProducts as $featuredProduct)
 					<div class="grid_1_of_4 images_1_of_4">
