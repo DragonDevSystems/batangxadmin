@@ -4,7 +4,7 @@
 		<h3>New Products</h3>
 	</div>
 	<div class="see">
-		<p><a href="#">See all Products</a></p>
+		<p><a href="{{URL::Route('getAllNewProduct')}}">See all Products</a></p>
 	</div>
 	<div class="clear"></div>
 </div>

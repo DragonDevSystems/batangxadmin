@@ -389,4 +389,9 @@ class CustomerController extends Controller {
 					"invoicelink" => URL::route('getCheckOutPrint', [$productInovice['vCode'] , $inv_id])
 				));
 	}
+
+	public function getAllNewProduct()
+	{
+		return View::make('customer.product.allNewProduct')->with('mt','an');
+	}
 }
