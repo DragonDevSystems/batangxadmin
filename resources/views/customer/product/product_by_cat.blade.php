@@ -16,7 +16,7 @@
 					@for($x = 0 ; $x < count($response) ; $x++)
 						<div class="grid_1_of_4 images_1_of_4">
 							<a href="{{ URL::Route('productPreview',[$response[$x]['productInfo']['id'],$response[$x]['productInfo']['name']]) }}"><img width="212" height="212" style="display:block; margin:auto;" src="{{env('FILE_PATH_CUSTOM')}}productThumbnail/{{$response[$x]['pro_img']}}" alt="" /></a>
-							 <h2>{{$response[$x]['productInfo']['name']}}</h2>
+							 <h2>{{str_limit($response[$x]['productInfo']['name'], $limit = 15, $end = '...')}}</h2>
 							<div class="price-details">
 						       <div class="price-number">
 									<p><span class="rupees">{{$response[$x]['productPrice']}}</span></p>
