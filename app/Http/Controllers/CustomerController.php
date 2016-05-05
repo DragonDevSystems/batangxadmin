@@ -162,7 +162,7 @@ class CustomerController extends Controller {
 			$vCode = date_format($date, 'U').str_random(110);
 			$productInovice = new ProductInvoice();
 			$productInovice['cus_id'] = Auth::User()['id'];
-			$productInovice['remarks'] = "reserved/ Cash on delivery";
+			$productInovice['remarks'] = "Cash on Pick Up";
 			$productInovice['vcode'] = $vCode;
 			if(!$productInovice->save())
 			{

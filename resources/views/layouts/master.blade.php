@@ -96,7 +96,7 @@
 		function promptConfirmation($message)
 		{
 			//$("#mdl_confirmation_msg").text($message);
-			$('body').append('<div class="modal fade modal-info" tabindex="-1" role="dialog" id="prompt_confirmation">\
+			$('body').append('<div class="modal fade" tabindex="-1" role="dialog" id="prompt_confirmation" data-keyboard="false" data-backdrop="static">\
 								  <div class="modal-dialog">\
 								    <div class="modal-content">\
 								      <div class="modal-header">\
@@ -108,8 +108,8 @@
 								        <p id="mdl_confirmation_msg">'+$message+'</p>\
 								      </div>\
 								      <div class="modal-footer">\
-								        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>\
-								        <button class="btn btn-outline" type="button" data-dismiss="modal" id="btnYes">Save changes</button>\
+								        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>\
+								        <button class="btn btn-primary" type="button" data-dismiss="modal" id="btnYes">Save changes</button>\
 								      </div>\
 								    </div>\
 								  </div>\
