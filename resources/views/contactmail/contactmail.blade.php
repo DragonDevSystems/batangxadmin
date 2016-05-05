@@ -12,11 +12,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Contact Mail
+        Inquiries
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{ URL::Route('getUAL') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Contact Mail</li>
+        <li class="active">Inquiries</li>
       </ol>
     </section>
 

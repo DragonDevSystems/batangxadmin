@@ -18,7 +18,7 @@
                                               <p>'+data[i].content_title+'</p>'),
                                              $('<div />' , { 'class' : 'icon'}).append(
                                               $('<i />' , {'class' : 'ion '+data[i].Ionicons})),
-                                             $('<a />' , { 'href' : data[i].link , 'class' : 'small-box-footer' , 'html' : 'More info <i class="fa fa-arrow-circle-right"></i>'}))));
+                                             $('<a />' , { 'href' : data[i].link , 'class' : 'small-box-footer' , 'html' : 'View Details <i class="fa fa-arrow-circle-right"></i>'}))));
               }
             }
            

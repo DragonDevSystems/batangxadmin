@@ -76,7 +76,7 @@
 	@yield('addHead')
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini skin-red">
 	<script type="text/javascript">
 		function promptMsg($result,$message)
 		{

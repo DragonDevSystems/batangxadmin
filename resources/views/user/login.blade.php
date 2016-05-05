@@ -63,8 +63,6 @@
         </div>
         <!-- /.col -->
       </div>
-
-    <a href="#">I forgot my password</a><br>
     <!--<a href="register.html" class="text-center">Register a new membership</a>-->
 
   </div>
