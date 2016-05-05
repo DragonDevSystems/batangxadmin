@@ -103,9 +103,9 @@
 
       <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
       Note:
-      To pick up your product please bring valid I.D. and a copy of you invoice.Thank you.
+      For product pick up, please bring a valid I.D. plus a printed copy of your invoice. Thank you.
       <br><br>
-      For "Cash on Pick Up" trasaction, your invoice trasaction will be forfieted for next 24hrs.
+      For "Cash on Pick Up" trasaction, your invoice trasaction/reservation shall be forfieted in next 24hrs upon failure to complete the transaction.
       </p>
     </div>
     <!-- /.col -->

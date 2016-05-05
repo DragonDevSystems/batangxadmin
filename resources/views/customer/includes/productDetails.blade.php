@@ -27,7 +27,7 @@
 			<p>Status:  <font color='{{($response[0]["pro_qty"] == "Available") ? "green" : "red"}}' size="4">{{$response[0]['pro_qty']}}</font></p>
 			<p>Available Item:  <font color='{{($response[0]["item_remain"] != 0) ? "green" : "red"}}' size="3">{{$response[0]['item_remain']}}</font></p>
 			<ul>
-				<li>Quality:<select id="qty">
+				<li>Quantity:<select id="qty">
 					<option value="1">1</option>
 					<option value="2">2</option>
 					<option value="3">3</option>

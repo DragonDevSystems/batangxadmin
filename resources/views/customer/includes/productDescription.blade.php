@@ -2,7 +2,7 @@
 		<div id="horizontalTab">
 		<ul class="resp-tabs-list">
 			<li>Product Details</li>
-			<li>product Specs</li>
+			<li>product Specifications</li>
 			<div class="clear"></div>
 		</ul>
 		<div class="resp-tabs-container">

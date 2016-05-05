@@ -5,7 +5,7 @@
 		<h3>Featured Products</h3>
 	</div>
 	<div class="see">
-		<p><a href="{{URL::Route('getAllFeaturedProduct')}}">See all Products</a></p>
+		<p><a href="{{URL::Route('getAllFeaturedProduct')}}">See All Products</a></p>
 	</div>
 	<div class="clear"></div>
 </div>
