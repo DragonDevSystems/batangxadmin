@@ -70,7 +70,7 @@
         
         <li class="treeview {{ ($mt == "ml") ? "active" : ""}}">
           <a href="{{ URL::Route('getContactMailView') }}">
-            <i class="fa fa-envelope-o"></i> <span>Contact Mail</span> <i class="fa pull-right"></i>
+            <i class="fa fa-envelope-o"></i> <span>Inquiries</span> <i class="fa pull-right"></i>
           </a>
         </li>
 

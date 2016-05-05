@@ -169,7 +169,7 @@ Route::group(array('prefix' => '/admin'),function()
 			});
 		});
 	});
-	Route::group(array('prefix' => '/contact-mail'),function()
+	Route::group(array('prefix' => '/inquiries'),function()
 	{
 		Route::group(array('before' => 'auth'), function()
 		{

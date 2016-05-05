@@ -208,7 +208,7 @@ class GlobalController extends Controller {
 						array(
 								"count"	=> count($this->unReadMessage()),
 								"bg_color" => "bg-blue",
-								"content_title" => "Message (Contact us Page)",
+								"content_title" => "Unread Inquiries",
 								"Ionicons" => "ion-android-mail",
 								"link" => URL::Route('getContactMailView'),
 							),//un-read message from contact us
