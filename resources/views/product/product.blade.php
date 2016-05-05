@@ -64,7 +64,6 @@
                        	@endif
                     @endif
                   @endforeach
-                  <th>Quantity</th>
                   <th>Featured</th>
                 </tr>
                 </thead>
@@ -162,7 +161,6 @@
 				$('#product_list').DataTable().row.add([''+response[i].id+'', 
                                                     ''+response[i].name+'', 
                                                     ''+response[i].description+'',
-                                                    ''+response[i].qty+'',
                                                     '<i class="'+response[i].featured+'"></i>',
                                                     ]).draw();
 			}
