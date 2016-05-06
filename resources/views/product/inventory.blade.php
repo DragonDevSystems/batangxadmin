@@ -12,7 +12,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Invoices
+        Inventory
       </h1>
     </section>
 
@@ -69,10 +69,10 @@
 
 				}
 				var table = $("#dtUAList").DataTable();
-				$('#dtUAList tbody').on('click', 'tr', function () {
+				/*$('#dtUAList tbody').on('click', 'tr', function () {
 			        var data = table.row( this ).data();
 			        invoiceModal(data[0]);
-			    } );
+			    } );*/
 			}
 			else
 			{
