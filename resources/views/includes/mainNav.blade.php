@@ -97,6 +97,12 @@
             <i class="fa fa-file-text-o"></i> <span>Transaction History</span> <i class="fa pull-right"></i>
           </a>
         </li>
+        <li class="treeview {{ ($mt == "int") ? "active" : ""}}">
+          <a href="{{ URL::Route('getInventoryView') }}">
+            <i class="fa fa-file-text-o"></i> <span>Inventory</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
+
       </ul>
     </section>
     <!-- /.sidebar -->

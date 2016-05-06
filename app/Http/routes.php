@@ -104,6 +104,7 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::get('/admin/stats/{entry}', array('uses' => 'GlobalController@statsList', 'as' => 'statsList','middleware' => 'auth'));
 				Route::get('/admin/statsSummary/{entry}', array('uses' => 'GlobalController@statsSummary', 'as' => 'statsSummary','middleware' => 'auth'));
 				Route::get('/admin/invoiceList/', array('uses' => 'GlobalController@invoiceList', 'as' => 'invoiceList','middleware' => 'auth'));
+				Route::get('/admin/inventoryList/', array('uses' => 'GlobalController@inventoryList', 'as' => 'inventoryList','middleware' => 'auth'));
 				Route::get('/admin/invoiceInfoAjax/', array('uses' => 'CustomerController@invoiceInfoAjax', 'as' => 'invoiceInfoAjax','middleware' => 'auth'));
 				Route::post('/admin/checkoutReservation/', array('uses' => 'CustomerController@checkoutReservation', 'as' => 'checkoutReservation','middleware' => 'auth'));
 				Route::post('/admin/cancelledReservation/{cus_id}/{inv_id}/{type}', array('uses' => 'CustomerController@cancelledReservation', 'as' => 'cancelledReservation','middleware' => 'auth'));
@@ -139,6 +140,7 @@ Route::group(array('prefix' => '/admin'),function()
 			Route::get('/getProductList', array('uses' => 'ProductController@getProductList', 'as' => 'getProductList','middleware' => 'auth'));
 			Route::get('/getProductInfo', array('uses' => 'ProductController@getProductInfo', 'as' => 'getProductInfo','middleware' => 'auth'));
 			Route::get('/getInvoiceView', array('uses' => 'ProductController@getInvoiceView', 'as' => 'getInvoiceView','middleware' => 'auth'));
+			Route::get('/getInventoryView', array('uses' => 'ProductController@getInventoryView', 'as' => 'getInventoryView','middleware' => 'auth'));
 			Route::get('/getWalkIn', array('uses' => 'CustomerController@getWalkIn', 'as' => 'getWalkIn','middleware' => 'auth'));
 			Route::group(array('before' => 'csrf'), function()
 			{

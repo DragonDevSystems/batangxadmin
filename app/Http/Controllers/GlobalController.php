@@ -770,5 +770,28 @@ class GlobalController extends Controller {
 		return $status;
 	}
 
+	public function inventoryList()
+	{
+		$response = array();
+		$all = ProductInformation::all();
+		if(!empty($all))
+		{
+			foreach ($all as $alli) {
+				$productOnCart = ProductOnCart::where("prod_id","=",$alli['id'])->sum("qty");
+				$productReserve = ProductReserve::where("prod_id","=",$alli['id'])->where("status","=",1)->sum("qty");
+				$productSold = ProductSold::where("prod_id","=",$alli['id'])->sum("qty");
+				$productInventory = ProductInventory::where("prod_id","=",$alli['id'])->first();
+				$response[] = array(
+						"prod_code" => str_pad($alli['id'], 6, '0', STR_PAD_LEFT),
+						"name" => $alli['name'],
+						"on_cart" => (!empty($productOnCart)) ? $productOnCart : 0,
+						"reserved" => (!empty($productReserve)) ? $productReserve : 0,
+						"sold" => (!empty($productSold)) ? $productSold : 0,
+						"avail_item" => (!empty($productInventory)) ? $productInventory['qty'] : 0,
+					);
+			}
+		}
+		return $response;
+	}
 
 }

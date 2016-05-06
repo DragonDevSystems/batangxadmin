@@ -40,6 +40,11 @@ class ProductController extends Controller {
 									->with('mt',"inv");
 	}
 
+	public function getInventoryView()
+	{
+		return View::make('product.inventory')->with("userInfo",$this->userInfo())
+									->with('mt',"int");
+	}
 	public function uploadProductImage()
 	{
 		$images = Input::file('file');
