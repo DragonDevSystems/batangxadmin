@@ -1,3 +1,7 @@
+<li>
+  <a href="#" id="date_time"></a>
+  <script type="text/javascript">window.onload = date_time('date_time');</script>
+</li>
 <!-- User Account: style can be found in dropdown.less -->
 <li class="dropdown user user-menu">
   <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
@@ -23,10 +27,6 @@
       </div>
     </li>
   </ul>
-</li>
-<li>
-  <a href="#" id="date_time"></a>
-  <script type="text/javascript">window.onload = date_time('date_time');</script>
 </li>
 <form id="uploadProfilePic" method="post" enctype ="multipart/form-data">
     <input type="file" name="input_profile_image" id="input_profile_image" style="display:none">
