@@ -160,7 +160,7 @@ return [
          * Php Libraries...
          */
         Intervention\Image\ImageServiceProvider::class,
-        Netshell\Paypal\PaypalServiceProvider::class,
+        //Netshell\Paypal\PaypalServiceProvider::class,
     ],
 
     /*

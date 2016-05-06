@@ -24,6 +24,10 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="#" id="date_time"></a>
+  <script type="text/javascript">window.onload = date_time('date_time');</script>
+</li>
 <form id="uploadProfilePic" method="post" enctype ="multipart/form-data">
     <input type="file" name="input_profile_image" id="input_profile_image" style="display:none">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">

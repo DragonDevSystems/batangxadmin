@@ -53,6 +53,8 @@
 		<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
 		<!--<script src="{{env('FILE_PATH_CUSTOM')}}plugins/flot/jquery.flot.categories.min.js"></script>-->
 		<!-- Page script --> 
+
+		<script type="text/javascript" src="{{env('FILE_PATH_CUSTOM')}}js/date_time.js"></script>
 		<style>
 			.modal {
 			  text-align: center;
