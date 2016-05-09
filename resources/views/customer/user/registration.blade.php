@@ -8,7 +8,7 @@
       </div>
       <div class="modal-body">
         <div class="login-box-body">
-          <div class="form-group has-feedback has-error"></div>
+          <div class="form-group has-feedback has-error errorCheckReg"></div>
           <div class="form-group has-feedback">
             <input type="text" class="form-control" id="regusername" name="regusername" placeholder="Username">
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -136,28 +136,28 @@
                 if(data.status == "success")
                 {
 
-                  $('.has-error').empty();
+                  $('.errorCheckReg').empty();
                   $('#mdl_registration').modal('hide');
                   promptMsg(data.status,data.message)
                 }
                 else
                 {
-                  $('.has-error').empty();
-                  $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i> '+data.message+''}));
+                  $('.errorCheckReg').empty();
+                  $('.errorCheckReg').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i> '+data.message+''}));
                 }
                 //console.log(data);
             });
           }
           else
           {
-            $('.has-error').empty();
-                $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i>Password does not match.'}));
+            $('.errorCheckReg').empty();
+            $('.errorCheckReg').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i>Password does not match.'}));
           }
       }
       else
       {
-        $('.has-error').empty();
-        $('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i>To continue, you maust read and accept the terms and condition.'}));
+        $('.errorCheckReg').empty();
+        $('.errorCheckReg').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i>To continue, you maust read and accept the terms and condition.'}));
       }
 
     }

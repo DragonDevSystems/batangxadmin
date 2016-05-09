@@ -8,7 +8,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="login-box-body">
-					<div class="form-group has-feedback has-error"></div>
+					<div class="form-group has-feedback has-error errorCheckLogin "></div>
 					<div class="form-group has-feedback">
 						<input type="email" class="form-control" id="email" name="email" placeholder="Username or Email">
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -64,8 +64,8 @@
             }
             else
             {
-            	$('.has-error').empty();
-            	$('.has-error').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i> '+data.message+''}));
+            	$('.errorCheckLogin').empty();
+            	$('.errorCheckLogin').append($('<label />' , {'class' :  'control-label' , 'html' : '<i class="fa fa-times-circle-o"></i> '+data.message+''}));
             }
             //console.log(data);
         });
