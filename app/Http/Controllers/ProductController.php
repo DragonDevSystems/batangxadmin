@@ -48,7 +48,7 @@ class ProductController extends Controller {
 
 	public function getCriLvlView()
 	{
-		return View::make('product.criLvl')->with("userInfo",$this->userInfo())
+		return View::make('product.crilvl')->with("userInfo",$this->userInfo())
 									->with('mt',"cl");
 	}
 
