@@ -794,4 +794,29 @@ class GlobalController extends Controller {
 		return $response;
 	}
 
+	public function criLvlList()
+	{
+		$response = array();
+		$all = ProductInformation::all();
+		if(!empty($all))
+		{
+			foreach ($all as $alli) {
+				$productOnCart = ProductOnCart::where("prod_id","=",$alli['id'])->sum("qty");
+				$productReserve = ProductReserve::where("prod_id","=",$alli['id'])->where("status","=",1)->sum("qty");
+				$productSold = ProductSold::where("prod_id","=",$alli['id'])->sum("qty");
+				$productInventory = ProductInventory::where("prod_id","=",$alli['id'])->first();
+				$avail_item = (!empty($productInventory)) ? $productInventory['qty'] : 0;
+				if($alli['cri_lvl'] >= $avail_item)
+				{
+					$response[] = array(
+						"prod_code" => str_pad($alli['id'], 6, '0', STR_PAD_LEFT),
+						"name" => $alli['name'],
+						"cri_lvl" => $alli['cri_lvl'],
+						"avail_item" => $avail_item,
+					);
+				}
+			}
+		}
+		return $response;
+	}
 }

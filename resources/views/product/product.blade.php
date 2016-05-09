@@ -242,6 +242,10 @@
 																		  <label for="description">Description :</label>\
 																		  <textarea contentEditable="true" style="resize: none;" class="form-control" rows="3"  placeholder="Enter product description..." name="description" id="description" required>'+data.description+'</textarea>\
 																		</div>\
+																		<div class="form-group">\
+																		  <label for="name">Item Critical Level :</label>\
+																		  <input type="text" class="form-control" id="cri_lvl" name="cri_lvl" value="'+data.cri_lvl+'" placeholder="Enter Item Critical Level" required>\
+																		</div>\
 																		<div class="price_list">\
 																			<div class="form-group ">\
 																			  	<div class="input-group">\
@@ -409,6 +413,7 @@
 								var category = $('.formAddProduct').find('#category').val();
 								var description = $('.formAddProduct').find('#description').val();
 								var price = $('.formAddProduct').find('#price').val();
+								var cri_lvl = $('.formAddProduct').find('#cri_lvl').val();
 								var id = $(this).data('id');
 								$specs =[];
 								$x = 0;
@@ -426,7 +431,7 @@
 											$('#btnYes').click(function() {
 												$.post('{{URL::Route('addProduct')}}',{ _token: _token ,name: name, 
 												category : category, description : description, specs : $specs, id : id,
-												price : price} , function(response)
+												price : price , cri_lvl : cri_lvl} , function(response)
 							    				{
 							    					console.log(response);
 							    					if(response.status = "success"){

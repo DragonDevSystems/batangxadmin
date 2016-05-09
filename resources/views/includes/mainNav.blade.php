@@ -102,7 +102,11 @@
             <i class="fa fa-file-text-o"></i> <span>Inventory</span> <i class="fa pull-right"></i>
           </a>
         </li>
-
+        <li class="treeview {{ ($mt == "cl") ? "active" : ""}}">
+          <a href="{{ URL::Route('getCriLvlView') }}">
+            <i class="fa fa-file-text-o"></i> <span>Critical Level Item</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

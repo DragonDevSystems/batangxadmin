@@ -45,6 +45,13 @@ class ProductController extends Controller {
 		return View::make('product.inventory')->with("userInfo",$this->userInfo())
 									->with('mt',"int");
 	}
+
+	public function getCriLvlView()
+	{
+		return View::make('product.criLvl')->with("userInfo",$this->userInfo())
+									->with('mt',"cl");
+	}
+
 	public function uploadProductImage()
 	{
 		$images = Input::file('file');
@@ -132,6 +139,7 @@ class ProductController extends Controller {
 		$description = Input::get('description');
 		$specs = Input::get('specs');
 		$price = Input::get('price');
+		$cri_lvl = Input::get('cri_lvl');
 
 		if($id == "new"){
 			$addProductInfo = new ProductInformation();
@@ -142,6 +150,7 @@ class ProductController extends Controller {
 		$addProductInfo['name'] = $name;
 		$addProductInfo['pro_cat_id'] = $category;
 		$addProductInfo['description'] = $description;
+		$addProductInfo['cri_lvl'] = $cri_lvl;
 		if($addProductInfo->save()){
 			$image = ProductImage::where('prod_id', '=', 0)
 							->where('uploader_id', '=', Auth::User()['id'])
@@ -233,6 +242,7 @@ class ProductController extends Controller {
 				"remaining_inv" => !empty($remaining_inv) ? $remaining_inv['qty'] : 0,
 				"current_price_value" => !empty($current_price) ? 'PHP '.number_format($current_price['price'], 2) : "No Price Available",
 				"featured" 	=> $information['isFeatured'] == 0 ? "No" : "Yes",
+				"cri_lvl" 	=> $information['cri_lvl'],
 				));	
 	}
 
