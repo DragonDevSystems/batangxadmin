@@ -378,7 +378,7 @@ class GlobalController extends Controller {
 			{
 				$response[] = array(
 					"productInfo" => $topNewProducti,
-					"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
+					"productPrice" => (!empty($proPrice)) ? 'PHP '.number_format($proPrice['price'], 2) : "Price N/A" ,
 					"pro_img" => $images
 				);
 			}
@@ -397,7 +397,7 @@ class GlobalController extends Controller {
 			{
 				$response[] = array(
 					"productInfo" => $topNewProducti,
-					"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
+					"productPrice" => (!empty($proPrice)) ? 'PHP '.number_format($proPrice['price'], 2) : "Price N/A" ,
 					"pro_img" => $images
 				);
 			}
@@ -416,7 +416,7 @@ class GlobalController extends Controller {
 			{
 				$response[] = array(
 					"productInfo" => $product,
-					"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
+					"productPrice" => (!empty($proPrice)) ? 'PHP '.number_format($proPrice['price'], 2) : "Price N/A" ,
 					"pro_img" => $images
 				);
 			}
@@ -462,7 +462,7 @@ class GlobalController extends Controller {
 				$totalQty += $checki['qty'];
 			}
 			$response[] = array(
-					"totalPrice" => '&#8369; '.number_format($totalP, 2),
+					"totalPrice" => 'PHP '.number_format($totalP, 2),
 					"totalQty" => $totalQty,
 				);
 		}
@@ -489,8 +489,8 @@ class GlobalController extends Controller {
 							"prod_id" => $prodInfo['id'],
 							"name" => $prodInfo['name'],
 							"qty" => $checki['qty'],
-							"unit_price" =>'&#8369; '.number_format($productPrice['price'], 2),
-							"price" => '&#8369; '.number_format(($productPrice['price'] * $checki['qty']), 2),
+							"unit_price" =>'PHP '.number_format($productPrice['price'], 2),
+							"price" => 'PHP '.number_format(($productPrice['price'] * $checki['qty']), 2),
 						);
 					$totalQty += $checki['qty'];
 					$totalP += ($productPrice['price'] * $checki['qty']);
@@ -498,7 +498,7 @@ class GlobalController extends Controller {
 			}
 			$response[] = array(
 				"productInfo" => $products,
-				"totalPrice" => '&#8369; '.number_format($totalP, 2),
+				"totalPrice" => 'PHP '.number_format($totalP, 2),
 				"totalQty" => $totalQty,
 				"price_figure" => $totalP
 			);
@@ -525,8 +525,8 @@ class GlobalController extends Controller {
 							"prod_id" => $prodInfo['id'],
 							"name" => $prodInfo['name'],
 							"qty" => $checki['qty'],
-							"unit_price" =>'&#8369; '.number_format($productPrice['price'], 2),
-							"price" => '&#8369; '.number_format(($productPrice['price'] * $checki['qty']), 2),
+							"unit_price" =>'PHP '.number_format($productPrice['price'], 2),
+							"price" => 'PHP '.number_format(($productPrice['price'] * $checki['qty']), 2),
 						);
 					$totalQty += $checki['qty'];
 					$totalP += ($productPrice['price'] * $checki['qty']);
@@ -534,7 +534,7 @@ class GlobalController extends Controller {
 			}
 			$response[] = array(
 				"productInfo" => $products,
-				"totalPrice" => '&#8369; '.number_format($totalP, 2),
+				"totalPrice" => 'PHP '.number_format($totalP, 2),
 				"totalQty" => $totalQty,
 			);
 		}
@@ -560,8 +560,8 @@ class GlobalController extends Controller {
 							"prod_id" => $prodInfo['id'],
 							"name" => $prodInfo['name'],
 							"qty" => $checki['qty'],
-							"unit_price" =>'&#8369; '.number_format($productPrice['price'], 2),
-							"price" => '&#8369; '.number_format(($productPrice['price'] * $checki['qty']), 2),
+							"unit_price" =>'PHP '.number_format($productPrice['price'], 2),
+							"price" => 'PHP '.number_format(($productPrice['price'] * $checki['qty']), 2),
 						);
 					$totalQty += $checki['qty'];
 					$totalP += ($productPrice['price'] * $checki['qty']);
@@ -569,7 +569,7 @@ class GlobalController extends Controller {
 			}
 			$response[] = array(
 				"productInfo" => $products,
-				"totalPrice" => '&#8369; '.number_format($totalP, 2),
+				"totalPrice" => 'PHP '.number_format($totalP, 2),
 				"totalQty" => $totalQty,
 			);
 		}
@@ -707,9 +707,9 @@ class GlobalController extends Controller {
 									0 => $onCartProducti['prod_id'],
 									1 => $userInfo['fname'].' '.$userInfo['lname'],
 									2 => $prodInfo['name'],
-									3 => '&#8369; '.number_format($current_price['price'], 2),
+									3 => 'PHP '.number_format($current_price['price'], 2),
 									4 => $onCartProducti['qty'],
-									5 => '&#8369; '.number_format(($current_price['price'] * $onCartProducti['qty']), 2),
+									5 => 'PHP '.number_format(($current_price['price'] * $onCartProducti['qty']), 2),
 								);
 						}
 					}

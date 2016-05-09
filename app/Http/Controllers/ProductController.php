@@ -231,7 +231,7 @@ class ProductController extends Controller {
 				"current_price" => !empty($current_price) ? $current_price['id'] : "",
 				"category" => $category,
 				"remaining_inv" => !empty($remaining_inv) ? $remaining_inv['qty'] : 0,
-				"current_price_value" => !empty($current_price) ? '&#8369; '.number_format($current_price['price'], 2) : "No Price Available",
+				"current_price_value" => !empty($current_price) ? 'PHP '.number_format($current_price['price'], 2) : "No Price Available",
 				"featured" 	=> $information['isFeatured'] == 0 ? "No" : "Yes",
 				));	
 	}
@@ -281,7 +281,7 @@ class ProductController extends Controller {
 					{
 						$response[] = array(
 							"productInfo" => $productListi,
-							"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Price N/A" ,
+							"productPrice" => (!empty($proPrice)) ? 'PHP '.number_format($proPrice['price'], 2) : "Price N/A" ,
 							"pro_img" => $images['thumbnail_img']
 						);
 					}
@@ -305,7 +305,7 @@ class ProductController extends Controller {
 			$remainItem = ProductInventory::where("prod_id","=",$paramCheck['id'])->first();
 			$response[] = array(
 				"productInfo" => $paramCheck,
-				"productPrice" => (!empty($proPrice)) ? '&#8369; '.number_format($proPrice['price'], 2) : "Not specified" ,
+				"productPrice" => (!empty($proPrice)) ? 'PHP '.number_format($proPrice['price'], 2) : "Not specified" ,
 				"pro_qty" => (!empty($qty)) ? "Available" : "Out of Stock" ,
 				"pro_img" => $images,
 				"pro_specs" => $proSpecs,
