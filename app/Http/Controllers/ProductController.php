@@ -43,13 +43,13 @@ class ProductController extends Controller {
 	public function getInventoryView()
 	{
 		return View::make('product.inventory')->with("userInfo",$this->userInfo())
-									->with('cc',"int")->with('mt',"tp");
+									->with('mt',"int");
 	}
 
 	public function getCriLvlView()
 	{
 		return View::make('product.crilvl')->with("userInfo",$this->userInfo())
-									->with('cc',"cl")->with('mt',"tp");
+									->with('mt',"cl");
 	}
 
 	public function uploadProductImage()

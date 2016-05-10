@@ -33,7 +33,7 @@ class ReportsController extends Controller {
 	public function getSales()
 	{
 		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
-		return View::Make("reports.sales")->with("userInfo",$userInfo)->with('cc','sr')->with('mt','tp');
+		return View::Make("reports.sales")->with("userInfo",$userInfo)->with('mt','sr');
 	}
 
 	public function printSales($sdate,$edate)

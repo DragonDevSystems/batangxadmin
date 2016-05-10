@@ -85,21 +85,6 @@
                 <i class="fa fa-file-text-o"></i> <span>Transaction History</span> <i class="fa pull-right"></i>
               </a>
             </li>
-            <li class="treeview {{ $mt == "tp" ? (($cc == "int") ? "active" : "") : ""}}">
-              <a href="{{ URL::Route('getInventoryView') }}">
-                <i class="fa fa-file-text-o"></i> <span>Inventory</span> <i class="fa pull-right"></i>
-              </a>
-            </li>
-            <li class="treeview {{ $mt == "tp" ? (($cc == "cl") ? "active" : "") : ""}}">
-              <a href="{{ URL::Route('getCriLvlView') }}">
-                <i class="fa fa-file-text-o"></i> <span>Critical Level Item</span> <i class="fa pull-right"></i>
-              </a>
-            </li>
-            <li class="treeview {{ $mt == "tp" ? (($cc == "sr") ? "active" : "") : ""}}">
-              <a href="{{ URL::Route('getSales') }}">
-                <i class="fa fa-file-text-o"></i> <span>Sales Report</span> <i class="fa pull-right"></i>
-              </a>
-            </li>
             <li class="{{ $mt == "tp" ? (($cc == "wi") ? "active" : "") : ""}} treeview">
               <a href="{{ URL::Route('getWalkIn') }}">
                 <i class="fa fa-money"></i> <span>Walk-in</span> <i class="fa pull-right"></i>
@@ -113,7 +98,21 @@
           </a>
         </li>
 
-
+        <li class="treeview {{ ($mt == "int") ? "active" : ""}}">
+          <a href="{{ URL::Route('getInventoryView') }}">
+            <i class="fa fa-file-text-o"></i> <span>Inventory</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
+        <li class="treeview {{ ($mt == "cl") ? "active" : ""}}">
+          <a href="{{ URL::Route('getCriLvlView') }}">
+            <i class="fa fa-file-text-o"></i> <span>Critical Level Item</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
+        <li class="treeview {{ ($mt == "sr") ? "active" : ""}}">
+          <a href="{{ URL::Route('getSales') }}">
+            <i class="fa fa-file-text-o"></i> <span>Sales Report</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
 
         <li class="treeview {{ ($mt == "nw") ? "active" : ""}}">
           <a href="{{ URL::Route('getNewsView') }}">
