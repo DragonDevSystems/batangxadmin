@@ -299,7 +299,7 @@ class CustomerController extends Controller {
 	function getWalkIn()
 	{
 		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
-		return View::Make("product.walkin")->with("userInfo",$userInfo)->with('mt','wi');
+		return View::Make("product.walkin")->with("userInfo",$userInfo)->with('cc','wi')->with('mt','tp');
 	}
 
 	function cancelledReservation($cus_id,$inv_id,$type)

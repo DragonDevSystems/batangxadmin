@@ -1,6 +1,6 @@
   <header class="main-header">
     <!-- Logo -->
-    <a href="{{ URL::Route('home') }}" class="logo">
+    <a href="{{ URL::Route('home') }}" class="logo" style="background-color: #fff;">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini">GX</span>
       <!-- logo for regular state and mobile devices -->

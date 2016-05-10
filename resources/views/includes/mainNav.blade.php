@@ -100,6 +100,11 @@
                 <i class="fa fa-file-text-o"></i> <span>Sales Report</span> <i class="fa pull-right"></i>
               </a>
             </li>
+            <li class="{{ $mt == "tp" ? (($cc == "wi") ? "active" : "") : ""}} treeview">
+              <a href="{{ URL::Route('getWalkIn') }}">
+                <i class="fa fa-money"></i> <span>Walk-in</span> <i class="fa pull-right"></i>
+              </a>
+            </li>
           </ul>
         </li>
         <li class="treeview {{ ($mt == "ml") ? "active" : ""}}">
@@ -108,11 +113,7 @@
           </a>
         </li>
 
-        <li class="{{ ($mt == "wi") ? "active" : ""}} treeview">
-          <a href="{{ URL::Route('getWalkIn') }}">
-            <i class="fa fa-money"></i> <span>Walk-in</span> <i class="fa pull-right"></i>
-          </a>
-        </li>
+
 
         <li class="treeview {{ ($mt == "nw") ? "active" : ""}}">
           <a href="{{ URL::Route('getNewsView') }}">
