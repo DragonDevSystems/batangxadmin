@@ -44,15 +44,20 @@
 		<!-- bootstrap wysihtml5 - text editor -->
   		<link rel="stylesheet" href="{{env('FILE_PATH_CUSTOM')}}plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   		<link rel="stylesheet" href="{{env('FILE_PATH_CUSTOM')}}css/custom.css">
+
 		<!-- FLOT CHARTS -->
-		<!--<script src="{{env('FILE_PATH_CUSTOM')}}plugins/flot/jquery.flot.min.js"></script>-->
+		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/flot/jquery.flot.min.js"></script>
 		<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
-		<!--<script src="{{env('FILE_PATH_CUSTOM')}}plugins/flot/jquery.flot.resize.min.js"></script>-->
+		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/flot/jquery.flot.resize.min.js"></script>
 		<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
-		<!--<script src="{{env('FILE_PATH_CUSTOM')}}plugins/flot/jquery.flot.pie.min.js"></script>-->
+		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/flot/jquery.flot.pie.min.js"></script>
 		<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
-		<!--<script src="{{env('FILE_PATH_CUSTOM')}}plugins/flot/jquery.flot.categories.min.js"></script>-->
+		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/flot/jquery.flot.categories.min.js"></script>
 		<!-- Page script --> 
+		
+		<!-- daterangepicker -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/daterangepicker/daterangepicker.js"></script>
 
 		<script type="text/javascript" src="{{env('FILE_PATH_CUSTOM')}}js/date_time.js"></script>
 		<style>
@@ -216,9 +221,7 @@
 	<script src="{{env('FILE_PATH_CUSTOM')}}plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
 	<!-- jQuery Knob Chart -->
 	<script src="{{env('FILE_PATH_CUSTOM')}}plugins/knob/jquery.knob.js"></script>
-	<!-- daterangepicker -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-	<script src="{{env('FILE_PATH_CUSTOM')}}plugins/daterangepicker/daterangepicker.js"></script>
+
 	<!-- datepicker -->
 	<script src="{{env('FILE_PATH_CUSTOM')}}plugins/datepicker/bootstrap-datepicker.js"></script>
 	<!-- Bootstrap WYSIHTML5 -->

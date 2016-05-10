@@ -1,0 +1,131 @@
+@extends('layouts.master')
+@section('addHead')
+  <title>Dashboard</title>
+@endsection
+
+@section('content')
+<div class="wrapper">
+@include('includes.header')
+  @include('includes.mainNav')
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Sales Report
+      </h1>
+    </section>
+
+    <!-- Main content -->
+	<section class="content">
+		<!-- Invoice list -->
+		<div class="box box-primary div-gen">
+			<div class="box-header">
+            	<div class="box-tools pull-right">
+                  <button class="btn btn-primary btn-sm" type="button" data-placeid="" onClick="generateReport();">
+                    <i class="fa fa-plus"></i>
+                    Generate
+                  </button>
+                </div>
+            </div>
+			<!-- /.box-header -->
+			<div class="form-group">
+                <label>Date range:</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="reportRange">
+                </div>
+                <!-- /.input group -->
+              </div>
+            
+		</div>
+
+		<div class="row">
+		        <div class="col-md-12">
+		          <!-- Bar chart -->
+		          <div class="box box-primary">
+		            <div class="box-header with-border">
+		              <i class="fa fa-bar-chart-o"></i>
+
+		              <h3 class="box-title">Sales Chart</h3>
+
+		              <div class="box-tools pull-right">
+		                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+		                </button>
+		                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+		              </div>
+		            </div>
+		            <div class="box-body">
+		              <div id="bar-chart" style="height: 300px;"></div>
+		            </div>
+		            <!-- /.box-body-->
+		          </div>
+		      </div>
+		  </div>
+          <!-- /.box -->
+	</section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  @include('includes.footer')
+  @include('includes.settingSidebar')
+</div>
+<script type="text/javascript">
+	$('#reportRange').daterangepicker();
+
+	function generateReport()
+	{
+		var daterange = $("#reportRange").val();
+
+		$(".div-gen").append('<div class="overlay tbl-overlay">\
+	        	<i class="fa fa-spinner fa-spin"></i>\
+	        </div>');
+		$.get('{{URL::Route('generateSalesReport')}}',{date:daterange} , function(data)
+        {
+        	$(".tbl-overlay").remove();
+        	var data_val = [["January", 10], ["February", 8], ["March", 100], ["April", 13], ["May", 17], ["June", 9],["January2", 10], ["February3", 8], ["March4", 100], ["April4", 13], ["May4", 17], ["June4", 9]];
+        	fillChart(data_val);
+        });
+	}
+
+
+    function fillChart(data_val)
+    {
+		/* END AREA CHART */
+
+		/*
+		* BAR CHART
+		* ---------
+		*/
+    	var bar_data = {
+	      data: data_val,
+	      color: "#3c8dbc",
+	    };
+	    $.plot("#bar-chart", [bar_data], {
+	      grid: {
+	      	hoverable: true,
+	      	clickable: true,
+	        borderWidth: 1,
+	        borderColor: "#f3f3f3",
+	        tickColor: "#f3f3f3"
+	      },
+	      series: {
+	        bars: {
+	          show: true,
+	          barWidth: 0.1,
+	          align: "center"
+	        }
+	      },
+	      xaxis: {
+	        mode: "categories",
+	        tickLength: 0
+	      }
+	    });
+	    /* END BAR CHART */
+    }
+
+</script>
+@endsection

@@ -107,6 +107,11 @@
             <i class="fa fa-file-text-o"></i> <span>Critical Level Item</span> <i class="fa pull-right"></i>
           </a>
         </li>
+        <li class="treeview {{ ($mt == "sr") ? "active" : ""}}">
+          <a href="{{ URL::Route('getSales') }}">
+            <i class="fa fa-file-text-o"></i> <span>Sales Report</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
