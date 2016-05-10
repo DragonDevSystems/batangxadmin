@@ -143,19 +143,19 @@ class UAMController extends Controller {
 			{
 				return Response::json(array(
 		            'status'  => 'success',
-		            'message'  => 'You successfully update the particular customer.',
+		            'message'  => 'You successfully update the particular admin.',
 		        ));
 			}
 			return Response::json(array(
 	            'status'  => 'fail',
-	            'message'  => 'Fail to update customer. System has encounter unnecessary error. Please Try again.',
+	            'message'  => 'Fail to update admin user. System has encounter unnecessary error. Please Try again.',
 	        ));
 		}
 		else
 		{
 			return Response::json(array(
 	            'status'  => 'fail',
-	            'message'  => 'The user that are you trying to update is not yet in the customer record. Please check and try again.',
+	            'message'  => 'The user that are you trying to update is not yet in the admin record. Please check and try again.',
 	        ));
 		}
 	}
@@ -183,19 +183,19 @@ class UAMController extends Controller {
 			{
 				return Response::json(array(
 		            'status'  => 'success',
-		            'message'  => 'You successfully update the particular admin.',
+		            'message'  => 'You successfully update the particular customer.',
 		        ));
 			}
 			return Response::json(array(
 	            'status'  => 'fail',
-	            'message'  => 'Fail to update admin user. System has encounter unnecessary error. Please Try again.',
+	            'message'  => 'Fail to update customer. System has encounter unnecessary error. Please Try again.',
 	        ));
 		}
 		else
 		{
 			return Response::json(array(
 	            'status'  => 'fail',
-	            'message'  => 'The user that are you trying to update is not yet in the admin record. Please check and try again.',
+	            'message'  => 'The user that are you trying to update is not yet in the customer record. Please check and try again.',
 	        ));
 		}
 	}
