@@ -213,4 +213,16 @@ Route::group(array('prefix' => '/admin'),function()
 		});
 
 	});
+
+	Route::group(array('prefix' => '/banner'),function()
+	{
+		Route::group(array('before' => 'auth'), function()
+		{
+			Route::get('/', array('uses' => 'BannerController@getBannerView', 'as' => 'getBannerView','middleware' => 'auth'));
+			Route::group(array('before' => 'csrf'), function()
+			{
+				Route::post('/postBanner/{id}', array('uses' => 'BannerController@postBanner', 'as' => 'postBanner','middleware' => 'auth'));
+			});
+		});
+	});
 });

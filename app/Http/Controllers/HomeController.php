@@ -8,6 +8,7 @@ use App;
 use Redirect;
 use App\Models\News;
 use App\Models\Testimonials;
+use App\Models\Banner;
 class HomeController extends Controller {
 
 	public function index()
@@ -34,7 +35,14 @@ class HomeController extends Controller {
 
 	public function cusIndex()
 	{
-		return View::Make("customer.home.index")->with('mt','home');
+		$banner1 = Banner::find(1);
+		$banner2 = Banner::find(2);
+		$banner3 = Banner::find(3);
+		return View::Make("customer.home.index")
+							->with('banner1',$banner1)
+							->with('banner2',$banner2)
+							->with('banner3',$banner3)
+							->with('mt','home');
 	}
 
 	public function termsandcondition()

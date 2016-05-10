@@ -63,6 +63,11 @@
                 <!--<i class="fa fa-truck"></i>--> <span>Delivery</span> <i class="fa pull-right"></i>
               </a>
             </li>
+            <li class="{{ $mt == "fm" ? (($cc == "bn") ? "active" : "") : ""}}">
+              <a href="{{ URL::Route('getBannerView') }}">
+                <!--<i class="fa fa-truck"></i>--> <span>Banner</span> <i class="fa pull-right"></i>
+              </a>
+            </li>
           </ul>
         </li>
 
