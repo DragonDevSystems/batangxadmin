@@ -95,24 +95,68 @@
 		$.get('{{URL::Route('getDeliveryProduct')}}',{id : id}, function(data)
 		{
 			console.log(data)
-			if(data.length != 0)
-	      	{
 	      		$('#div-entry').empty();
 				$('#div-entry').append('<div class="box-header with-border">\
 			          <h3 class="box-title">Receipt Information</h3>\
 			          <div class="box-tools pull-right">\
+						<button id="editDelivery" class="btn btn-info btn-sm " type="button">\
+							<i class="fa fa-edit"></i>\
+							Edit\
+						</button>\
+						<button id="canceleditDelivery" class="btn btn-warning btn-sm " type="button" style="display:none">\
+							<i class="fa fa-edit"></i>\
+							Cancel\
+						</button>\
 			            <button type="button" class="btn btn-danger btn-sm"  onClick="defaultDisplay()"><i class="fa fa-undo" aria-hidden="true"></i></button>\
 			          </div>\
 			        </div>');
 
 				$('#div-entry').append('<div class="box-body formAddProduct">\
-															<div class="form-group">\
-															  <label for="receipt_num">Delivery Receipt No.</label>\
-															  <input style="width:50%" type="text" class="form-control" id="receipt_num" name="receipt_num" value="" placeholder="" disabled>\
+														<div class="row">\
+															<div class="col-md-6">\
+																<div class="form-group">\
+																  <label for="receipt_num">Delivery Receipt No.</label>\
+																  <input type="text" class="form-control" id="receipt_num" name="receipt_num" value="" placeholder="" disabled>\
+																  <input type="hidden" class="form-control" id="type" name="type" value="edit">\
+																</div>\
 															</div>\
+															<div class="col-md-6">\
+																<div class="row">\
+																	<div class="col-md-7">\
+																		<div class="form-group">\
+															                <label for="product">Choose Product</label>\
+															                <select id="product" name="product" placeholder="Select a product." class="form-control select2" style="width: 100%;" required disabled>\
+															                @foreach($allProduct as $product)\
+															                <option value="{{$product['id']}}">{{$product['name']}}</option>\
+															                @endforeach\
+															                </select>\
+															            </div>\
+															        </div>\
+															        <div class="col-md-5">\
+																		<div class="form-group ">\
+																			<label for="qty">QTY</label>\
+																		  	<div class="input-group">\
+																			    <input maxlength="2" type="text" id="qty" name="qty" placeholder="add quantity" class="form-control" aria-label="..." disabled>\
+																				<div class="input-group-btn">\
+																				<button type="button" class="btn btn-default plus new" data-toggle="tooltip" title="Add product" disabled>\
+																					<i class="fa fa-plus" aria-hidden="true"></i>\
+																				</button>\
+																				</div>\
+																			</div>\
+																		</div>\
+															        </div>\
+													            </div>\
+															</div>\
+														</div>\
 														<div class="box box-default">\
 															<div class="box-header">\
 															<h3 class="box-title">Product List</h3>\
+															<div class="box-tools pull-right">\
+																<button id="remove_product" class="btn btn-danger btn-sm " type="button" disabled>\
+																	<i class="fa fa-trash"></i>\
+																	Remove\
+																</button>\
+															</div>\
 													        </div>\
 															<div class="box-body">\
 												              	<table id="qty_list" class="table table-bordered table-hover">\
@@ -130,18 +174,74 @@
 												        </div>\
 							           				</div>\
 												');
+				var table2 = $('#qty_list').DataTable();
 		        $('#qty_list').DataTable().clear().draw();
 		        for (var i = 0; i < data.length; i++) 
 		        {
 		        	if(i == 0){
 		        		$('#receipt_num').val(data[i].receipt);
 		        	}
-		        	$('#qty_list').DataTable().row.add([''+data[i].id+'', 
+		        	if(data.length > 1){
+		        		$('#qty_list').DataTable().row.add([''+data[i].id+'', 
                                         ''+data[i].name+'', 
                                         ''+data[i].qty+'', 
                                         ]).draw();
+		        	}
+		        	
 		        }
-		    }
+
+				$('#qty_list tbody').on( 'click', 'tr', function () {
+	      
+			        if ( $(this).hasClass('active') ) {
+			          $(this).removeClass('active');
+			          $('#remove_product').prop("disabled", true);
+			        }
+			        else{
+			          table2.$('tr.active').removeClass('active');
+			          $(this).addClass('active');
+			          $('#remove_product').prop("disabled", false);
+			        }
+			    } );
+		        $("#product").select2({
+					//minimumResultsForSearch: -1,
+					placeholder: "Select a product.",
+	   				//allowClear: false
+				}).select2("val", null);
+
+				 $(document).on("click","#remove_product",function(){
+		     		promptConfirmation("Are ou sure you want to remove this record ?");
+			     	$("#btnYes").click(function(){
+					    $.map(table2.rows('.active').data(), function (item) {
+				           	var product =  item[0];
+				           	var name =  item[1];
+				           	var qty =  item[2];
+				           	var type = $('#type').val();
+				           	var receipt_num = $('#receipt_num').val();
+				            var _token = "{{ csrf_token() }}";
+
+							$.post('{{URL::Route('deleteDeliveryProduct')}}',{ _token: _token ,product: product, name : name , qty : qty ,
+							type: type , receipt_num : receipt_num } , function(response)
+								{
+								if(response.status == "success"){
+								  table2.row('.active').remove().draw( false )
+								  promptMsg(response.status,response.message);
+								}
+							});
+				        });
+					});
+			    });
+
+				$(document).on("click","#editDelivery",function(){
+					$('#canceleditDelivery').show();
+					$('#product,#qty,.plus').removeAttr("disabled")
+					$(this).hide();
+				});
+				$(document).on("click","#canceleditDelivery",function(){
+					$('#editDelivery').show();
+					$('#product,#qty,.plus').attr('disabled', 'disabled');
+					$(this).hide();
+				});
+		    
 		});
 	}
 	function getReceiptList()
@@ -346,14 +446,16 @@
     });
    
 	$(document).on("click",".plus",function(){
-
+		var receipt_num = $("#receipt_num").val();
+		var type = $("#type").val();
 		var product = $('#product').val();
 		var name = $("#product option:selected").text();
 		var qty = $('#qty').val();
 		var check = $(this).hasClass('new') ? "new" : "old";
 		var _token = "{{ csrf_token() }}";
 		$this = $(this);
-		$.post('{{URL::Route('addDelivery')}}',{ _token: _token ,product: product, qty : qty, check : check} , function(response)
+		$.post('{{URL::Route('addDelivery')}}',{ _token: _token ,product: product, qty : qty, check : check ,
+		receipt_num: receipt_num, type : type} , function(response)
 		{
 			//console.log(response);
 			if(response.status == "success"){

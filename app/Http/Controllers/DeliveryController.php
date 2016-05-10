@@ -33,6 +33,9 @@ class DeliveryController extends Controller {
 		$product = Input::get('product');
 		$qty = Input::get('qty');
 		$check = Input::get('check');
+		//for edit
+		$type = Input::get('type');
+		$receipt_num = Input::get('receipt_num');
 		if($check == "new"){
 			$affectedRows = ProductDelivery::where('receipt_num', '=', 0)
 									->where('user_id', '=', Auth::User()['id'])
@@ -40,7 +43,14 @@ class DeliveryController extends Controller {
 		}
 		if(!empty($product) && !empty($qty)){
 			$addDelivery = new ProductDelivery();
-			$addDelivery['receipt_num'] = 0;
+			if($type == "edit"){
+				$getDelivery = ProductDeliveryReceipt::where('receipt_num','=',$receipt_num)->first();
+				$addDelivery['receipt_num'] = $getDelivery['id'];
+			}
+			else{
+				$addDelivery['receipt_num'] = 0;
+			}
+			
 			$addDelivery['prod_id'] = $product;
 			$addDelivery['qty'] = $qty;
 			$addDelivery['user_id'] = Auth::User()['id'];
@@ -64,12 +74,24 @@ class DeliveryController extends Controller {
 		$product = Input::get('product');
 		$name = Input::get('name');
 		$qty = Input::get('qty');
-
-		$getProduct = ProductDelivery::where('prod_id','=',$product)
+		//for edit
+		$type = Input::get('type');
+		$receipt_num = Input::get('receipt_num');
+		if($type ="edit"){
+			$getProduct = ProductDelivery::where('prod_id','=',$product)
+									->where('receipt_num','=',$receipt_num)
+									->where('qty','=',$qty)
+									->where('user_id','=',Auth::User()['id'])
+									->first();
+		}
+		else{
+			$getProduct = ProductDelivery::where('prod_id','=',$product)
 									->where('receipt_num','=',0)
 									->where('qty','=',$qty)
 									->where('user_id','=',Auth::User()['id'])
 									->first();
+		}
+		
 		if(!empty($getProduct)){
 			if($getProduct->delete()){
 				return Response::json(array(
@@ -79,7 +101,7 @@ class DeliveryController extends Controller {
 			}
 		}
 		return Response::json(array(
-							"status" => "success",
+							"status" => "fail",
 							"message" => "Delete fail.",
 						));
 	}
@@ -163,7 +185,7 @@ class DeliveryController extends Controller {
 		$response = array();
 		$receiptInfo = ProductDeliveryReceipt::find($receipt);
 		$getProducts = ProductDelivery::where('receipt_num','=',$receipt)->get();
-		if(!empty($getProducts))
+		if(count($getProducts) > 0)
 		{
 			foreach ($getProducts as $product) {
 				$product_info = ProductInformation::find($product['prod_id']);
@@ -174,6 +196,12 @@ class DeliveryController extends Controller {
 						"qty" => $product['qty'],
 					);
 			}
+			return Response::json($response);
+		}
+		else{
+			$response[]= array(
+						"receipt" => $receiptInfo['receipt_num'],
+					);
 			return Response::json($response);
 		}
 	}
