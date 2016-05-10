@@ -136,8 +136,13 @@
 	        bars: {
 	          show: true,
 	          barWidth: 0.1,
-	          align: "center"
-	        }
+	          align: "center",
+	          horizontal: false
+	        },
+	        series: {
+		        lines: { show: true },
+		        points: { show: true }
+		    }
 	      },
 	      xaxis: {
 	        mode: "categories",
