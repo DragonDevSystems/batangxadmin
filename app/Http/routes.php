@@ -18,6 +18,7 @@ Route::get('/new', array('uses' =>'HomeController@getNews', 'as' => 'getNews'));
 Route::get('/category/{category}', array('uses' =>'ProductController@getProByCat', 'as' => 'getProByCat'));
 Route::get('/product/{pro_id}/{pro_name}', array('uses' =>'ProductController@productPreview', 'as' => 'productPreview'));
 Route::get('/automation/checkExpireReservation', array('uses' =>'CronController@checkExpireReservation', 'as' => 'checkExpireReservation'));
+Route::get('/automation/userBlocked', array('uses' =>'CronController@userBlocked', 'as' => 'userBlocked'));
 Route::get('/New-product/all', array('uses' =>'CustomerController@getAllNewProduct', 'as' => 'getAllNewProduct'));
 Route::get('/Featured-product/all', array('uses' =>'CustomerController@getAllFeaturedProduct', 'as' => 'getAllFeaturedProduct'));
 Route::group(array('before' => 'auth'), function()

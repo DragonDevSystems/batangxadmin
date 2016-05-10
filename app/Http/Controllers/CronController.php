@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\ProductInvoice;
 use App\Models\ProductReserve;
 use App\Models\ProductInventory;
+use App\Models\User;
 class CronController extends Controller {
 
 	public function checkExpireReservation()
@@ -50,5 +51,36 @@ class CronController extends Controller {
 			
 		}
 		
+	}
+
+	public function userBlocked()
+	{
+		$allCustomerList = User::Where("isAdmin","=",0)->where("blocked","=",0)->get();
+		if(!empty($allCustomerList))
+		{
+			foreach ($allCustomerList as $allCustomerListi) {
+				$ctr = 0;
+				$invList = ProductInvoice::where("cus_id","=",$allCustomerListi['id'])->get();
+				if(!empty($invList))
+				{
+					foreach ($invList as $invListi) {
+						if($invListi['status'] == 4)
+						{
+							$ctr++;
+							if($ctr == 5)
+							{
+								$userInfo = User::find($allCustomerListi['id']);
+								$userInfo['blocked'] = 1;
+								$userInfo->save();
+							}
+						}
+						else
+						{
+							$ctr = 0;
+						}
+					}
+				}
+			}
+		}
 	}
 }
