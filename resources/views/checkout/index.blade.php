@@ -1,6 +1,6 @@
 @extends('customer.layouts.master')
 @section('addHead')
-  <title>Welcome | GameXtreme</title>
+  <title>Check-out | GameXtreme</title>
 @endsection
 
 @section('content')

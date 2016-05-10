@@ -73,9 +73,9 @@ class ReportsController extends Controller {
 				$response[] = [$byDatei,$dayTotal];
 			}
 		}
-
+		$dateprint = date('Y-m-d h:i:sa');
 		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
-		return View::Make("reports.printSales")->with("userInfo",$userInfo)->with("products",$products)->with('mt','sr');
+		return View::Make("reports.printSales")->with("userInfo",$userInfo)->with("products",$products)->with("allTotal",number_format($allTotal, 2))->with('mt','sr')->with("dateprint",$dateprint);
 	}
 
 	public function generateSalesReport()

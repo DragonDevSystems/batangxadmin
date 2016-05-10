@@ -1,6 +1,6 @@
 @extends('customer.layouts.master')
 @section('addHead')
-  <title>Welcome | GameXtreme</title>
+  <title>Reports | GameXtreme</title>
 @endsection
 
 @section('content')
@@ -10,7 +10,12 @@
     <div class="col-xs-12">
       <div class="col-xs-4">
         <h2 class="page-header">
-          <small>Date: 5-10-2016</small>
+          <small>Date: {{$dateprint}}</small>
+        </h2>
+      </div>
+      <div class="col-xs-4">
+        <h2 class="page-header">
+          <big class="pull-center">Sales Report</big>
         </h2>
       </div>
     </div>
@@ -31,14 +36,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>5-10-2016</td>
-            <td>001</td>
-            <td>LG G4</td>
-            <td>5.00</td>
-            <td>5</td>
-            <td>25.00</td>
-          </tr>
+        	@for($x=0 ; $x < count($products) ; $x++)
+	          <tr>
+	            <td>{{$products[$x]['date']}}</td>
+	            <td>{{$products[$x]['inv_no']}}</td>
+	            <td>{{$products[$x]['product']}}</td>
+	            <td>{{$products[$x]['unit_price']}}</td>
+	            <td>{{$products[$x]['qty']}}</td>
+	            <td>{{$products[$x]['subtotal']}}</td>
+	          </tr>
+          	@endfor
         </tbody>
       </table>
     </div>
@@ -53,7 +60,7 @@
         <table class="table">
           <tr>
             <th style="width:50%">Total Sales:</th>
-            <td>PHP 5,000.00</td>
+            <td>{{$allTotal}}</td>
           </tr>
           <tr>
           </tr>
