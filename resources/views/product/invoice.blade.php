@@ -26,6 +26,7 @@
 					<thead>
 						<tr>
 							<th>Invoice No.</th>
+							<th>Date</th>
 							<th>Customer Name</th>
 							<th>Remarks</th>
 							<th>Status</th>
@@ -57,7 +58,8 @@
 				$('#dtUAList').DataTable().clear().draw();
 				for (var i = 0; i < data.length; i++) 
 				{
-					$('#dtUAList').DataTable().row.add([''+data[i].inv_no+'', 
+					$('#dtUAList').DataTable().row.add([''+data[i].inv_no+'',
+													''+data[i].date+'', 
                                                     ''+data[i].customer+'', 
                                                     ''+data[i].remarks+'', 
                                                     ''+data[i].status+'', 

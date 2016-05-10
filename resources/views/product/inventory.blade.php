@@ -30,7 +30,7 @@
 							<th>On Cart Item</th>
 							<th>Reserved Item</th>
 							<th>Sold Item</th>
-							<th>Available Item</th>
+							<th>Stock on Hand</th>
 						</tr>
 					</thead>
 					<tbody id="tbUAList"></tbody>

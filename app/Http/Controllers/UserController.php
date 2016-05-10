@@ -252,6 +252,14 @@ class UserController extends Controller {
 
 			if($auth)
 			{
+				if(Auth::User()['blocked'])
+				{
+					Auth::logout();
+					return  Response::json(array(
+	                    'status'  => 'fail',
+	                    'message'  => 'Your account has been blocked. Please contact us.',
+	                ));
+				}
 				if($source == "client")
 				{
 					return 1;

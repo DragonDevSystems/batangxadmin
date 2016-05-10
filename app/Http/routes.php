@@ -80,6 +80,7 @@ Route::group(array('prefix' => '/admin'),function()
 			{
 				Route::get('/statsbox', array('uses' => 'GlobalController@statsbox', 'as' => 'statsbox','middleware' => 'auth'));
 				Route::get('/admin/list',array('uses' => 'UAMController@adminUserList', 'as' => 'adminUserList'));
+				Route::get('/admin/customerList',array('uses' => 'UAMController@customerList', 'as' => 'customerList'));
 				Route::get('/admin/uaal', array('uses' => 'UAMController@uaal', 'as' => 'uaal','middleware' => 'auth'));
 				Route::get('/admin/information/{id}', array('uses' => 'GlobalController@userInfoList', 'as' => 'userInfoList','
 					middleware' => 'auth'));
@@ -100,6 +101,7 @@ Route::group(array('prefix' => '/admin'),function()
 				Route::post('/product/addCategory', array('uses' => 'FileMaintenanceController@addCategory', 'as' => 'addCategory','middleware' => 'auth'));
 				Route::post('/addAdmin', array('uses' => 'UAMController@addAdmin', 'as' => 'addAdmin','middleware' => 'auth'));
 				Route::post('/updateAdmin', array('uses' => 'UAMController@updateAdmin', 'as' => 'updateAdmin','middleware' => 'auth'));
+				Route::post('/updateCustomer', array('uses' => 'UAMController@updateCustomer', 'as' => 'updateCustomer','middleware' => 'auth'));
 				Route::post('/addToCart/{id}', array('uses' => 'ProductController@addToCart', 'as' => 'addToCart'));
 				Route::get('/admin/productOnCart', array('uses' => 'GlobalController@productOnCart', 'as' => 'productOnCart'));
 				Route::get('/admin/onCartList/{id}/{type}', array('uses' => 'GlobalController@onCartList', 'as' => 'onCartList'));
@@ -123,6 +125,7 @@ Route::group(array('prefix' => '/admin'),function()
 		{
 			Route::get('/getTransactionHistory', array('uses' => 'UAMController@getTransactionHistory', 'as' => 'getTransactionHistory','middleware' => 'auth'));
 			Route::get('/getUAL', array('uses' => 'UAMController@getUAL', 'as' => 'getUAL','middleware' => 'auth'));
+			Route::get('/getCustomer', array('uses' => 'UAMController@getCustomer', 'as' => 'getCustomer','middleware' => 'auth'));
 			Route::get('/getRoles', array('uses' => 'UAMController@getRoles', 'as' => 'getRoles','middleware' => 'auth'));
 			Route::get('/getPermissions', array('uses' => 'UAMController@getPermissions', 'as' => 'getPermissions','middleware' => 'auth'));
 		});

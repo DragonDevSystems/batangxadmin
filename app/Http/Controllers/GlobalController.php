@@ -54,6 +54,7 @@ class GlobalController extends Controller {
 						"gender"		=> $userInfo['gender'],
 						"address"		=> $userInfo['address'],
 						"isVerified"	=> $username['isVerified'],
+						"blocked"		=> $username['blocked'],
 					);
 		}
 	}
@@ -181,42 +182,42 @@ class GlobalController extends Controller {
 								"count" =>count($this->newUser()),
 								"bg_color" => "bg-red",
 								"content_title" => "New Users This Month",
-								"Ionicons" => "ion-person-add",
+								"Ionicons" => "",//"ion-person-add",
 								"link" => URL::Route('statsList','NU'),
 							),//new user this month
 						array(
 								"count"	=> count($this->onlineUser()),
 								"bg_color" => "bg-red",
 								"content_title" => "Online User",
-								"Ionicons" => "ion-stats-bars",
+								"Ionicons" => "",//"ion-stats-bars",
 								"link" => URL::Route('statsList','OU'),
 							),// online user near realtime
 						array(
 								"count"	=> count($this->registeredUser()),
 								"bg_color" => "bg-red",
 								"content_title" => "Registered User",
-								"Ionicons" => "ion-person-add",
+								"Ionicons" => "",//"ion-person-add",
 								"link" => URL::Route('statsList','RU'),
 							),// total of registered user
 						array(
 								"count"	=> count($this->unverifiedUser()),
 								"bg_color" => "bg-red",
 								"content_title" => "Unverified User",
-								"Ionicons" => "ion-pie-graph",
+								"Ionicons" => "",//"ion-pie-graph",
 								"link" => URL::Route('statsList','UVU'),
 							),//un-verified user
 						array(
 								"count"	=> count($this->unReadMessage()),
 								"bg_color" => "bg-red",
 								"content_title" => "Unread Inquiries",
-								"Ionicons" => "ion-android-mail",
+								"Ionicons" => "",//"ion-android-mail",
 								"link" => URL::Route('getContactMailView'),
 							),//un-read message from contact us
 						array(
 								"count"	=> count($this->onCartProduct()),
 								"bg_color" => "bg-red",
 								"content_title" => "On Cart Product",
-								"Ionicons" => "ion-android-cart",
+								"Ionicons" => "",//"ion-android-cart",
 								"link" => URL::Route('statsList','OCP'),
 							),//On cart product
 						]);
@@ -738,6 +739,7 @@ class GlobalController extends Controller {
 				
 				$response[] = array(
 						"inv_no" => str_pad($alli['id'], 6, '0', STR_PAD_LEFT),
+						"date" => date('Y-m-d',strtotime($alli['created_at'])),
 						"customer" => $userInfo['fname'].' '.$userInfo['lname'],
 						"remarks" => $alli['remarks'],
 						"status" => $this->invoiceStatus($alli['status']),
