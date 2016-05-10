@@ -51,8 +51,9 @@
 		              <i class="fa fa-bar-chart-o"></i>
 
 		              <h3 class="box-title">Sales Chart</h3>
-
+		              <h1 class="box-title h-header"></h1>
 		              <div class="box-tools pull-right">
+		              	<a href="google.com" class="btn btn-primary btn-sm btn-print" target="_blank" disabled><i class="fa fa-print"></i> Print</a>
 		                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
 		                </button>
 		                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -62,6 +63,9 @@
 		              <div id="bar-chart" style="height: 300px;"></div>
 		            </div>
 		            <!-- /.box-body-->
+		            <div class="form-group">
+		                <label id="totalSales"></label>
+		           	</div>
 		          </div>
 		      </div>
 		  </div>
@@ -75,7 +79,7 @@
 </div>
 <script type="text/javascript">
 	$('#reportRange').daterangepicker();
-
+	generateReport();
 	function generateReport()
 	{
 		var daterange = $("#reportRange").val();
@@ -86,11 +90,27 @@
 		$.get('{{URL::Route('generateSalesReport')}}',{date:daterange} , function(data)
         {
         	$(".tbl-overlay").remove();
-        	var data_val = [["January", 10], ["February", 8], ["March", 100], ["April", 13], ["May", 17], ["June", 9],["January2", 10], ["February3", 8], ["March4", 100], ["April4", 13], ["May4", 17], ["June4", 9]];
-        	fillChart(data_val);
+ 			if(data.response.length != 0)
+ 			{
+ 				$(".btn-print").removeAttr('disabled');
+ 				fillChart(data.response);
+ 			}
+ 			else
+ 			{
+		 		$(".btn-print").attr({
+                    'disabled': 'disabled'
+                });
+ 			}
+			$(".h-header").text(data.dateRange);
+			$("#totalSales").text(data.allTotal);
+			$(".btn-print").attr({
+                    'href': data.printTarget
+                });
+			fillChart(data.response);
+        	//var data_val = [["January", 10], ["February", 8], ["March", 100], ["April", 13], ["May", 17], ["June", 9],["January2", 10], ["February3", 8], ["March4", 100], ["April4", 13], ["May4", 17], ["June4", 9]];
+        	
         });
 	}
-
 
     function fillChart(data_val)
     {
