@@ -56,7 +56,6 @@
             <!-- /.box-footer -->
             <div class="box-footer">
               <button type="button" class="btn btn-default trash_mail" data-id="{{$mail['id']}}"><i class="fa fa-trash-o"></i> Delete</button>
-              <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
             </div>
             <!-- /.box-footer -->
           </div>
