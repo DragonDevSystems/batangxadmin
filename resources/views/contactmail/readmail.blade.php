@@ -72,7 +72,7 @@
   @include('includes.settingSidebar')
 </div>
 <script type="text/javascript">
-	$(document).on("click",".trash_mail",function(){
+	/*$(document).on("click",".trash_mail",function(){
     var id = $(this).data('id');
     var _token = "{{ csrf_token() }}";
     promptConfirmation("Do you want to move this mail to trash?");
@@ -87,6 +87,43 @@
         }
       });
     });
+  });*/
+  $(document).on("click",".trash_mail",function(){
+    var type = "{{$mm}}";
+    var id = $(this).data('id');
+    if(type == "inbox"){
+      promptConfirmation("Do you want to move this mail to trash?");
+      $('#btnYes').click(function() {
+       
+        var _token = "{{ csrf_token() }}";
+        $.post('{{URL::Route('moveToTrash')}}',{ _token: _token, id: id } , function(response)
+        {
+          if(response.status == "success"){
+           promptMsg(response.status,response.message);
+           window.location.href = "{{URL::Route('getContactMailView')}}";
+          }
+        });
+        $(this).closest('tr').fadeOut("slow",function(){ 
+                                    $(this).remove(); 
+                                  });
+      });
+    }
+    else{
+      promptConfirmation("Do you want to remove this mail permanently?");
+      $('#btnYes').click(function() {
+        var _token = "{{ csrf_token() }}";
+        $.post('{{URL::Route('deleteMail')}}',{ _token: _token, id: id } , function(response)
+        {
+          if(response.status == "success"){
+           promptMsg(response.status,response.message);
+           window.location.href = "{{URL::Route('getTrashMailView')}}";
+          }
+        });
+        $(this).closest('tr').fadeOut("slow",function(){ 
+                                    $(this).remove(); 
+                                  });
+      });
+    }
   });
   $(document).on("click",".next",function(){
     var id = "{{$mail['id']}}";
