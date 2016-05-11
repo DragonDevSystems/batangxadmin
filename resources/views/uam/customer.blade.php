@@ -112,9 +112,6 @@
 							$('<button/>', {'class': 'btn btn-box-tool' ,'type' : 'button', 'data-widget': 'collapse' , 'html' : '<i class="fa fa-minus"></i>' })),
 						$('<div />', { 'class' : 'row'}).append(
 							$('<div />', { 'class' : 'col-md-3 col-sm-3'}).append(
-								$('<div />' , {'class' : 'col-md-12 col-sm-12'}).append(
-									$('<div />' , {'class' : 'image pull-left'}).append(
-										$('<img/>', {'src':'{{env('FILE_MAIN_PATH')}}'+data.uinfo.userDp , 'style':'margin:0px auto;width:40px;height:40px;' , 'class':'img-circle' , 'alt':'User Image'}))),
 								$('<div />' , { 'class' : 'col-md-12 col-sm-12'}).append(
 									$('<div />' , { 'class' : 'form-group'}).append(
 										$('<label />' , { 'class' : 'control-label' , 'for' : 'username' , 'text' : 'Username'}),
