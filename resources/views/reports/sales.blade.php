@@ -19,6 +19,7 @@
     <!-- Main content -->
 	<section class="content">
 		<!-- Invoice list -->
+
 		<div class="box box-primary div-gen">
 			<div class="box-header">
             	<div class="box-tools pull-right">
@@ -29,18 +30,28 @@
                 </div>
             </div>
 			<!-- /.box-header -->
-			<div class="form-group">
-                <label>Date range:</label>
-
-                <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control pull-right" id="reportRange">
-                </div>
-                <!-- /.input group -->
-              </div>
-            
+			<div class="row">
+				<div class="col-md-4 col-sm-3">
+					<div class="form-group">
+						<select class="form-control select2" id="rType">
+							<option value="0">Daily</option>
+							<option value="1">Monthly</option>
+							<option value="2">Yearly</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-3" id="divParam">
+					<div class="form-group">
+						<label>Date range:</label>
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="fa fa-calendar"></i>
+							</div>
+							<input type="text" class="form-control pull-right" id="reportRange">
+						</div>
+					</div>
+	        	</div>
+            </div>
 		</div>
 
 		<div class="row">
@@ -78,16 +89,53 @@
   @include('includes.settingSidebar')
 </div>
 <script type="text/javascript">
+
+	$(document).ready(function() {
+		$(".select2").select2();
+	});
+
+	$(document).on("change", "#rType", function(e){
+	    e.preventDefault();
+	    $("#divParam").empty();
+	    switch($(this).val()) {
+		    case "0":
+		        $("#divParam").append(
+		        	$('<div />', {'class' : 'form-group'}).append(
+						'<label>Date range:</label>\
+						<div class="input-group">\
+							<div class="input-group-addon">\
+								<i class="fa fa-calendar"></i>\
+							</div>\
+							<input type="text" class="form-control pull-right" id="reportRange">\
+						</div>'));
+		        break;
+		    case "1":
+		    	 $("#divParam").append(
+		        	$('<div />', {'class' : 'form-group'}).append(
+						'<label>Select Year:</label>\
+						<select class="form-control select2" id="year">\
+							<option value="2016">2016</option>\
+						</select>'));
+		    	 break;
+		    case "2":
+		        break;
+		    default:
+		        break;
+		}
+		return  false;
+	});
 	$('#reportRange').daterangepicker();
 	generateReport();
 	function generateReport()
 	{
 		var daterange = $("#reportRange").val();
-
+		var rtype  = $("#rType").val();
+		var year  = $("#year").val();
+		
 		$(".div-gen").append('<div class="overlay tbl-overlay">\
 	        	<i class="fa fa-spinner fa-spin"></i>\
 	        </div>');
-		$.get('{{URL::Route('generateSalesReport')}}',{date:daterange} , function(data)
+		$.get('{{URL::Route('generateSalesReport')}}',{date:daterange , rtype : rtype, year : year} , function(data)
         {
         	$(".tbl-overlay").remove();
  			if(data.response.length != 0)
@@ -108,7 +156,6 @@
                 });
 			fillChart(data.response);
         	//var data_val = [["January", 10], ["February", 8], ["March", 100], ["April", 13], ["May", 17], ["June", 9],["January2", 10], ["February3", 8], ["March4", 100], ["April4", 13], ["May4", 17], ["June4", 9]];
-        	
         });
 	}
 
