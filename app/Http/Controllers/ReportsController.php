@@ -285,7 +285,7 @@ class ReportsController extends Controller {
 					}
 
 					$headerL = "for ".$startdate." to ".$enddate ;
-					$printUrl = URL::Route('printSales',[$startdate,$enddate,0,0]);
+					$printUrl = URL::Route('printDelivery',[$startdate,$enddate,0,0]);
 				break;
 			case 1:
 				$monthRange = [[1,'January'],[2,'February'],[3,'March'],[4,'April'],[5,'May'],[6,'June'],[7,'July'],[8,'August'],[9,'September'],[10,'October'],[11,'November'],[12,'December']];
@@ -307,7 +307,7 @@ class ReportsController extends Controller {
 					}
 				}
 				$headerL = "for ".$year;
-				$printUrl = URL::Route('printSales',[0,0,$year,1]);
+				$printUrl = URL::Route('printDelivery',[0,0,$year,1]);
 			break;
 				case 2:
 				$yearRange = ['2016'];
@@ -325,7 +325,7 @@ class ReportsController extends Controller {
 					$response[] = [$yearRangei,$dayTotal];
 				}
 				$headerL = "for ".$year;
-				$printUrl = URL::Route('printSales',[0,0,0,2]);
+				$printUrl = URL::Route('printDelivery',[0,0,0,2]);
 				break;
 			default:
 				# code...
@@ -339,5 +339,60 @@ class ReportsController extends Controller {
 				"printTarget" => $printUrl,
 			);
 
+	}
+
+	public function printDelivery($sdate,$edate,$year,$type)
+	{
+		$byDate = array();
+		$response = array();
+		$products = array();
+
+		switch ($type) {
+			case 0:
+				$allTotal = 0;
+				$total = ProductDeliveryReceipt::where(DB::raw('DATE(created_at)'),'>=',$sdate)->where(DB::raw('DATE(created_at)'),'<=',$edate)->get();
+				break;
+			case 1:
+				$allTotal = 0;
+				$total = ProductDeliveryReceipt::whereYear('created_at','=',$year)->get();
+				break;
+			case 2:
+				$allTotal = 0;
+				$total = ProductDeliveryReceipt::all();
+				break;
+			default:
+				# code...
+				break;
+		}
+		
+		if(!empty($total))
+		{
+			foreach ($total as $totali) {
+				if(!in_array(date('Y-m-d',strtotime($totali['created_at'])),$byDate))
+				{
+					$byDate[] = date('Y-m-d',strtotime($totali['created_at']));
+				}
+				$info = ProductDeliveryReceipt::find($totali['id']);
+				$receipts[] = array(
+						"date" => date('Y-m-d',strtotime($totali['created_at'])),
+						"receipts" => $info['receipt_num'],
+						"remarks" => $info['remarks'],
+					);
+			}
+
+			foreach ($byDate as $byDatei) {
+				$dayTotal = 0;
+				$result = ProductDeliveryReceipt::where(DB::raw('DATE(created_at)'),'=',$byDatei)->get();
+				foreach ($result as $resulti) {
+					$dayTotal += (count(ProductDeliveryReceipt::find($resulti['id'])));
+
+				}
+				$allTotal += $dayTotal;
+			}
+		}
+
+		$dateprint = date('Y-m-d h:i:sa');
+		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
+		return View::Make("reports.printDelivery")->with("userInfo",$userInfo)->with("receipts",$receipts)->with("allTotal",number_format($allTotal, 2))->with('mt','sr')->with("dateprint",$dateprint);
 	}
 }

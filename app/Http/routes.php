@@ -173,6 +173,7 @@ Route::group(array('prefix' => '/admin'),function()
 			Route::get('/getDeliveryProduct', array('uses' => 'DeliveryController@getDeliveryProduct', 'as' => 'getDeliveryProduct','middleware' => 'auth'));
 			Route::get('/reports', array('uses' => 'ReportsController@getDeliveryReportView', 'as' => 'getDeliveryReportView','middleware' => 'auth'));
 			Route::get('/generateDeliveryReport', array('uses' => 'ReportsController@generateDeliveryReport', 'as' => 'generateDeliveryReport','middleware' => 'auth'));
+			Route::get('/printDelivery/{sdate}/{edate}/{year}/{type}', array('uses' => 'ReportsController@printDelivery', 'as' => 'printDelivery','middleware' => 'auth'));
 			Route::group(array('before' => 'csrf'), function()
 			{
 				Route::post('/addDelivery', array('uses' => 'DeliveryController@addDelivery', 'as' => 'addDelivery','middleware' => 'auth'));
