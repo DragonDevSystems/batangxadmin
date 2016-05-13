@@ -11,7 +11,11 @@
  		@include('customer.includes.mainMenu')
    </div>
  <div class="main">
-    <div class="content">	
+    <div class="content">
+    		<?php 
+    			$aboutInfo = App::make("App\Http\Controllers\AboutController")->getAboutInformation();
+    			$locations = App::make("App\Http\Controllers\AboutController")->getAllLocation();
+    		?>	
     	    	<div class="section group">
 				<div class="col span_2_of_3">
 				  <div class="contact-form">
@@ -57,9 +61,9 @@
 						    	<p>Alabang Town Center,</p>
 						   		<p>Alabang-Zapote Road,</p>
 						   		<p>Muntinlupa City, Metro Manila</p>
-				   		<p>Phone:(02) 842-2782</p>
-				 	 	<p>Email: <span>gxtremephtestpp@gmail.com</span></p>
-				   		<p>Follow on: <a href="https://www.facebook.com/GamextremePhilippines" target="_blank"><span>Facebook</span></a>, <a href="http://www.ebay.ph/usr/gamextremephils" target="_blank"><span>e-Bay</span></a>
+				   		<p>Phone:{{$aboutInfo['number']}}</p>
+				 	 	<p>Email: <span>{{$aboutInfo['email']}}</span></p>
+				   		<p>Follow on: <a href="{{$aboutInfo['fb_link']}}" target="_blank"><span>Facebook</span></a>, <a href="{{$aboutInfo['ebay_link']}}" target="_blank"><span>e-Bay</span></a>
 				   </div>
 				 </div>
 			  </div>		
