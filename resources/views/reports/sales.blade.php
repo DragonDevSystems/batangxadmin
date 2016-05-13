@@ -30,28 +30,31 @@
                 </div>
             </div>
 			<!-- /.box-header -->
-			<div class="row">
-				<div class="col-md-4 col-sm-3">
-					<div class="form-group">
-						<select class="form-control select2" id="rType">
-							<option value="0">Daily</option>
-							<option value="1">Monthly</option>
-							<option value="2">Yearly</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-3" id="divParam">
-					<div class="form-group">
-						<label>Date range:</label>
-						<div class="input-group">
-							<div class="input-group-addon">
-								<i class="fa fa-calendar"></i>
-							</div>
-							<input type="text" class="form-control pull-right" id="reportRange">
+			<div class="box-body">
+				<div class="row">
+					<div class="col-md-4 col-sm-3">
+						<div class="form-group">
+							<label>Filter</label>
+							<select class="form-control select2" id="rType">
+								<option value="0">Daily</option>
+								<option value="1">Monthly</option>
+								<option value="2">Yearly</option>
+							</select>
 						</div>
 					</div>
-	        	</div>
-            </div>
+					<div class="col-md-4 col-sm-3" id="divParam">
+						<div class="form-group">
+							<label>Date range:</label>
+							<div class="input-group">
+								<div class="input-group-addon">
+									<i class="fa fa-calendar"></i>
+								</div>
+								<input type="text" class="form-control pull-right" id="reportRange">
+							</div>
+						</div>
+		        	</div>
+	            </div>
+	        </div>
 		</div>
 
 		<div class="row">
