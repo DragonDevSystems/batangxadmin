@@ -109,8 +109,10 @@ class DeliveryController extends Controller {
 	public function addReceipt()
 	{
 		$receipt = Input::get('receipt');
+		$remarks = Input::get('remarks');
 		$addReceipt = new ProductDeliveryReceipt();
 		$addReceipt['receipt_num'] = $receipt;
+		$addReceipt['remarks'] = $remarks;
 		if($addReceipt->save())
 		{
             $products = ProductDelivery::where('receipt_num', '=', 0)
@@ -194,6 +196,7 @@ class DeliveryController extends Controller {
 						"id" => $product_info['id'],
 						"name" => $product_info['name'],
 						"qty" => $product['qty'],
+						"remarks" =>!empty($receiptInfo['remarks']) ? $receiptInfo['remarks'] : "No remarks.",
 					);
 			}
 			return Response::json($response);
