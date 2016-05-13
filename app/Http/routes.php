@@ -225,4 +225,18 @@ Route::group(array('prefix' => '/admin'),function()
 			});
 		});
 	});
+
+	Route::group(array('prefix' => '/about'),function()
+	{
+		Route::group(array('before' => 'auth'), function()
+		{
+			Route::get('/', array('uses' => 'AboutController@getAboutView', 'as' => 'getAboutView','middleware' => 'auth'));
+			Route::group(array('before' => 'csrf'), function()
+			{
+				Route::post('/addAboutInfo', array('uses' => 'AboutController@addAboutInfo', 'as' => 'addAboutInfo','middleware' => 'auth'));
+				Route::post('/addAddress', array('uses' => 'AboutController@addAddress', 'as' => 'addAddress','middleware' => 'auth'));
+				Route::post('/deleteAddress', array('uses' => 'AboutController@deleteAddress', 'as' => 'deleteAddress','middleware' => 'auth'));
+			});
+		});
+	});
 });
