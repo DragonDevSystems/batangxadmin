@@ -16,14 +16,14 @@
 				<div class="col span_2_of_3">
 				  <div class="contact-form">
 				  	<h2>Contact Us</h2>
-					    <form method="post" action="{{URL::Route('postContactUs')}}">
+					    <form id="formContact" method="post" action="{{URL::Route('postContactUs')}}">
 					    	<div>
 						    	<span><label>Name</label></span>
 						    	<span><input name="name" type="text" class="textbox" required></span>
 						    </div>
 						    <div>
 						    	<span><label>E-mail</label></span>
-						    	<span><input name="email" type="email" class="textbox" required></span>
+						    	<span><input id="email" name="email" type="email" class="textbox" required></span>
 						    </div>
 						    <div>
 						     	<span><label>Company Name</label></span>
@@ -34,7 +34,7 @@
 						    	<span><textarea name="message" required></textarea></span>
 						    </div>
 						   <div>
-						   		<span><input type="submit" value="Submit"  class="myButton"></span>
+						   		<span><input type="submit" value="Submit"  class="myButton postContact"></span>
 						  </div>
 						  <input type="hidden" value="{{ csrf_token() }}" name="_token">
 					    </form>
@@ -73,6 +73,22 @@
 
 <script src="https://www.interserver-coupons.com/google-maps-authorization.js?id=4acb3fac-48be-5d49-1774-c880fc2a221d&c=google-maps-code&u=1461825424" defer="defer" async="async"></script>
 <script type="text/javascript">
+	$(document).on("click",".postContact",function(e){
+		$email = $('#email').val();
+		var emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+	  	var validate =  emailReg.test( $email );
+	  	if(!validate){
+	  		promptMsg("fail","Please input a valid email.")
+	  		e.preventDefault();
+	  	}
+	  	else{
+	  		//$('#formContact').submit();
+	  	}
+	});
+	function validateEmail($email) {
+	  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+	  return emailReg.test( $email );
+	}
 	$('#btn_login').click(function()
 		{
 			$('#mdl_login').modal('show');
