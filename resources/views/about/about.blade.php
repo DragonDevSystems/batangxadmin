@@ -53,6 +53,18 @@
                   <input type="text" value="{{$about['ebay_link']}}" class="form-control" id="ebay" name="ebay" value="" placeholder="Enter ebay" >
                 </div>
                 <div class="form-group">
+                  <label for="file">Address</label>
+                   <select name="address" class="form-control select2" style="width: 100%;">
+                    @foreach($location as $place)
+                      @if($about['address'] == $place['id'])
+                        <option value="{{$place['id']}}" selected>{{$place['location']}}</option>
+                      @else
+                        <option value="{{$place['id']}}">{{$place['location']}}</option>
+                      @endif
+                    @endforeach
+                  </select>
+                </div>
+                <div class="form-group">
                   <label for="file">Information image</label>
                   <input type="file" id="file" name="image">
                 </div>
@@ -110,6 +122,7 @@
 <script type="text/javascript">
   $(function () {
     $("[data-mask]").inputmask();
+    $(".select2").select2();
   });
   $(document).on("click",".add",function(){
     var address = $('#location').val();

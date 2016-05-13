@@ -15,6 +15,7 @@
     		<?php 
     			$aboutInfo = App::make("App\Http\Controllers\AboutController")->getAboutInformation();
     			$locations = App::make("App\Http\Controllers\AboutController")->getAllLocation();
+    			$getLocationInfo = App::make("App\Http\Controllers\AboutController")->getLocationInfo($aboutInfo['address']);
     		?>	
     	    	<div class="section group">
 				<div class="col span_2_of_3">
@@ -58,9 +59,7 @@
       				</div>
       			<div class="company_address">
 				     	<h3>Company Information :</h3>
-						    	<p>Alabang Town Center,</p>
-						   		<p>Alabang-Zapote Road,</p>
-						   		<p>Muntinlupa City, Metro Manila</p>
+						    	<p>{{$getLocationInfo['location']}}</p>
 				   		<p>Phone:{{$aboutInfo['number']}}</p>
 				 	 	<p>Email: <span>{{$aboutInfo['email']}}</span></p>
 				   		<p>Follow on: <a href="{{$aboutInfo['fb_link']}}" target="_blank"><span>Facebook</span></a>, <a href="{{$aboutInfo['ebay_link']}}" target="_blank"><span>e-Bay</span></a>

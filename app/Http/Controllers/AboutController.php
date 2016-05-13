@@ -30,6 +30,11 @@ class AboutController extends Controller {
 		return Location::all();
 	}
 
+	public function getLocationInfo($id)
+	{
+		return Location::find($id);
+	}
+
 	public function getAboutView()
 	{
 		$location = Location::all();
@@ -85,6 +90,7 @@ class AboutController extends Controller {
 		$number = Input::get('mobile');
 		$fb_link = Input::get('facebook');
 		$ebay_link = Input::get('ebay');
+		$address = Input::get('address');
 		$image = Input::file('image');
 
 		//$banner = About::find(1);
@@ -97,6 +103,7 @@ class AboutController extends Controller {
 		$about['number'] = $number;
 		$about['fb_link'] = $fb_link;
 		$about['ebay_link'] = $ebay_link;
+		$about['address'] = $address;
 		if(!empty($image)){
 			$date = new DateTime();
 			$tn_name = date_format($date, 'U').str_random(110).'.'.$image->getClientOriginalExtension();
