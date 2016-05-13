@@ -12,20 +12,29 @@
    </div>
  <div class="main">
     <div class="content">
-    	@foreach($news as $new)
-    		<?php $time = \Carbon\Carbon::createFromTimeStamp(strtotime($new['created_at']))->toDayDateTimeString();
-            ?>
-	    	<div class="image group">
-				<div class="grid images_3_of_1">
-					<img src="{{env('FILE_PATH_CUSTOM')}}productThumbnail/{{$new['img_thumbnail']}}" alt="" />
-				</div>
-				<div class="grid news_desc">
-					<h3>{{$new['title']}}</h3>
-					<h4>Posted on {{$time}} by <span><a href="#">Game Extreme</a></span></h4>
-					<p>{!! str_replace("\n","<br>", $new->message) !!}<!--<a title="more" href="javascript:void(0)">[....]</a>--></p>
-				</div>
-		    </div>	
-		@endforeach
+    	@if(count($news) != 0)
+	    	@foreach($news as $new)
+	    		<?php $time = \Carbon\Carbon::createFromTimeStamp(strtotime($new['created_at']))->toDayDateTimeString();
+	            ?>
+		    	<div class="image group">
+					<div class="grid images_3_of_1">
+						<img src="{{env('FILE_PATH_CUSTOM')}}productThumbnail/{{$new['img_thumbnail']}}" alt="" />
+					</div>
+					<div class="grid news_desc">
+						<h3>{{$new['title']}}</h3>
+						<h4>Posted on {{$time}} by <span><a href="#">Game Extreme</a></span></h4>
+						<p>{!! str_replace("\n","<br>", $new->message) !!}<!--<a title="more" href="javascript:void(0)">[....]</a>--></p>
+					</div>
+			    </div>	
+			@endforeach
+		@else
+			<div class="image group">
+					<div class="grid news_desc">
+						<h4><span><a href="javascript:void(0);">No available news.</a></span></h4>
+					</div>
+			    </div>	
+		@endif
+
 		<div class="content-pagenation">
 			{!! $news->render() !!}
 		</div>	

@@ -37,6 +37,7 @@ class NewsController extends Controller {
 		$title = Input::get('title');
 		$message = Input::get('message');
 		$image = Input::file('file');
+		$date_expired = Input::get('date_expired');
 		$date = new DateTime();
 		if(!empty($image)){
 			$tn_name = date_format($date, 'U').str_random(110).'.'.$image->getClientOriginalExtension();
@@ -60,6 +61,7 @@ class NewsController extends Controller {
 			
 			$addNews['title'] = $title;
 			$addNews['message'] = $message;
+			$addNews['date_expired'] = $date_expired;
 			if(!empty($image)){
 				$addNews['img_filename'] = $iname;
 				$addNews['img_thumbnail'] = $tn_name;
@@ -80,11 +82,13 @@ class NewsController extends Controller {
 			foreach ($news as $new) {
 				$message = str_limit($new['message'], $limit = 60, $end = '...');
 				$time = \Carbon\Carbon::createFromTimeStamp(strtotime($new['created_at']))->toDayDateTimeString();
+				$date_expired = \Carbon\Carbon::createFromTimeStamp(strtotime($new['date_expired']))->toDayDateTimeString();
 				$data[] = array(
 						"id" => $new['id'],
 						"title" => $new['title'],
 						"message" => $message,
 						"time" => $time,
+						"date_expired" => $date_expired,
 					);
 			}
 		}

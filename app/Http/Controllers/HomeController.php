@@ -61,9 +61,9 @@ class HomeController extends Controller {
 
 	public function getNews()
 	{
-
-		$news = News::orderBy('created_at', 'DESC')->paginate(3);
-		return View::Make("customer.menu.news")->with('mt','news')->with('news',$news);
+		$now = \Carbon\Carbon::today();
+		$news = News::orderBy('created_at', 'DESC')->where('date_expired','>=',$now)->paginate(3);
+		return View::Make("customer.menu.news")->with('mt','news')->with('news',$news)->with('now',$now);
 	}
 
 	public function getContactUs()

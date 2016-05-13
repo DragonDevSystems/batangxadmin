@@ -46,7 +46,8 @@
                   <th>Id</th>
                   <th>Title</th>
                   <th>Message</th>
-                  <th>Date</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
                 </tr>
                 </thead>
                 <tbody id="tbUAList">
@@ -122,6 +123,7 @@
                                                     ''+response[i].title+'', 
                                                     ''+response[i].message+'',
                                                     ''+response[i].time+'',
+                                                    ''+response[i].date_expired+'',
                                                     ]).draw();
 			}
 		});
@@ -157,6 +159,10 @@
 																  <input type="hidden" class="form-control" id="news_id" name="news_id" value="'+data.id+'">\
 																  <input type="text" class="form-control" id="title" name="title" value="'+data.title+'" placeholder="Enter news tile" required>\
 																</div>\
+																<div class="form-group">\
+												              		<label>Date expired:</label>\
+												                	<input type="text" value="" style="width:25%;" class="form-control" placeholder="Date expired." name="date_expired" id="date_expired" required>\
+												              	</div>\
 																<div class="form-group">\
 																  <label>Message :</label>\
 																  <textarea style="resize: none;" class="form-control" rows="11"  placeholder="Enter news message..." name="message" id="message" required>'+data.message+'</textarea>\
@@ -194,8 +200,10 @@
 						$('.addImage').click( function () {
 							$('#file').click();
 						});
+						$(function () {
+					      $('#date_expired').datepicker();
+					    });
 					});
-					
 
 					/*$('.addNews').click( function () {
 						$('#formAddNews').find(':submit').click();
@@ -269,8 +277,6 @@
 									'Click on the below list for preview'))))),
 				$('<div />' , { 'class' : 'box-footer'}));
 	}
-
-	
 </script>
 @endsection
 

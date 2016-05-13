@@ -58,6 +58,8 @@
 		<!-- daterangepicker -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/daterangepicker/daterangepicker.js"></script>
+		<!-- bootstrap datepicker -->
+		<script src="{{env('FILE_PATH_CUSTOM')}}plugins/datepicker/bootstrap-datepicker.js"></script>
 
 		<script type="text/javascript" src="{{env('FILE_PATH_CUSTOM')}}js/date_time.js"></script>
 		<style>
