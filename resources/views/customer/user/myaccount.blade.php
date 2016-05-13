@@ -34,13 +34,10 @@
 		              	<label>Firstname:</label>
 		                <input type="text" value="{{$userInfo['fname']}}" class="form-control" placeholder="Firstname" name="myFirstname" id="myFirstname" required>
 		              </div>
-		              <div class="form-group">
-		              <label>Gender:</label>
-		                <select type="text" class="form-control select2" placeholder="Gender" name="myGender" id="myGender" required>
-		                      <option value="1">Male</option>
-		                      <option value="2">Female</option>
-		                </select>
-		              </div>
+		               <div class="form-group">
+			          	<label>Mobile No:</label>
+			              <input type="text" value="{{$userInfo['mobile']}}"class="form-control" placeholder="Mobile or Phone Number" name="myMobile" id="myMobile" data-inputmask='"mask": "(999) 999-9999"' data-mask required>
+			          </div>
 		            </div>
 		            <div class="col-md-6">
 		              <div class="form-group">
@@ -52,19 +49,6 @@
 		                	<input type="text" value="{{$userInfo['dob']}}" class="form-control" placeholder="Date of Birth" name="myDob" id="myDob" required>
 		              </div>
 		            </div>
-		          </div>
-		          <div class="form-group">
-		          	<label>Mobile No:</label>
-		            <div class="input-group">
-		              <div class="input-group-addon">
-		                <i class="fa fa-phone"></i>
-		              </div>
-		              <input type="text" value="{{$userInfo['mobile']}}"class="form-control" placeholder="Mobile or Phone Number" name="myMobile" id="myMobile" data-inputmask='"mask": "(999) 999-9999"' data-mask required>
-		            </div>
-		          </div>
-		          <div class="form-group">
-		          		<label>Address:</label>
-		              	<textarea style="resize: none;" class="form-control" rows="5" placeholder="Enter Address..." name="myAddress" id="myAddress" required>{{$userInfo['address']}}</textarea>
 		          </div>
 		          <div class="row">
 		            <div class="col-md-6">
