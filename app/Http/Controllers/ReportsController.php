@@ -376,7 +376,7 @@ class ReportsController extends Controller {
 				$receipts[] = array(
 						"date" => date('Y-m-d',strtotime($totali['created_at'])),
 						"receipts" => $info['receipt_num'],
-						"remarks" => $info['remarks'],
+						"remarks" => !empty($info['remarks']) ? $info['remarks'] : "No remarks.",
 					);
 			}
 
