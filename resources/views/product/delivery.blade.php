@@ -172,6 +172,10 @@
 												              </table>\
 												            </div>\
 												        </div>\
+												        <div class="form-group">\
+										                  <label for="remarks">Remarks</label>\
+										                  <textarea type="text"style="resize: none;" rows="6" class="form-control" id="remarks" name="remarks" value="" placeholder="Enter remarks" disabled></textarea>\
+										                </div>\
 							           				</div>\
 												');
 				var table2 = $('#qty_list').DataTable();
@@ -180,8 +184,9 @@
 		        {
 		        	if(i == 0){
 		        		$('#receipt_num').val(data[i].receipt);
+		        		$('#remarks').val(data[i].remarks);
 		        	}
-		        	if(data.length > 1){
+		        	if(data.length != 0){
 		        		$('#qty_list').DataTable().row.add([''+data[i].id+'', 
                                         ''+data[i].name+'', 
                                         ''+data[i].qty+'', 
@@ -201,6 +206,7 @@
 			          $(this).addClass('active');
 			          $('#remove_product').prop("disabled", false);
 			        }
+			        $(window).scrollTop($('#div-entry').offset().top);
 			    } );
 		        $("#product").select2({
 					//minimumResultsForSearch: -1,
@@ -323,6 +329,10 @@
 																				</div>\
 																	        </div>\
 															            </div>\
+															            <div class="form-group">\
+														                  <label for="remarks">Remarks</label>\
+														                  <textarea type="text"style="resize: none;" rows="6" class="form-control" id="remarks" name="remarks" value="" placeholder="Enter remarks" ></textarea>\
+														                </div>\
 																	</form>\
 																</div>\
 																<div class="col-md-7">\
@@ -372,6 +382,7 @@
 			$(document).on("click",".add_delivery",function(){
 				var checkReceipt = $('#receipt_num').closest('.has-warning').length;
 				var receipt = $('#receipt_num').val();
+				var remarks = $('#remarks').val();
 				var _token = "{{ csrf_token() }}";
 				var check = $("#qty_list").dataTable().fnSettings().aoData.length;
 				$this = $(this);
@@ -379,7 +390,7 @@
 					if(receipt && check != 0){
 						promptConfirmation("Are ou sure you want to add this receipt ?");
 			     		$("#btnYes").click(function(){
-			     			$.post('{{URL::Route('addReceipt')}}',{ _token: _token ,receipt: receipt} , function(response)
+			     			$.post('{{URL::Route('addReceipt')}}',{ _token: _token ,receipt: receipt , remarks : remarks} , function(response)
 							{
 								if(response.status == "success"){
 									defaultDisplay();

@@ -124,6 +124,11 @@
             <!--<i class="fa fa-newspaper-o"></i>--> <span>News</span> <i class="fa pull-right"></i>
           </a>
         </li>
+        <li class="treeview {{ ($mt == "ab") ? "active" : ""}}">
+          <a href="{{ URL::Route('getAboutView') }}">
+            <!--<i class="fa fa-newspaper-o"></i>--> <span>About</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

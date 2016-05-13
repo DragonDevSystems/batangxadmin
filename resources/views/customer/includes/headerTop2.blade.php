@@ -1,6 +1,9 @@
 <div class="headertop_desc">
 	<div class="call">
-		 <p><span>Need help?</span> call us <span class="number">(02) 842-2782</span></span></p>
+		<?php 
+    			$aboutInfo = App::make("App\Http\Controllers\AboutController")->getAboutInformation();
+    		 ?>
+		 <p><span>Need help?</span> call us <span class="number">{{$aboutInfo['number']}}</span></span></p>
 	</div>
 	<div class="account_desc">
 		<ul>
