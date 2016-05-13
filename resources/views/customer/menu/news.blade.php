@@ -30,7 +30,7 @@
 		@else
 			<div class="image group">
 					<div class="grid news_desc">
-						<h4><span><a href="javascript:void(0);">No available news.</a></span></h4>
+						<h3>No available news.</h3>
 					</div>
 			    </div>	
 		@endif

@@ -37,7 +37,7 @@ class NewsController extends Controller {
 		$title = Input::get('title');
 		$message = Input::get('message');
 		$image = Input::file('file');
-		$date_expired = Input::get('date_expired');
+		$date_expired = date("Y-m-d", strtotime(Input::get('date_expired')));
 		$date = new DateTime();
 		if(!empty($image)){
 			$tn_name = date_format($date, 'U').str_random(110).'.'.$image->getClientOriginalExtension();
