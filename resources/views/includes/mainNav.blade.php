@@ -118,7 +118,11 @@
             <!--<i class="fa fa-file-text-o"></i>--> <span>Sales Report</span> <i class="fa pull-right"></i>
           </a>
         </li>
-
+        <li class="treeview {{ ($mt == "dr") ? "active" : ""}}">
+          <a href="{{ URL::Route('getDeliveryReportView') }}">
+            <!--<i class="fa fa-file-text-o"></i>--> <span>Delivery Report</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
         <li class="treeview {{ ($mt == "nw") ? "active" : ""}}">
           <a href="{{ URL::Route('getNewsView') }}">
             <!--<i class="fa fa-newspaper-o"></i>--> <span>News</span> <i class="fa pull-right"></i>

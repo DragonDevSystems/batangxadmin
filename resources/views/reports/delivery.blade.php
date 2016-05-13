@@ -12,7 +12,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Sales Report
+        Delivery Report
       </h1>
     </section>
 
@@ -95,7 +95,6 @@
 
 	$(document).ready(function() {
 		$(".select2").select2();
-		$('#reportRange').daterangepicker();
 	});
 
 	$(document).on("change", "#rType", function(e){
@@ -112,7 +111,7 @@
 							</div>\
 							<input type="text" class="form-control pull-right" id="reportRange">\
 						</div>'));
-		        $('#reportRange').daterangepicker();
+		         $('#reportRange').daterangepicker();
 		        break;
 		    case "1":
 		    	 $("#divParam").append(
@@ -129,7 +128,7 @@
 		}
 		return  false;
 	});
-	
+	$('#reportRange').daterangepicker();
 	generateReport();
 	function generateReport()
 	{
@@ -140,7 +139,7 @@
 		$(".div-gen").append('<div class="overlay tbl-overlay">\
 	        	<i class="fa fa-spinner fa-spin"></i>\
 	        </div>');
-		$.get('{{URL::Route('generateSalesReport')}}',{date:daterange , rtype : rtype, year : year} , function(data)
+		$.get('{{URL::Route('generateDeliveryReport')}}',{date:daterange , rtype : rtype, year : year} , function(data)
         {
         	$(".tbl-overlay").remove();
  			if(data.response.length != 0)

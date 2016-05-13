@@ -22,6 +22,7 @@ use App\Models\ProductReserve;
 use App\Models\ContactUs;
 use App\Models\ProductInvoice;
 use App\Models\ProductSold;
+use App\Models\ProductDeliveryReceipt;
 
 class ReportsController extends Controller {
 
@@ -223,5 +224,120 @@ class ReportsController extends Controller {
 	        }
 	    }
 	    return $aryRange;
-}
+	}
+
+	public function getDeliveryReportView()
+	{
+		$userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
+		return View::Make("reports.delivery")->with("userInfo",$userInfo)->with('mt','dr');
+	}
+
+	public function generateDeliveryReport()
+	{
+		$byDate = array();
+		$response = array();
+		$allTotal = 0;
+		$date = Input::get('date');
+		$rtype = Input::get('rtype');
+		$year = Input::get('year');
+		$headerL = null;
+		$printUrl = null;
+		switch ($rtype) {
+			case 0:
+					if(!empty($date))
+					{
+						$daysEx = explode("-",$date);
+						$startdate = date('Y-m-d',strtotime($daysEx[0]));
+						$enddate = date('Y-m-d',strtotime($daysEx[1]));
+					}
+					else
+					{
+						$startdate = date('Y-m-01');
+						$enddate = date("Y-m-d");
+					}
+
+					$dateRange = $this->createDateRangeArray($startdate,$enddate);
+					$total = ProductDeliveryReceipt::where(DB::raw('DATE(created_at)'),'>=',$startdate)->where(DB::raw('DATE(created_at)'),'<=',$enddate)->get();
+					if(!empty($total))
+					{
+						foreach ($total as $totali) {
+							if(!in_array(date('Y-m-d',strtotime($totali['created_at'])),$byDate))
+							{
+								$byDate[] = date('Y-m-d',strtotime($totali['created_at']));
+							}
+						}
+
+						foreach ($dateRange as $dateRangei) {
+							$dayTotal = 0;
+							//$result = ProductSold::where(DB::raw('DATE(created_at)'),'=',$dateRangei)->get();
+							$result = ProductDeliveryReceipt::where(DB::raw('DATE(created_at)'),'=',$dateRangei)->get();
+							if(!empty($result))
+							{
+								foreach ($result as $resulti) {
+									//$dayTotal += (ProductPrice::find($resulti['price_id'])['price'] * $resulti['qty']);
+									$dayTotal += (count(ProductDeliveryReceipt::find($resulti['id'])));
+								}
+							}
+
+							$allTotal += $dayTotal;
+							$response[] = [$dateRangei,$dayTotal];
+						}
+					}
+
+					$headerL = "for ".$startdate." to ".$enddate ;
+					$printUrl = URL::Route('printSales',[$startdate,$enddate,0,0]);
+				break;
+			case 1:
+				$monthRange = [[1,'January'],[2,'February'],[3,'March'],[4,'April'],[5,'May'],[6,'June'],[7,'July'],[8,'August'],[9,'September'],[10,'October'],[11,'November'],[12,'December']];
+				$total = ProductDeliveryReceipt::whereYear('created_at','=',$year)->get();
+				if(!empty($total))
+				{
+					foreach ($monthRange as $monthRangei) {
+						$dayTotal = 0;
+						$result = ProductDeliveryReceipt::whereMonth('created_at','=',$monthRangei[0])->get();
+						if(!empty($result))
+						{
+							foreach ($result as $resulti) {
+								//$dayTotal += (ProductPrice::find($resulti['price_id'])['price'] * $resulti['qty']);
+								$dayTotal += (count(ProductDeliveryReceipt::find($resulti['id'])));
+							}
+						}
+						$allTotal += $dayTotal;
+						$response[] = [$monthRangei[1],$dayTotal];
+					}
+				}
+				$headerL = "for ".$year;
+				$printUrl = URL::Route('printSales',[0,0,$year,1]);
+			break;
+				case 2:
+				$yearRange = ['2016'];
+				foreach ($yearRange as $yearRangei) {
+					$dayTotal = 0;
+					$result = ProductDeliveryReceipt::whereYear('created_at','=',$yearRangei)->get();
+					if(!empty($result))
+					{
+						foreach ($result as $resulti) {
+							//$dayTotal += (ProductPrice::find($resulti['price_id'])['price'] * $resulti['qty']);
+							$dayTotal += (count(ProductDeliveryReceipt::find($resulti['id'])));
+						}
+					}
+					$allTotal += $dayTotal;
+					$response[] = [$yearRangei,$dayTotal];
+				}
+				$headerL = "for ".$year;
+				$printUrl = URL::Route('printSales',[0,0,0,2]);
+				break;
+			default:
+				# code...
+				break;
+		}
+
+		return array(
+				"response" => $response,
+				"dateRange" => $headerL,
+				"allTotal" => "Total Sales: PHP ".number_format($allTotal, 2),
+				"printTarget" => $printUrl,
+			);
+
+	}
 }
