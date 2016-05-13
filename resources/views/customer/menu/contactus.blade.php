@@ -30,7 +30,7 @@
 						    	<span><input name="company" type="text" class="textbox" required></span>
 						    </div>
 						    <div>
-						    	<span><label>Subject</label></span>
+						    	<span><label>Message</label></span>
 						    	<span><textarea name="message" required></textarea></span>
 						    </div>
 						   <div>

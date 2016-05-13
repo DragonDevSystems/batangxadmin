@@ -11,19 +11,15 @@
           <div class="form-group has-feedback has-error errorCheckReg"></div>
           <div class="form-group has-feedback">
             <input type="text" class="form-control" id="regusername" name="regusername" placeholder="Username">
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
             <input type="text" class="form-control" id="regemail" name="regemail" placeholder="Email">
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
             <input type="password" class="form-control" placeholder="Password" name="regPassword" id="regPassword">
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
             <input type="password" class="form-control" placeholder="Re-type Password" name="re-password" id="re-password">
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="row">
             <div class="col-md-6">
@@ -31,10 +27,7 @@
                 <input type="text" class="form-control" placeholder="Firstname" name="fname" id="fname">
               </div>
               <div class="form-group">
-                <select type="text" class="form-control select2" placeholder="Gender" name="gender" id="gender">
-                      <option value="1">Male</option>,
-                      <option value="2">Female</option>,
-                </select>
+                <input type="text" class="form-control" placeholder="Mobile or Phone Number" name="mobile" id="mobile" data-inputmask='"mask": "(99) 9999-99999"' data-mask>
               </div>
             </div>
             <div class="col-md-6">
@@ -42,20 +35,8 @@
                 <input type="text" class="form-control" placeholder="Lastname" name="lname" id="lname">
               </div>
               <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Date of Birth" name="dob" id="dob">
+                <input type="text" class="form-control" placeholder="Date of Birth" name="dob" id="dob">
               </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-phone"></i>
-              </div>
-              <input type="text" class="form-control" placeholder="Mobile or Phone Number" name="mobile" id="mobile" data-inputmask='"mask": "(99) 9999-99999"' data-mask>
-            </div>
-          </div>
-          <div class="form-group">
-              <textarea style="resize: none;" class="form-control" rows="5" placeholder="Enter Address..." name="address" id="address"></textarea>
             </div>
           </div>
          <div class="row">

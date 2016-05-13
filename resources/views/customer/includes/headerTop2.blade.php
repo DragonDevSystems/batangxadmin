@@ -5,6 +5,8 @@
 	<div class="account_desc">
 		<ul>
 			@if(Auth::Check())
+				<?php $userInfo = App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']); ?>
+				<li>Hi! {{$userInfo['fname']}}</li>
 				<li><a href="{{URL::Route('getLogout')}}">Sign out</a></li>
 				<li><a href="{{URL::Route('getCheckOut')}}">Checkout</a></li>
 				<li><a href="{{URL::Route('getMyaccount')}}">My Account</a></li>
