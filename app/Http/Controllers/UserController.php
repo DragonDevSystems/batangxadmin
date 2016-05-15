@@ -649,7 +649,7 @@ class UserController extends Controller {
 				);
 			}
 		}
-		return View::make('user.AuditTrail')->with("userInfo",$this->userInfo())
+		return View::make('user.auditTrail')->with("userInfo",$this->userInfo())
 									->with('data',$data)
 									->with('mt',"at");
 	}
