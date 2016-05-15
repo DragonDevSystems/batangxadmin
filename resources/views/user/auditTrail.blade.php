@@ -21,9 +21,6 @@
     </section>
     <section class="content">
         <div class="box box-danger">
-            <div class="box-header">
-              <h3 class="box-title">Audit Trail</h3>
-            </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="auditTrailList" class="table table-bordered table-striped">
