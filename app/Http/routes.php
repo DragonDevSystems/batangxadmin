@@ -241,4 +241,12 @@ Route::group(array('prefix' => '/admin'),function()
 			});
 		});
 	});
+
+	Route::group(array('prefix' => '/audtit-trail'),function()
+	{
+		Route::group(array('before' => 'auth'), function()
+		{
+			Route::get('/', array('uses' => 'UserController@getAuditView', 'as' => 'getAuditView','middleware' => 'auth'));
+		});
+	});
 });

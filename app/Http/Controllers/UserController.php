@@ -5,6 +5,7 @@ use App\Models\Info;
 use App\Models\User;
 use App\Models\PasswordRecovery;
 use App\Models\UserImage;
+use App\Models\AuditTrail;
 use Validator;
 use Input;
 use Response;
@@ -626,4 +627,30 @@ class UserController extends Controller {
         	));
 		}
     }
+
+	public function userInfo()
+	{
+		return App::make("App\Http\Controllers\GlobalController")->userInfoList(Auth::User()['id']);
+	}
+
+    public function getAuditView()
+	{
+		$auditLists = AuditTrail::orderBy('created_at', 'desc')->get();
+		$data= array();
+		foreach ($auditLists as $list) {
+			$info = App::make("App\Http\Controllers\GlobalController")->userInfoList($list['user_id']);
+			if(!empty($info['fname']) || !empty($info['lname']))
+			{
+				$data[] = array(
+				"name" => $info['fname'], $info['lname'],
+				"task" =>  $list['details'],
+				"date" =>  $time = \Carbon\Carbon::createFromTimeStamp(strtotime($list['created_at']))->toDayDateTimeString(),
+				"ip" =>  $list['ip_address'],
+				);
+			}
+		}
+		return View::make('user.AuditTrail')->with("userInfo",$this->userInfo())
+									->with('data',$data)
+									->with('mt',"at");
+	}
 }
