@@ -71,7 +71,13 @@
 
 <script type="text/javascript">
     $(function () {
-      $('#dob').datepicker();
+      var dt = new Date();
+      dt.setFullYear(new Date().getFullYear()-18);
+      $('#dob').datepicker(
+        {
+        viewMode: "years",
+        endDate : dt
+    });
       $("[data-mask]").inputmask();
       //$(".select2").select2();
     });
