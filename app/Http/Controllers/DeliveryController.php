@@ -82,7 +82,6 @@ class DeliveryController extends Controller {
 			$getProduct = ProductDelivery::where('prod_id','=',$product)
 									->where('receipt_num','=',$receipt['id'])
 									->where('qty','=',$qty)
-									->where('user_id','=',Auth::User()['id'])
 									->first();
 		}
 		else{
