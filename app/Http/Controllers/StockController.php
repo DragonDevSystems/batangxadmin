@@ -18,6 +18,7 @@ use App\Models\ProductPrice;
 use App\Models\ProductDeliveryReceipt;
 use App\Models\ProductInventory;
 use Image;
+use App\Models\ProductDelivery;
 class StockController extends Controller {
 
 	public function userInfo()
@@ -230,6 +231,12 @@ class StockController extends Controller {
 				if(!empty($getNewDelivery))
 				{
 					foreach ($getNewDelivery as $getNewDeliveryi) {
+						$saveProduct = new ProductDelivery();
+						$saveProduct['prod_id'] = $getNewDeliveryi['prod_id'];
+						$saveProduct['receipt_num'] = $addReceipt['id'];
+						$saveProduct['qty'] = $getNewDeliveryi['qty'];
+						$saveProduct['user_id'] = Auth::User()['id'];
+						$saveProduct->save();
 						$update = ProductInventory::where("prod_id","=",$getNewDeliveryi['prod_id'])->first();
 						if(!empty($update))
 						{
