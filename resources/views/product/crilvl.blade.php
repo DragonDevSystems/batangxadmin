@@ -19,7 +19,7 @@
     <!-- Main content -->
 	<section class="content">
 		<!-- Invoice list -->
-		<div class="box box-primary">
+		<div class="box box-danger">
 			<!-- /.box-header -->
 			<div class="box-body" onload="window.print();">
 				<table id="dtUAList" class="table table-bordered table-striped table-hover">
@@ -33,12 +33,15 @@
 					</thead>
 					<tbody id="tbUAList"></tbody>
 				</table>
+				<a href="{{URL::Route('getCritPrint')}}" target="_blank" class="btn btn-default print"><i class="fa fa-print"></i> Print</a>
 			</div>
 			<div class="overlay tbl-overlay">
 	        	<i class="fa fa-spinner fa-spin"></i>
 	        </div>
-	        <a href="#" target="_blank" class="btn btn-default print"><i class="fa fa-print"></i> Print</a>
+
+	        
 		</div>
+
 	</section>
     <!-- /.content -->
   </div>

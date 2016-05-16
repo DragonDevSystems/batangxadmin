@@ -456,4 +456,11 @@ class ProductController extends Controller {
 				"message" => "Fail to make it as a featured product.",
 			));*/
 	}
+
+	public function getCritPrint()
+	{
+		$lists = App::make("App\Http\Controllers\GlobalController")->criLvlList();
+		return View::make('product.critlevelPrint')->with("userInfo",$this->userInfo())
+								->with('lists',$lists);
+	}
 }

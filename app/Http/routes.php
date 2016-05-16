@@ -151,6 +151,7 @@ Route::group(array('prefix' => '/admin'),function()
 			Route::get('/getInventoryView', array('uses' => 'ProductController@getInventoryView', 'as' => 'getInventoryView','middleware' => 'auth'));
 			Route::get('/getCriLvlView', array('uses' => 'ProductController@getCriLvlView', 'as' => 'getCriLvlView','middleware' => 'auth'));
 			Route::get('/getWalkIn', array('uses' => 'CustomerController@getWalkIn', 'as' => 'getWalkIn','middleware' => 'auth'));
+			Route::get('/getCritPrint', array('uses' => 'ProductController@getCritPrint', 'as' => 'getCritPrint','middleware' => 'auth'));
 			Route::group(array('before' => 'csrf'), function()
 			{
 				Route::post('/addProduct', array('uses' => 'ProductController@addProduct', 'as' => 'addProduct','middleware' => 'auth'));
