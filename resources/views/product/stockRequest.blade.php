@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('addHead')
-  <title>Delivery</title>
+  <title>Stock Request</title>
 @endsection
 
 @section('content')
@@ -12,27 +12,27 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Delivery List
+        Stock Request
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{ URL::Route('getUAL') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Delivery</li>
+        <li class="active">Stock Request</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-		<div id="div-entry" class="box box-success">
+		<div id="div-entry" class="box box-danger">
 		</div>
 
 		<!-- product list -->
-		<div class="box box-primary">
+		<div class="box box-danger">
             <div class="box-header">
-            	<h3 class="box-title">Delivery List</h3>
+            	<h3 class="box-title">Stock Request</h3>
             	<div class="box-tools pull-right">
                   <button class="btn btn-primary btn-sm" type="button" data-placeid="" onClick="setNewEntry();">
                     <i class="fa fa-plus"></i>
-                    Add Delivery
+                    Stock Request
                   </button>
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -47,11 +47,9 @@
                     $include = ["id","receipt_num","created_at"]; 
                 ?>
                 <tr>
-                  @foreach($headers as $header)
-                    @if(in_array($header, $include))
-                       <th>{{$header}}</th>
-                    @endif
-                  @endforeach
+                  <th>Request Number</th>
+                  <th>Status</th>
+                  <th>Date Created</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -71,9 +69,9 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		defaultDisplay();
-		var table = $('#delivery_list').DataTable({
+		var table = $('#delivery_list').DataTable( {
 		        "order": [[ 0, "desc" ]]
-		    });
+		    } );
 		$('#delivery_list tbody').on( 'click', 'tr', function () {
 			if ( $(this).hasClass('active') ) {
 	            $(this).removeClass('active');
@@ -94,12 +92,12 @@
 		$('#div-entry').append('<div class="overlay">\
 		        	<i class="fa fa-spinner fa-spin"></i>\
 		        </div>');
-		$.get('{{URL::Route('getDeliveryProduct')}}',{id : id}, function(data)
+		$.get('{{URL::Route('getRequestProduct')}}',{id : id}, function(data)
 		{
 			console.log(data)
 	      		$('#div-entry').empty();
 				$('#div-entry').append('<div class="box-header with-border">\
-			          <h3 class="box-title">Receipt Information</h3>\
+			          <h3 class="box-title">Stock Request Information</h3>\
 			          <div class="box-tools pull-right">\
 						<button id="editDelivery" class="btn btn-info btn-sm " type="button">\
 							<i class="fa fa-edit"></i>\
@@ -117,7 +115,7 @@
 														<div class="row">\
 															<div class="col-md-6">\
 																<div class="form-group">\
-																  <label for="receipt_num">Delivery Receipt No.</label>\
+																  <label for="receipt_num">Request Number:</label>\
 																  <input type="text" class="form-control" id="receipt_num" name="receipt_num" value="" placeholder="" disabled>\
 																  <input type="hidden" class="form-control" id="type" name="type" value="edit">\
 																</div>\
@@ -175,9 +173,11 @@
 												            </div>\
 												        </div>\
 												        <div class="form-group">\
-										                  <label for="remarks">Remarks</label>\
-										                  <textarea type="text"style="resize: none;" rows="6" class="form-control" id="remarks" name="remarks" value="" placeholder="Enter remarks" disabled></textarea>\
+										                  <label for="remarks">Status</label>\
+										                  <input type="text" class="form-control" id="remarks" name="remarks" value="" placeholder="" disabled>\
 										                </div>\
+										                <a href="#" target="_blank" class="btn btn-default print"><i class="fa fa-print"></i> Print</a>\
+										                <a href="javascript:void(0)" class="btn btn-default confirmReceive" data-id="'+id+'"><i class="fa fa-check"></i>Receive</a>\
 							           				</div>\
 												');
 				var table2 = $('#qty_list').DataTable();
@@ -187,6 +187,10 @@
 		        	if(i == 0){
 		        		$('#receipt_num').val(data[i].receipt);
 		        		$('#remarks').val(data[i].remarks);
+		        		$(".print").attr("href",data[i].url);
+		        		if(data[i].remarks == "Received"){
+		        			$('.confirmReceive').attr('disabled', true);
+		        		}
 		        	}
 		        	if(data.length != 0){
 		        		$('#qty_list').DataTable().row.add([''+data[i].id+'', 
@@ -227,7 +231,7 @@
 				           	var receipt_num = $('#receipt_num').val();
 				            var _token = "{{ csrf_token() }}";
 
-							$.post('{{URL::Route('deleteDeliveryProduct')}}',{ _token: _token ,product: product, name : name , qty : qty ,
+							$.post('{{URL::Route('deleteProductRequest')}}',{ _token: _token ,product: product, name : name , qty : qty ,
 							type: type , receipt_num : receipt_num } , function(response)
 								{
 								if(response.status == "success"){
@@ -260,16 +264,16 @@
 			{
 				if(data.status == "success")
 				{
-					$.get('{{URL::Route('getReceiptList',0)}}',{ event: "add"}, function(data)
+					$.get('{{URL::Route('getRequestList',0)}}',{ event: "add"}, function(data)
 					{
 						if(data.length != 0)
 				      	{
 					        $('#delivery_list').DataTable().clear().draw();
 					        for (var i = 0; i < data.length; i++) 
 					        {
-					        	$('#delivery_list').DataTable().row.add([''+data[i].id+'', 
-                                                    ''+data[i].receipt_num+'', 
-                                                    ''+data[i].created_at+'', 
+					        	$('#delivery_list').DataTable().row.add([''+data[i].id+'',
+                                                    ''+data[i].status+'', 
+                                                    ''+data[i].date+'', 
                                                     ]).draw();
 					        }
 					    }
@@ -292,7 +296,7 @@
 				{
 					$('#div-entry').empty();
 							$('#div-entry').append('<div class="box-header with-border">\
-						          <h3 class="box-title">Add Delivery</h3>\
+						          <h3 class="box-title">Add Stock Request</h3>\
 						          <div class="box-tools pull-right">\
 						            <button type="button" class="btn btn-danger btn-sm"  onClick="defaultDisplay()"><i class="fa fa-undo" aria-hidden="true"></i></button>\
 						          </div>\
@@ -302,10 +306,6 @@
 															<div class="row">\
 																<div class="col-md-5">\
 																	<form id="formAddProduct" method="post" role="form">\
-																		<div class="form-group">\
-																		  <label for="receipt_num">Delivery Receipt No.</label>\
-																		  <input type="text" class="form-control" id="receipt_num" name="receipt_num" value="" placeholder="Enter receipt number." >\
-																		</div>\
 																		<div class="row">\
 																			<div class="col-md-7">\
 																				<div class="form-group">\
@@ -331,10 +331,6 @@
 																				</div>\
 																	        </div>\
 															            </div>\
-															            <div class="form-group">\
-														                  <label for="remarks">Remarks</label>\
-														                  <textarea type="text"style="resize: none;" rows="6" class="form-control" id="remarks" name="remarks" value="" placeholder="Enter remarks" ></textarea>\
-														                </div>\
 																	</form>\
 																</div>\
 																<div class="col-md-7">\
@@ -362,7 +358,7 @@
 																</div>\
 															</div>\
 															<div class="box-footer">\
-																<button  type="button" class="btn btn-primary add_delivery">Add Delivery</button>\
+																<button  type="button" class="btn btn-primary add_delivery">Add Stock Request</button>\
 															</div>\
 								           				</div>\
 													');
@@ -388,30 +384,23 @@
 				var _token = "{{ csrf_token() }}";
 				var check = $("#qty_list").dataTable().fnSettings().aoData.length;
 				$this = $(this);
-				if(checkReceipt !=1){
-					if(receipt && check != 0){
-						promptConfirmation("Are ou sure you want to add this receipt ?");
+					if(check != 0){
+						promptConfirmation("Are ou sure you want to add this request ?");
 			     		$("#btnYes").click(function(){
-			     			$.post('{{URL::Route('addReceipt')}}',{ _token: _token ,receipt: receipt , remarks : remarks} , function(response)
+			     			$.post('{{URL::Route('addRequest')}}',{ _token: _token ,receipt: receipt , remarks : remarks} , function(response)
 							{
 								if(response.status == "success"){
 									defaultDisplay();
 									getReceiptList();
+									promptMsg("success","Success.");
 								}
 							});
 			     		});
 					}
-					else if(!receipt){
-						$('#receipt_num').closest('.form-group').find('label').html('<i class="fa fa-exclamation-triangle"></i>Delivery Receipt No. - Required');
-			          	$('#receipt_num').closest('.form-group').addClass('has-warning');
-					}
 					else{
 						promptMsg("fail","Please add product.");
 					}
-				}
-				else{
-					$('#receipt_num').focus().blur();
-				}
+				
 					
 			});
 		    $(document).on("click","#remove_product",function(){
@@ -423,7 +412,7 @@
 			           	var qty =  item[2];
 			            var _token = "{{ csrf_token() }}";
 
-						$.post('{{URL::Route('deleteDeliveryProduct')}}',{ _token: _token ,product: product, name : name , qty : qty } , function(response)
+						$.post('{{URL::Route('deleteProductRequest')}}',{ _token: _token ,product: product, name : name , qty : qty } , function(response)
 							{
 							if(response.status == "success"){
 							  table2.row('.active').remove().draw( false )
@@ -467,7 +456,7 @@
 		var check = $(this).hasClass('new') ? "new" : "old";
 		var _token = "{{ csrf_token() }}";
 		$this = $(this);
-		$.post('{{URL::Route('addDelivery')}}',{ _token: _token ,product: product, qty : qty, check : check ,
+		$.post('{{URL::Route('addProductRequest')}}',{ _token: _token ,product: product, qty : qty, check : check ,
 		receipt_num: receipt_num, type : type} , function(response)
 		{
 			//console.log(response);
@@ -520,7 +509,7 @@
 	   	$('#div-entry').empty();
 		$('#div-entry').append(
 				$('<div />' , { 'class' : 'box-header with-border'}).append(
-					$('<h3 />' , { 'class' : 'box-title' , 'text' : 'Add Product'}),
+					$('<h3 />' , { 'class' : 'box-title' , 'text' : 'Add Stock Request'}),
 					$('<div />' , { 'class' : 'box-tools pull-right'}).append(
 						'<button id="btn-new-user" class="btn btn-primary btn-sm" type="button" onClick="setNewEntry();">\
 							<i class="fa fa-plus-circle"></i>\
@@ -534,31 +523,100 @@
 						$('<div />' , {'class' : 'col-md-12 col-lg-12'}).append(
 							$('<h1 />' , { 'class': 'text-center'}).append(
 								$('<small />').append(
-									$('<button />' , { 'id':'btn-new-user-icn' , 'class':'btn btn-app' , 'data-placement':'top' , 'data-toggle':'tooltip' , 'type':'button' , 'onClick':'setNewEntry();' , 'html' : '<i class="fa fa-plus-circle fa-3x"></i>Add Delivery'}).append(
+									$('<button />' , { 'id':'btn-new-user-icn' , 'class':'btn btn-app' , 'data-placement':'top' , 'data-toggle':'tooltip' , 'type':'button' , 'onClick':'setNewEntry();' , 'html' : '<i class="fa fa-plus-circle fa-3x"></i>Add Stock Request'}).append(
 										''),
 									$('<br />'),
 									'Click on the below list for preview'))))),
 				$('<div />' , { 'class' : 'box-footer'}));
 	}
 
-	$(document).on("keyup","#receipt_num",function(){
+	
+	$(document).on("click",".confirmReceive",function(){
+		$this = $(this).data('id');
+		promptConfirmation("Are you sure?");
+		$("#btnYes").click(function(){
+			$('body').append('<div class="modal requestModal" data-keyboard="false" data-backdrop="static">\
+					            <div class="modal-dialog">\
+					              <div class="modal-content">\
+					                <div class="modal-header">\
+					                  	<h4 class="modal-title">\
+						                    </span>Enter the receipt number\
+						                 </h4>\
+					                </div>\
+					                <div class="modal-body">\
+					                  	<div class="form-group">\
+										  <label for="request_receipt">Receipt Number:</label>\
+										  <input type="text" class="form-control" id="request_receipt" name="request_receipt" value="" placeholder="">\
+										  <input type="hidden" class="form-control" id="type" name="type" value="edit">\
+										</div>\
+										<div class="form-group">\
+						                  <label for="d_remarks">Remarks</label>\
+						                  <textarea type="text"style="resize: none;" rows="2" class="form-control" id="d_remarks" name="d_remarks" value="" placeholder="Enter remarks"></textarea>\
+						                </div>\
+						                <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Cancel</button>\
+										<a href="javascript:void(0)" class="btn btn-default confirmDelivery" data-id="'+$this+'"><i class="fa fa-check"></i>Confirm Delivery</a>\
+					                </div>\
+					              </div>\
+					            </div>\
+					          </div>');
+			$(".requestModal").modal("show");
+		});
+	});
+	$(document).on("keyup","#request_receipt",function(){
 		var receipt = $(this).val();
 		$.get('{{URL::Route('checkReceiptDelivery')}}',{ receipt : receipt} , function(response)
 		{
 			console.log(response);
 			if(response.status == "fail"){
-				$('#receipt_num').closest('.form-group').find('label').html('<i class="fa fa-exclamation-triangle"></i> '+response.message+'');
-          		$('#receipt_num').closest('.form-group').addClass('has-warning').removeClass('has-success');
+				$('#request_receipt').closest('.form-group').find('label').html('<i class="fa fa-exclamation-triangle"></i> '+response.message+'');
+          		$('#request_receipt').closest('.form-group').addClass('has-warning').removeClass('has-success');
 			}else if(response.status == "success"){
-				$('#receipt_num').closest('.form-group').find('label').html('<i class="fa fa-check"></i> '+response.message+'');
-          		$('#receipt_num').closest('.form-group').addClass('has-success').removeClass('has-warning');
+				$('#request_receipt').closest('.form-group').find('label').html('<i class="fa fa-check"></i> '+response.message+'');
+          		$('#request_receipt').closest('.form-group').addClass('has-success').removeClass('has-warning');
 			}
 			else{
-				$('#receipt_num').closest('.form-group').find('label').html(''+response.message+'');
-				$('#receipt_num').closest('.form-group').removeClass('has-success').removeClass('has-warning');
+				$('#request_receipt').closest('.form-group').find('label').html(''+response.message+'');
+				$('#request_receipt').closest('.form-group').removeClass('has-success').removeClass('has-warning');
 			}
 		});
 	});
+	$(document).on("hidden.bs.modal",".requestModal",function(){
+	    	$('body').addClass('remove_body_padding');
+			$(this).remove();
+	});
+	$(document).on("click",".confirmDelivery",function(){
+		var stock_request = $(this).data('id');
+		var checkReceipt = $('#request_receipt').closest('.has-warning').length;
+		var receipt = $('#request_receipt').val();
+		var remarks = $('#d_remarks').val();
+		var _token = "{{ csrf_token() }}";
+		$this = $(this);
+		if(checkReceipt !=1){
+			if(receipt){
+				promptConfirmation("Are you sure?");
+				$("#btnYes").click(function(){
+					$.post('{{URL::Route('requestDelivered')}}',{ _token : _token, stock_request : stock_request,
+						receipt : receipt, remarks: remarks} , function(response)
+					{
+						if(response.status == "success"){
+							promptMsg("success","Success.");
+							//window.location.href = response.link;
+						}
+
+					});
+				});
+			}
+			else{
+				$('#request_receipt').closest('.form-group').find('label').html('<i class="fa fa-exclamation-triangle"></i>Delivery Receipt No. - Required');
+			    $('#request_receipt').closest('.form-group').addClass('has-warning');
+			}
+		}
+		else{
+			$('#request_receipt').focus().blur();
+		}
+
+	});
+	
 </script>
 @endsection
 

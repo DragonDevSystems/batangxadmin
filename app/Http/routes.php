@@ -249,4 +249,23 @@ Route::group(array('prefix' => '/admin'),function()
 			Route::get('/', array('uses' => 'UserController@getAuditView', 'as' => 'getAuditView','middleware' => 'auth'));
 		});
 	});
+
+	Route::group(array('prefix' => '/stock-request'),function()
+	{
+		Route::group(array('before' => 'auth'), function()
+		{
+			Route::get('/', array('uses' => 'StockController@getStockRequestView', 'as' => 'getStockRequestView','middleware' => 'auth'));
+			Route::get('/getRequestList', array('uses' => 'StockController@getRequestList', 'as' => 'getRequestList','middleware' => 'auth'));
+			Route::get('/getRequestProduct', array('uses' => 'StockController@getRequestProduct', 'as' => 'getRequestProduct','middleware' => 'auth'));
+			Route::get('/print/{id}', array('uses' => 'StockController@getRequestPrint', 'as' => 'getRequestPrint','middleware' => 'auth'));
+			Route::group(array('before' => 'csrf'), function()
+			{
+				Route::post('/addProductRequest', array('uses' => 'StockController@addProductRequest', 'as' => 'addProductRequest','middleware' => 'auth'));
+				Route::post('/deleteProductRequest', array('uses' => 'StockController@deleteProductRequest', 'as' => 'deleteProductRequest','middleware' => 'auth'));
+				Route::post('/addRequest', array('uses' => 'StockController@addRequest', 'as' => 'addRequest','middleware' => 'auth'));
+				Route::post('/requestDelivered', array('uses' => 'StockController@requestDelivered', 'as' => 'requestDelivered','middleware' => 'auth'));
+			});
+
+		});
+	});
 });

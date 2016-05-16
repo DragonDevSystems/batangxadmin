@@ -815,6 +815,7 @@ class GlobalController extends Controller {
 						"name" => $alli['name'],
 						"cri_lvl" => $alli['cri_lvl'],
 						"avail_item" => $avail_item,
+						"id" => $alli['id'],
 					);
 				}
 			}

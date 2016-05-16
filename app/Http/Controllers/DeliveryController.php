@@ -77,7 +77,7 @@ class DeliveryController extends Controller {
 		//for edit
 		$type = Input::get('type');
 		$receipt_num = Input::get('receipt_num');
-		if($type ="edit"){
+		if($type =="edit"){
 			$getProduct = ProductDelivery::where('prod_id','=',$product)
 									->where('receipt_num','=',$receipt_num)
 									->where('qty','=',$qty)

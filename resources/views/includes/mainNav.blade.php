@@ -138,6 +138,11 @@
             <!--<i class="fa fa-newspaper-o"></i>--> <span>Audit Trail</span> <i class="fa pull-right"></i>
           </a>
         </li>
+        <li class="treeview {{ ($mt == "str") ? "active" : ""}}">
+          <a href="{{ URL::Route('getStockRequestView') }}">
+            <!--<i class="fa fa-newspaper-o"></i>--> <span>Stock Request</span> <i class="fa pull-right"></i>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

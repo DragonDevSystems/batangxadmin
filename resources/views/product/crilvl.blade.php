@@ -21,7 +21,7 @@
 		<!-- Invoice list -->
 		<div class="box box-primary">
 			<!-- /.box-header -->
-			<div class="box-body">
+			<div class="box-body" onload="window.print();">
 				<table id="dtUAList" class="table table-bordered table-striped table-hover">
 					<thead>
 						<tr>
