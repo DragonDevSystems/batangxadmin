@@ -35,7 +35,7 @@
                 <input type="text" class="form-control" placeholder="Lastname" name="lname" id="lname">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Date of Birth" name="dob" id="dob">
+                <input type="text" class="form-control" placeholder="Date of Birth" name="dob" id="dob" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
               </div>
             </div>
           </div>
