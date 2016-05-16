@@ -600,7 +600,7 @@
 					{
 						if(response.status == "success"){
 							promptMsg("success","Success.");
-							//window.location.href = response.link;
+							window.location.href = response.link;
 						}
 
 					});
