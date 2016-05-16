@@ -190,6 +190,7 @@
 		        		$(".print").attr("href",data[i].url);
 		        		if(data[i].remarks == "Received"){
 		        			$('.confirmReceive').attr('disabled', true);
+		        			$('#editDelivery').attr('disabled', true);
 		        		}
 		        	}
 		        	if(data.length != 0){
