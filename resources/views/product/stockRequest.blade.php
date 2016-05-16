@@ -191,6 +191,8 @@
 		        		if(data[i].remarks == "Received"){
 		        			$('.confirmReceive').attr('disabled', true);
 		        			$('#editDelivery').attr('disabled', true);
+		        			$('#remove_product').hide();
+		        			
 		        		}
 		        	}
 		        	if(data.length != 0){

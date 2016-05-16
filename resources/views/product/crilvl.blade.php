@@ -37,6 +37,7 @@
 			<div class="overlay tbl-overlay">
 	        	<i class="fa fa-spinner fa-spin"></i>
 	        </div>
+	        <a href="#" target="_blank" class="btn btn-default print"><i class="fa fa-print"></i> Print</a>
 		</div>
 	</section>
     <!-- /.content -->
